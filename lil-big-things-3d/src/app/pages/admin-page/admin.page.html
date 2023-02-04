@@ -1,1 +1,2 @@
-<p>admin-page works!</p>
+<div *ngIf="authService.userID">User logged in</div>
+<div *ngIf="!authService.userID">User logged out</div>
