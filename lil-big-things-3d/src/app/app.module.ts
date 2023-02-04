@@ -23,9 +23,10 @@ import {
 } from '@angular/fire/remote-config';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
+import { AdminPageComponent } from './pages/admin-page/admin.page';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent],
+  declarations: [AppComponent, HomePageComponent, AdminPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
