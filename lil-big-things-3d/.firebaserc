@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "lilbigthings3d": {
+      "hosting": {
+        "lil-big-things-3d": [
+          "lilbigthings3d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "lilbigthings3d"
+  }
+}
