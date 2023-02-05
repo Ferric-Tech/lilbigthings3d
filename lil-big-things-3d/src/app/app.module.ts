@@ -32,10 +32,19 @@ import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 import { RegisterComponent } from './pages/home-page/register/register.component';
-import { AddPrintComponent } from './pages/admin-page/admin-dashboard/add-print/add-print.component';
+import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent, AdminDashboardComponent, ErrorModalComponent, RegisterComponent, AddPrintComponent],
+  declarations: [
+    AppComponent,
+    HomePageComponent,
+    AdminPageComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    ErrorModalComponent,
+    RegisterComponent,
+    AddPrintFileComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

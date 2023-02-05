@@ -1,0 +1,9 @@
+<div class="page-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Add new print</mat-card-title>
+        </mat-card-header>
+        <input type="file" class="file-upload" (change)="onFileSelection($event)">
+        <button mat-button (click)="onSubmit()">Submit</button>
+    </mat-card>
+</div>
