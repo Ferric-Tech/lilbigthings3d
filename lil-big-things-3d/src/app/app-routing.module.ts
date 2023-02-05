@@ -4,9 +4,20 @@ import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admi
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { HomePageComponent } from './pages/home-page/home.page';
+import { RegisterComponent } from './pages/home-page/register/register.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  {
+    path: '',
+    component: HomePageComponent,
+    children: [
+      {
+        path: 'register',
+        title: 'Register new user',
+        component: RegisterComponent,
+      },
+    ],
+  },
   {
     path: 'admin',
     component: AdminPageComponent,

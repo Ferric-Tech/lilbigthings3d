@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ErrorModalContent } from 'src/app/modals/error-modal/error-modal.component';
 import {
-  ErrorModalContent,
-  OptionActionType,
-} from '../modals/error-modal/error-modal.component';
+  RegistrationAsUserFirstError,
+  UserNotFoundError,
+} from './error-handling.constants';
 
 export enum ErrorContext {
   AdminLogin = 'Admin login',
@@ -33,25 +34,15 @@ export class ErrorHandlingService {
     let errorContent = {} as ErrorModalContent;
     switch (error) {
       case ErrorState.UserNotFound:
-        errorContent = {
-          title: 'Email not registed',
-          subtitle: detail ? detail.email : '',
-          message:
-            'It seems the email provided is incorrect - are you sure this is correct (including spelling)?',
-          options: [
-            {
-              description: "Yes, I'm sure",
-              action: {
-                type: OptionActionType.EmitError,
-                followUpError: ErrorState.RegistrationAsUserRequiredFirst,
-              },
-            },
-            {
-              description: 'No, let me re-enter',
-              action: { type: OptionActionType.Close },
-            },
-          ],
-        };
+        errorContent = UserNotFoundError;
+        errorContent.subtitle = detail ? detail.email : '';
+        errorContent.options[0].action.followUpError =
+          ErrorState.RegistrationAsUserRequiredFirst;
+        break;
+
+      case ErrorState.RegistrationAsUserRequiredFirst:
+        errorContent = RegistrationAsUserFirstError;
+        errorContent.options[0].action.newRoute = '/register';
     }
 
     this.errorModelObs$.next(errorContent);

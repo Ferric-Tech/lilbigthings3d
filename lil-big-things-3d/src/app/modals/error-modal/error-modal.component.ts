@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ErrorHandlingService,
   ErrorState,
-} from 'src/app/services/error-handling.service';
+} from 'src/app/services/error-handling/error-handling.service';
 
 export interface ErrorModalContent {
   title: string;
@@ -19,11 +20,13 @@ export interface ErrorOption {
 export interface OptionAction {
   type: OptionActionType;
   followUpError?: ErrorState;
+  newRoute?: string;
 }
 
 export enum OptionActionType {
   Close,
   EmitError,
+  Navigate,
 }
 
 @Component({
@@ -34,7 +37,10 @@ export enum OptionActionType {
 export class ErrorModalComponent implements OnInit {
   isDisplaying = false;
   currentError: ErrorModalContent | undefined;
-  constructor(private readonly errorService: ErrorHandlingService) {}
+  constructor(
+    private readonly errorService: ErrorHandlingService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit() {
     this.errorService.errorModalContent.subscribe((content) => {
@@ -43,8 +49,8 @@ export class ErrorModalComponent implements OnInit {
     });
   }
 
-  onButtonClicked(action: OptionActionType): void {
-    switch (action) {
+  onButtonClicked(action: OptionAction): void {
+    switch (action.type) {
       case OptionActionType.Close:
         this.isDisplaying = false;
         break;
@@ -53,6 +59,12 @@ export class ErrorModalComponent implements OnInit {
         this.errorService.handleDefinedError(
           ErrorState.RegistrationAsUserRequiredFirst
         );
+        break;
+      case OptionActionType.Navigate:
+        this.isDisplaying = false;
+        action.newRoute
+          ? this.router.navigateByUrl(action.newRoute)
+          : this.router.navigateByUrl('');
     }
   }
 }

@@ -11,7 +11,7 @@ import {
   ErrorContext,
   ErrorHandlingService,
   ErrorState,
-} from './error-handling.service';
+} from './error-handling/error-handling.service';
 
 @Injectable({
   providedIn: 'root',

@@ -7,7 +7,7 @@
         <p>{{currentError.message}}</p>
         <div class="button-container">
             <button mat-button *ngFor="let option of currentError.options"
-                (click)="onButtonClicked(option.action.type)">{{option.description}}</button>
+                (click)="onButtonClicked(option.action)">{{option.description}}</button>
         </div>
     </mat-card>
 </div>
