@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddPrintComponent } from './pages/admin-page/admin-dashboard/add-print/add-print.component';
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
@@ -31,6 +32,13 @@ const routes: Routes = [
         path: 'dashboard',
         title: 'Admin dashboard',
         component: AdminDashboardComponent,
+        children: [
+          {
+            path: 'add-print',
+            title: 'Add new print',
+            component: AddPrintComponent,
+          },
+        ],
       },
     ],
   },
