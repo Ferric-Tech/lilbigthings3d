@@ -30,9 +30,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
+import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent, AdminDashboardComponent],
+  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent, AdminDashboardComponent, ErrorModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
