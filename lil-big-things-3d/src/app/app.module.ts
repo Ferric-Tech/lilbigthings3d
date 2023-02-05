@@ -28,9 +28,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, AdminPageComponent],
+  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
