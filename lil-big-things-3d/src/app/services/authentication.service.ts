@@ -6,11 +6,12 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
-import { ErrorHandlingService } from './error-handling.service';
-
-export enum LoginError {
-  UserNotFound = 'auth/user-not-found',
-}
+import {
+  ErrorAdditionalDetail,
+  ErrorContext,
+  ErrorHandlingService,
+  ErrorState,
+} from './error-handling.service';
 
 @Injectable({
   providedIn: 'root',
@@ -55,21 +56,21 @@ export class AuthenticationService {
         const user = userCredential.user;
         // ...
       })
-      .catch((error) => {
-        this.handleError(error);
+      .catch((error: { code: unknown; message: unknown }) => {
+        this.handleError(error, { email });
       });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private handleError(error: any): void {
-    Object.values(LoginError).includes(error.code)
-      ? this.emitError(error.code)
-      : this.emitError(error.code, error.message);
-  }
-
-  private emitError(error: unknown, message?: string): void {
-    message
-      ? this.errorService.handError(error, message)
-      : this.errorService.handError(error);
+  private handleError(error: any, detail: ErrorAdditionalDetail): void {
+    Object.values(ErrorState).includes(error.code)
+      ? this.errorService.handleDefinedError(error.code, {
+          email: detail.email,
+        })
+      : this.errorService.handleUndefinedError(
+          ErrorContext.AdminLogin,
+          error.code,
+          error.message
+        );
   }
 }
