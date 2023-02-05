@@ -33,6 +33,7 @@ import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admi
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 import { RegisterComponent } from './pages/home-page/register/register.component';
 import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
+import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-pr
     ErrorModalComponent,
     RegisterComponent,
     AddPrintFileComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,

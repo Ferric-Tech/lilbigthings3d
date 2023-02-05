@@ -1,0 +1,20 @@
+<div class="page-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Add new product</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="form-line">
+                <label for="title">Title: </label>
+                <input id="title" type="text" formControlName="title" required>
+            </div>
+            <div class="form-line">
+                <label for="decription">Description: </label>
+            </div>
+            <textarea class="text-area" id="decription" type="text" formControlName="decription"></textarea>
+            <input type="file" class="file-upload" (change)="onFileSelection($event)">
+
+            <button mat-button type="submit" [disabled]="!productForm.valid">Submit</button>
+        </form>
+    </mat-card>
+</div>
