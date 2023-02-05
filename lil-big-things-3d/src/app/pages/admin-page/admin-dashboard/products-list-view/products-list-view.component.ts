@@ -18,4 +18,8 @@ export class ProductsListViewComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.products = await this.fs.getAllProducts();
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onProductClicked(product: ProductDoc): void {
+    console.log(product);
+  }
 }
