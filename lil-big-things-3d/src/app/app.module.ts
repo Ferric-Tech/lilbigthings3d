@@ -24,12 +24,14 @@ import {
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent, AdminPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),

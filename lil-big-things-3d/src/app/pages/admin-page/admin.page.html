@@ -1,2 +1,11 @@
-<div *ngIf="authService.userID">User logged in</div>
-<div *ngIf="!authService.userID">User logged out</div>
+<div class="page-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <label for="email">Email: </label>
+        <input id="email" type="text" formControlName="email" required>
+
+        <label for="password">Password: </label>
+        <input id="password" type="text" formControlName="password">
+
+        <button type="submit" [disabled]="!loginForm.valid">Submit</button>
+    </form>
+</div>
