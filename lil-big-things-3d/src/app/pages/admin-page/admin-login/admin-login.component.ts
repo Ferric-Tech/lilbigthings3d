@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {
+  AuthenticationService,
+  SignInContext,
+} from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -26,6 +29,7 @@ export class AdminLoginComponent {
       return;
     }
     this.authService.signInWithEmail(
+      SignInContext.Admin,
       this.loginForm.controls.email.value,
       this.loginForm.controls.password.value
     );

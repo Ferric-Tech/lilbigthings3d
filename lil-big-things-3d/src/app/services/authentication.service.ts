@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import {
   ErrorAdditionalDetail,
   ErrorContext,
@@ -13,13 +14,21 @@ import {
   ErrorState,
 } from './error-handling/error-handling.service';
 
+export enum SignInContext {
+  Admin,
+  General,
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   auth = getAuth();
 
-  constructor(private readonly errorService: ErrorHandlingService) {}
+  constructor(
+    private readonly errorService: ErrorHandlingService,
+    private readonly router: Router
+  ) {}
 
   get userID(): string | null {
     onAuthStateChanged(this.auth, (user) => {
@@ -49,12 +58,21 @@ export class AuthenticationService {
       });
   }
 
-  signInWithEmail(email: string, password: string): void {
+  signInWithEmail(
+    context: SignInContext,
+    email: string,
+    password: string
+  ): void {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        // ...
+        switch (context) {
+          case SignInContext.Admin:
+            this.router.navigate(['admin/dashboard']);
+            break;
+          case SignInContext.General:
+            this.router.navigate(['']);
+        }
       })
       .catch((error: { code: unknown; message: unknown }) => {
         this.handleError(error, { email });
