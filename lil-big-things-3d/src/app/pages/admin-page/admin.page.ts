@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
 })
-export class AdminPageComponent implements OnInit {
+export class AdminPageComponent {
   loginForm = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
@@ -17,10 +17,6 @@ export class AdminPageComponent implements OnInit {
     readonly authService: AuthenticationService,
     private fb: FormBuilder
   ) {}
-
-  ngOnInit(): void {
-    console.log(this.authService.userID);
-  }
 
   onSubmit() {
     console.warn(this.loginForm.value);

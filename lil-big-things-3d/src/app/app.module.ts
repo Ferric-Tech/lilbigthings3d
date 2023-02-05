@@ -26,6 +26,8 @@ import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent, AdminPageComponent],
@@ -44,6 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
     BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
