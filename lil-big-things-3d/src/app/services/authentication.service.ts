@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
+import { ErrorHandlingService } from './error-handling.service';
 
 export enum LoginError {
   UserNotFound = 'auth/user-not-found',
@@ -16,6 +17,8 @@ export enum LoginError {
 })
 export class AuthenticationService {
   auth = getAuth();
+
+  constructor(private readonly errorService: ErrorHandlingService) {}
 
   get userID(): string | null {
     onAuthStateChanged(this.auth, (user) => {
@@ -53,10 +56,20 @@ export class AuthenticationService {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        this.handleError(error);
       });
   }
 
-  private emitError(): void {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleError(error: any): void {
+    Object.values(LoginError).includes(error.code)
+      ? this.emitError(error.code)
+      : this.emitError(error.code, error.message);
+  }
+
+  private emitError(error: unknown, message?: string): void {
+    message
+      ? this.errorService.handError(error, message)
+      : this.errorService.handError(error);
+  }
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorHandlingService {
-
-  constructor() { }
+  handError(error: unknown, message?: unknown): void {
+    message ? console.log(error) : console.log(error);
+  }
 }
