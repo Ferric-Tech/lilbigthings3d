@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
@@ -16,6 +17,7 @@ export interface Product {
 })
 export class AddProductComponent {
   printFiles: File[] = [];
+  imageFiles: File[] = [];
   productForm = this.fb.group({
     title: ['', Validators.required],
     decription: ['', Validators.required],
@@ -26,11 +28,15 @@ export class AddProductComponent {
     private fb: FormBuilder
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onFileSelection(event: any): void {
+  onPrintFileSelection(event: any): void {
     for (const file of event.target.files) {
-      const printFile = file as File;
-      this.printFiles.push(printFile);
+      this.printFiles.push(file as File);
+    }
+  }
+
+  onImageFileSelection(event: any): void {
+    for (const file of event.target.files) {
+      this.imageFiles.push(file as File);
     }
   }
 
@@ -42,6 +48,7 @@ export class AddProductComponent {
       title: this.productForm.value.title || '',
       decription: this.productForm.value.decription || '',
       printFiles: this.printFiles,
+      imageFiles: this.imageFiles,
     };
     this.fs.addProduct(product);
   }

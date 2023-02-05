@@ -34,6 +34,8 @@ import { ErrorModalComponent } from './modals/error-modal/error-modal.component'
 import { RegisterComponent } from './pages/home-page/register/register.component';
 import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
+import { ProductsListViewComponent } from './pages/admin-page/admin-dashboard/products-list-view/products-list-view.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-prod
     RegisterComponent,
     AddPrintFileComponent,
     AddProductComponent,
+    ProductsListViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-prod
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatTableModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

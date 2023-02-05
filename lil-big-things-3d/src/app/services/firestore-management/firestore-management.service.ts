@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
-import { addDoc, collection, getFirestore } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+} from '@angular/fire/firestore';
 import {
   getStorage,
   ref,
@@ -12,7 +17,7 @@ import { environment } from 'src/environments/environment';
 
 export interface ProductDoc {
   title: string;
-  decription: string;
+  description: string;
   printFileRefs: string[];
   imageFileRefs?: string[];
 }
@@ -27,7 +32,7 @@ export class FirestoreManagementService {
   async addProduct(product: Product): Promise<void> {
     const productDoc: ProductDoc = {
       title: product.title,
-      decription: product.decription,
+      description: product.decription,
       printFileRefs: [],
     };
     for (const printFile of product.printFiles) {
@@ -42,6 +47,18 @@ export class FirestoreManagementService {
       }
     }
     await addDoc(collection(this.db, 'products'), productDoc);
+  }
+
+  async getAllProducts(): Promise<ProductDoc[]> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const listOfProducts: ProductDoc[] = [];
+      const querySnapshot = await getDocs(collection(this.db, 'products'));
+      querySnapshot.forEach((doc) => {
+        listOfProducts.push(doc.data() as ProductDoc);
+      });
+      resolve(listOfProducts);
+    });
   }
 
   async addPrintFile(printFile: File): Promise<void> {

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
+import { ProductsListViewComponent } from './pages/admin-page/admin-dashboard/products-list-view/products-list-view.component';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { HomePageComponent } from './pages/home-page/home.page';
@@ -38,6 +39,11 @@ const routes: Routes = [
             path: 'add-product',
             title: 'Add new product',
             component: AddProductComponent,
+          },
+          {
+            path: 'products-list',
+            title: 'View all products',
+            component: ProductsListViewComponent,
           },
           {
             path: 'add-print',

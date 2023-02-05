@@ -12,7 +12,14 @@
                 <label for="decription">Description: </label>
             </div>
             <textarea class="text-area" id="decription" type="text" formControlName="decription"></textarea>
-            <input type="file" multiple class="file-upload" (change)="onFileSelection($event)">
+            <div class="form-line">
+                <label for="print-files">Print files: </label>
+                <input type="file" multiple class="file-upload" (change)="onPrintFileSelection($event)">
+            </div>
+            <div class="form-line">
+                <label for="print-files">Image files: </label>
+                <input type="file" multiple class="file-upload" (change)="onImageFileSelection($event)">
+            </div>
 
             <button mat-button type="submit" [disabled]="!productForm.valid">Submit</button>
         </form>
