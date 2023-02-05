@@ -12,7 +12,7 @@
                 <label for="decription">Description: </label>
             </div>
             <textarea class="text-area" id="decription" type="text" formControlName="decription"></textarea>
-            <input type="file" class="file-upload" (change)="onFileSelection($event)">
+            <input type="file" multiple class="file-upload" (change)="onFileSelection($event)">
 
             <button mat-button type="submit" [disabled]="!productForm.valid">Submit</button>
         </form>

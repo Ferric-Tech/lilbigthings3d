@@ -28,8 +28,10 @@ export class AddProductComponent {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFileSelection(event: any): void {
-    const printFile = event.target.files[0] as File;
-    this.printFiles.push(printFile);
+    for (const file of event.target.files) {
+      const printFile = file as File;
+      this.printFiles.push(printFile);
+    }
   }
 
   onSubmit() {
