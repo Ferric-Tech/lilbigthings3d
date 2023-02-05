@@ -29,9 +29,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent],
+  declarations: [AppComponent, HomePageComponent, AdminPageComponent, AdminLoginComponent, AdminDashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
