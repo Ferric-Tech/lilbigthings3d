@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import {
-  AuthenticationService,
-  SignInContext,
-} from 'src/app/services/authentication.service';
+  FirestoreManagementService,
+  PrintFile,
+} from 'src/app/services/firestore-management/firestore-management.service';
 
 @Component({
   selector: 'app-add-print',
@@ -15,23 +15,27 @@ export class AddPrintComponent {
     title: ['', Validators.required],
     description: ['', [Validators.required, Validators.minLength(16)]],
   });
+  file: File | undefined;
+  filePath: string | undefined;
 
   constructor(
-    readonly authService: AuthenticationService,
+    readonly fs: FirestoreManagementService,
     private fb: FormBuilder
   ) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onFileSelection(event: any): void {
+    this.file = event.target.files[0];
+    this.filePath = event.target.value;
+  }
+
   onSubmit() {
-    if (
-      !this.addPrintForm.controls.title.value ||
-      !this.addPrintForm.controls.description.value
-    ) {
+    if (!this.addPrintForm.value || !this.file || !this.filePath) {
       return;
     }
-    this.authService.signInWithEmail(
-      SignInContext.Admin,
-      this.addPrintForm.controls.title.value,
-      this.addPrintForm.controls.description.value
-    );
+    const fileToUpload = this.addPrintForm.value as PrintFile;
+    fileToUpload.file = this.file;
+    fileToUpload.filePath = this.filePath;
+    this.fs.addPrintFile(fileToUpload);
   }
 }

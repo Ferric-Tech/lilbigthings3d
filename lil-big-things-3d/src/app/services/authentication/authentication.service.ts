@@ -12,7 +12,7 @@ import {
   ErrorContext,
   ErrorHandlingService,
   ErrorState,
-} from './error-handling/error-handling.service';
+} from '../error-handling/error-handling.service';
 
 export enum SignInContext {
   Admin,

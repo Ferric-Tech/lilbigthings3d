@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {
   AuthenticationService,
   SignInContext,
-} from 'src/app/services/authentication.service';
+} from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-admin-login',
