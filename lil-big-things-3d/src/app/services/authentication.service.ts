@@ -57,4 +57,6 @@ export class AuthenticationService {
         const errorMessage = error.message;
       });
   }
+
+  private emitError(): void {}
 }

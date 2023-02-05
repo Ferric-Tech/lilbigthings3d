@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -7,27 +7,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   templateUrl: './admin.page.html',
   styleUrls: ['./admin.page.scss'],
 })
-export class AdminPageComponent {
-  loginForm = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required],
-  });
-
+export class AdminPageComponent implements OnInit {
   constructor(
-    readonly authService: AuthenticationService,
-    private fb: FormBuilder
+    private readonly authService: AuthenticationService,
+    private readonly router: Router
   ) {}
 
-  onSubmit() {
-    if (
-      !this.loginForm.controls.email.value ||
-      !this.loginForm.controls.password.value
-    ) {
-      return;
-    }
-    this.authService.signInWithEmail(
-      this.loginForm.controls.email.value,
-      this.loginForm.controls.password.value
-    );
+  ngOnInit(): void {
+    this.authService.userID
+      ? this.router.navigate(['admin/dashboard'])
+      : this.router.navigate(['admin/login']);
   }
 }
