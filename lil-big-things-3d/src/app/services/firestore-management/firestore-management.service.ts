@@ -4,11 +4,6 @@ import { getFirestore } from '@angular/fire/firestore';
 import { getStorage, ref, uploadBytes } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 
-export interface PrintFile {
-  file: File;
-  fileName: string;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -16,18 +11,14 @@ export class FirestoreManagementService {
   app = initializeApp(environment.firebase);
   db = getFirestore(this.app);
 
-  async addPrintFile(printFile: PrintFile): Promise<void> {
-    await this.addFileToStroage(printFile.fileName, printFile.file);
-    // await addDoc(collection(this.db, 'print-files'), {
-    //   title: printFile.title,
-    //   description: printFile.description,
-    // });
+  async addPrintFile(printFile: File): Promise<void> {
+    await this.addFileToStroage(printFile);
   }
 
-  private addFileToStroage(fileName: string, file: File): Promise<unknown> {
+  private addFileToStroage(file: File): Promise<unknown> {
     return new Promise((resolve) => {
       const storage = getStorage();
-      const filePathRef = ref(storage, fileName);
+      const filePathRef = ref(storage, file.name);
       uploadBytes(filePathRef, file).then((snapshot) => {
         console.log(snapshot);
         resolve(snapshot || null);

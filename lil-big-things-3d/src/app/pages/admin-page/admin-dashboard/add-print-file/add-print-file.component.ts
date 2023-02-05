@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FirestoreManagementService,
-  PrintFile,
-} from 'src/app/services/firestore-management/firestore-management.service';
+import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 
 @Component({
   selector: 'app-add-print-file',
@@ -10,18 +7,13 @@ import {
   styleUrls: ['./add-print-file.component.scss'],
 })
 export class AddPrintFileComponent {
-  printFile: PrintFile | undefined;
+  printFile: File | undefined;
 
   constructor(readonly fs: FirestoreManagementService) {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFileSelection(event: any): void {
-    const selectedFile = event.target.files[0] as File;
-    if (!selectedFile) return;
-    this.printFile = {
-      file: selectedFile,
-      fileName: selectedFile.name,
-    };
+    this.printFile = event.target.files[0] as File;
   }
 
   onSubmit() {
