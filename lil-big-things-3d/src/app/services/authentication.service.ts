@@ -31,12 +31,9 @@ export class AuthenticationService {
   ) {}
 
   get userID(): Promise<string | null> {
-    let userID: string | null;
     return new Promise((resolve) => {
       onAuthStateChanged(this.auth, (user) => {
-        if (!user) return;
-        userID = user.uid || null;
-        resolve(userID);
+        resolve(user?.uid || null);
       });
     });
   }
