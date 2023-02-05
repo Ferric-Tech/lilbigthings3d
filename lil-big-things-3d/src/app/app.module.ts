@@ -25,6 +25,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent, AdminPageComponent],
@@ -42,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     providePerformance(() => getPerformance()),
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
+    BrowserAnimationsModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
