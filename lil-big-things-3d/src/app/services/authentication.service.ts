@@ -7,6 +7,10 @@ import {
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 
+export enum LoginError {
+  UserNotFound = 'auth/user-not-found',
+}
+
 @Injectable({
   providedIn: 'root',
 })

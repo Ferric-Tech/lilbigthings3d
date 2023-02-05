@@ -19,6 +19,15 @@ export class AdminPageComponent {
   ) {}
 
   onSubmit() {
-    console.warn(this.loginForm.value);
+    if (
+      !this.loginForm.controls.email.value ||
+      !this.loginForm.controls.password.value
+    ) {
+      return;
+    }
+    this.authService.signInWithEmail(
+      this.loginForm.controls.email.value,
+      this.loginForm.controls.password.value
+    );
   }
 }
