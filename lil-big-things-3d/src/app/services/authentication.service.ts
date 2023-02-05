@@ -30,18 +30,15 @@ export class AuthenticationService {
     private readonly router: Router
   ) {}
 
-  get userID(): string | null {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        return user.uid;
-      }
-      return null;
+  get userID(): Promise<string | null> {
+    let userID: string | null;
+    return new Promise((resolve) => {
+      onAuthStateChanged(this.auth, (user) => {
+        if (!user) return;
+        userID = user.uid || null;
+        resolve(userID);
+      });
     });
-    // User is signed out
-    // ...
-    return null;
   }
 
   signUpWithEmail(email: string, password: string): void {

@@ -13,8 +13,8 @@ export class AdminPageComponent implements OnInit {
     private readonly router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.authService.userID
+  async ngOnInit(): Promise<void> {
+    (await this.authService.userID)
       ? this.router.navigate(['admin/dashboard'])
       : this.router.navigate(['admin/login']);
   }
