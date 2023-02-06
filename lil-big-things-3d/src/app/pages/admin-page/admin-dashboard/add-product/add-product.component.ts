@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { FormFieldType } from 'src/app/form-templates/models/form-templates.enum';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 
 export interface Product {
@@ -24,33 +25,16 @@ export interface FormFieldConfig {
   validators?: ValidatorFn[];
 }
 
-export enum FormFieldType {
-  MainLabel,
-  LabelSub,
-  UnderlinedLabel,
-  PlainLabel,
-  InputTitle,
-  InputPlain,
-  InputLong,
-  UploaderSingleFileUnderlined,
-  UploaderSingleFilePlain,
-  UploaderMultiFileUnderlined,
-  UploaderMultiFilePlain,
-}
-
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
-  printFiles: File[] = [];
-  imageFiles: File[] = [];
-
+  listOfFormGroups: { group: FormGroup; config: FormFieldConfig[] }[] = [];
   basicDetailsForm = this.fb.group({});
   filesForm = this.fb.group({});
 
-  formFieldType = FormFieldType;
   basicDetailsFormConfig: FormFieldConfig[] = [
     {
       name: 'title',
@@ -120,37 +104,13 @@ export class AddProductComponent implements OnInit {
     this.setForm(this.filesForm, this.filesFormConfig);
   }
 
-  private setForm(form: FormGroup, config: FormFieldConfig[]): void {
+  private setForm(group: FormGroup, config: FormFieldConfig[]): void {
     config.forEach((field: FormFieldConfig) => {
-      form.addControl(
+      group.addControl(
         field.name,
         new FormControl(field.placeholder || '', field.validators)
       );
     });
-  }
-
-  onPrintFileSelection(event: any): void {
-    for (const file of event.target.files) {
-      this.printFiles.push(file as File);
-    }
-  }
-
-  onImageFileSelection(event: any): void {
-    for (const file of event.target.files) {
-      this.imageFiles.push(file as File);
-    }
-  }
-
-  onSubmit() {
-    // if (!this.basicDetailsForm.valid || !this.printFiles) {
-    //   return;
-    // }
-    // const product: Product = {
-    //   title: this.basicDetailsForm.value.title || '',
-    //   decription: this.basicDetailsForm.value.description || '',
-    //   printFiles: this.printFiles,
-    //   imageFiles: this.imageFiles,
-    // };
-    // this.fs.addProduct(product);
+    this.listOfFormGroups.push({ group, config });
   }
 }

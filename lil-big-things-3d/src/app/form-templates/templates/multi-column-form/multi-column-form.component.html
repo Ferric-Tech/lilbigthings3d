@@ -1,0 +1,97 @@
+<div class="page-container">
+  <div class="button-panel">
+    <button mat-button type="submit">Submit</button>
+  </div>
+</div>
+
+<div class="page-container">
+  <div class="screen-container">
+    <div class="column-container">
+      <form
+        *ngFor="let form of config"
+        class="form-container"
+        [formGroup]="form.group"
+      >
+        <div *ngFor="let field of form.config">
+          <!-- Form Labels -->
+          <div
+            *ngIf="
+              field.type === formFieldType.MainLabel ||
+              field.type === formFieldType.LabelSub ||
+              field.type === formFieldType.UnderlinedLabel ||
+              field.type === formFieldType.PlainLabel
+            "
+            class="form-line"
+          >
+            <div
+              class="{{
+                field.type === formFieldType.MainLabel
+                  ? 'title'
+                  : field.type === formFieldType.LabelSub
+                  ? 'sub-title'
+                  : field.type === formFieldType.UnderlinedLabel
+                  ? 'underlined-title'
+                  : ''
+              }}"
+            >
+              {{ field.label }}
+            </div>
+          </div>
+
+          <!-- Inputs -->
+          <input
+            *ngIf="field.type === formFieldType.InputTitle"
+            formControlName="{{ field.name }}"
+            class="title"
+            id="{{ field.name }}"
+            type="text"
+          />
+
+          <!-- Text area -->
+          <textarea
+            *ngIf="field.type === formFieldType.InputLong"
+            formControlName="{{ field.name }}"
+            class="desc-area"
+            id="{{ field.name }}"
+            type="text"
+          ></textarea>
+
+          <!-- Uploaders -->
+          <div
+            *ngIf="
+              field.type === formFieldType.UploaderMultiFilePlain ||
+              field.type === formFieldType.UploaderMultiFileUnderlined ||
+              field.type === formFieldType.UploaderSingleFilePlain ||
+              field.type === formFieldType.UploaderSingleFileUnderlined
+            "
+            class="form-line"
+          >
+            <div
+              class="{{
+                field.type === formFieldType.UploaderMultiFileUnderlined ||
+                field.type === formFieldType.UploaderSingleFileUnderlined
+                  ? 'underlined-title'
+                  : 'indented-text'
+              }}"
+            >
+              {{ field.label }}
+            </div>
+            <input
+              class="fake-file-selector"
+              #designFileInput
+              type="file"
+              (change)="onPrintFileSelection($event)"
+            />
+            <button
+              class="file-selector-button"
+              #upload
+              (click)="designFileInput.click()"
+            >
+              Upload file
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

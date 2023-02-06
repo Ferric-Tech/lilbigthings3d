@@ -36,6 +36,7 @@ import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-pr
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
 import { ProductsListViewComponent } from './pages/admin-page/admin-dashboard/products-list-view/products-list-view.component';
 import { MatTableModule } from '@angular/material/table';
+import { MultiColumnFormComponent } from './form-templates/templates/multi-column-form/multi-column-form.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatTableModule } from '@angular/material/table';
     AddPrintFileComponent,
     AddProductComponent,
     ProductsListViewComponent,
+    MultiColumnFormComponent,
   ],
   imports: [
     BrowserModule,
