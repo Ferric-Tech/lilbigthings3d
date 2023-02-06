@@ -39,7 +39,10 @@
     font-weight: bold;
     font-size: 1rem;
     width: 96%;
-    margin: 1%;
+  }
+
+  .underlined-title {
+    text-decoration: underline;
   }
 
   .desc-area {
@@ -58,10 +61,6 @@
     margin: 1%;
     justify-content: space-between;
     align-items: center;
-
-    .underlined-title {
-      text-decoration: underline;
-    }
 
     .indented-text {
       margin-left: 5px;
