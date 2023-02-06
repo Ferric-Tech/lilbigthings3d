@@ -18,9 +18,9 @@ export interface Product {
 export class AddProductComponent {
   printFiles: File[] = [];
   imageFiles: File[] = [];
-  productForm = this.fb.group({
-    title: ['', Validators.required],
-    decription: ['', Validators.required],
+  basicDetailsForm = this.fb.group({
+    title: ['New Product', Validators.required],
+    decription: ['Provide a description', Validators.required],
   });
 
   constructor(
@@ -41,12 +41,12 @@ export class AddProductComponent {
   }
 
   onSubmit() {
-    if (!this.productForm.valid || !this.printFiles) {
+    if (!this.basicDetailsForm.valid || !this.printFiles) {
       return;
     }
     const product: Product = {
-      title: this.productForm.value.title || '',
-      decription: this.productForm.value.decription || '',
+      title: this.basicDetailsForm.value.title || '',
+      decription: this.basicDetailsForm.value.decription || '',
       printFiles: this.printFiles,
       imageFiles: this.imageFiles,
     };

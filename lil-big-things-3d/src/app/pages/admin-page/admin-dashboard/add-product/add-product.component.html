@@ -1,27 +1,57 @@
 <div class="page-container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Add new product</mat-card-title>
-        </mat-card-header>
-        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-            <div class="form-line">
-                <label for="title">Title: </label>
-                <input id="title" type="text" formControlName="title" required>
-            </div>
-            <div class="form-line">
-                <label for="decription">Description: </label>
-            </div>
-            <textarea class="text-area" id="decription" type="text" formControlName="decription"></textarea>
-            <div class="form-line">
-                <label for="print-files">Print files: </label>
-                <input type="file" multiple class="file-upload" (change)="onPrintFileSelection($event)">
-            </div>
-            <div class="form-line">
-                <label for="print-files">Image files: </label>
-                <input type="file" multiple class="file-upload" (change)="onImageFileSelection($event)">
-            </div>
+    <div class="button-panel">
+        <button mat-button type="submit" [disabled]="!basicDetailsForm.valid">Submit</button>
+    </div>
+</div>
 
-            <button mat-button type="submit" [disabled]="!productForm.valid">Submit</button>
-        </form>
-    </mat-card>
+<div class="page-container">
+    <div class="screen-container">
+        <div class="column-container">
+            <form class="form-container" [formGroup]="basicDetailsForm" (ngSubmit)="onSubmit()">
+                <input class="title" id="title" type="text" formControlName="title" required>
+                <textarea class="desc-area" id="decription" type="text" formControlName="decription"></textarea>
+            </form>
+            <form class="form-container" [formGroup]="basicDetailsForm" (ngSubmit)="onSubmit()">
+                <div class="sub-title">Files</div>
+                <div class="form-line">
+                    <div class="underlined-title">Design file</div>
+                    <input class='fake-file-selector' #designFileInput type="file"
+                        (change)="onPrintFileSelection($event)">
+                    <button class='file-selector-button' #upload (click)="designFileInput.click()">Upload file</button>
+                </div>
+                <div class="form-line">
+                    <div class="underlined-title">Print files</div>
+                </div>
+                <div class="form-line">
+                    <div class="indented-text">Fast</div>
+                    <input class='fake-file-selector' #printFilesInput type="file"
+                        (change)="onPrintFileSelection($event)">
+                    <button class='file-selector-button' #upload (click)="printFilesInput.click()">Upload file</button>
+                </div>
+                <div class="form-line">
+                    <div class="indented-text">Standard</div>
+                    <input class='fake-file-selector' #printFilesInput type="file"
+                        (change)="onPrintFileSelection($event)">
+                    <button class='file-selector-button' #upload (click)="printFilesInput.click()">Upload file</button>
+                </div>
+                <div class="form-line">
+                    <div class="indented-text">Optimised</div>
+                    <input class='fake-file-selector' #printFilesInput type="file"
+                        (change)="onPrintFileSelection($event)">
+                    <button class='file-selector-button' #upload (click)="printFilesInput.click()">Upload file</button>
+                </div>
+                <div class="form-line">
+                    <div class="indented-text">Custom</div>
+                    <input class='fake-file-selector' #printFilesInput type="file"
+                        (change)="onPrintFileSelection($event)">
+                    <button class='file-selector-button' #upload (click)="printFilesInput.click()">Upload file</button>
+                </div>
+            </form>
+        </div>
+        <div class="column-container">
+            <form class="form-container" [formGroup]="basicDetailsForm" (ngSubmit)="onSubmit()">
+                <div class="sub-title">Images</div>
+            </form>
+        </div>
+    </div>
 </div>
