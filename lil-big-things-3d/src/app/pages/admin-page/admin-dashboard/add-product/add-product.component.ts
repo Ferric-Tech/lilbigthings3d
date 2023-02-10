@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
-import { FormFieldType } from 'src/app/form-templates/models/form-templates.enum';
+  FormFieldConfig,
+  FormTemplateConfig,
+} from 'src/app/form-templates/models/form-template.interface';
+import {
+  FormLineType,
+  FORM_FIELD_TYPES,
+} from 'src/app/form-templates/models/form-templates.enum';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 
 export interface Product {
@@ -17,34 +18,26 @@ export interface Product {
   imageFiles?: File[];
 }
 
-export interface FormFieldConfig {
-  name: string;
-  type: FormFieldType;
-  label?: string;
-  placeholder?: string;
-  validators?: ValidatorFn[];
-}
-
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
-  listOfFormGroups: { group: FormGroup; config: FormFieldConfig[] }[] = [];
+  addProductFormConfig: FormTemplateConfig[][] = [];
   basicDetailsForm = this.fb.group({});
   filesForm = this.fb.group({});
 
   basicDetailsFormConfig: FormFieldConfig[] = [
     {
       name: 'title',
-      type: FormFieldType.InputTitle,
+      type: FormLineType.InputTitle,
       placeholder: 'New Product',
       validators: [Validators.required],
     },
     {
       name: 'description',
-      type: FormFieldType.InputLong,
+      type: FormLineType.InputLong,
       placeholder: 'Please provide a description',
       validators: [Validators.required],
     },
@@ -52,44 +45,39 @@ export class AddProductComponent implements OnInit {
 
   filesFormConfig: FormFieldConfig[] = [
     {
-      name: 'files-lable',
-      type: FormFieldType.LabelSub,
+      name: 'files-label',
+      type: FormLineType.LabelSub,
       label: 'Files',
     },
     {
-      name: 'design-files-uploader',
-      type: FormFieldType.UploaderSingleFileUnderlined,
-      placeholder: 'None',
+      name: 'design-file',
+      type: FormLineType.UploaderSingleFileUnderlined,
       label: 'Design file',
+      validators: [Validators.required],
     },
     {
       name: 'print-files-label',
-      type: FormFieldType.UnderlinedLabel,
-      placeholder: 'None',
+      type: FormLineType.UnderlinedLabel,
       label: 'Print file',
     },
     {
-      name: 'print-files-fast',
-      type: FormFieldType.UploaderSingleFilePlain,
-      placeholder: 'None',
+      name: 'print-file-fast',
+      type: FormLineType.UploaderSingleFilePlain,
       label: 'Fast',
     },
     {
-      name: 'print-files-standard',
-      type: FormFieldType.UploaderSingleFilePlain,
-      placeholder: 'None',
+      name: 'print-file-standard',
+      type: FormLineType.UploaderSingleFilePlain,
       label: 'Standard',
     },
     {
-      name: 'print-files-optimised',
-      type: FormFieldType.UploaderSingleFilePlain,
-      placeholder: 'None',
+      name: 'print-file-optimised',
+      type: FormLineType.UploaderSingleFilePlain,
       label: 'Optimised',
     },
     {
-      name: 'design-files-custom',
-      type: FormFieldType.UploaderSingleFilePlain,
-      placeholder: 'None',
+      name: 'design-file-custom',
+      type: FormLineType.UploaderSingleFilePlain,
       label: 'Custom',
     },
   ];
@@ -100,17 +88,29 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setForm(this.basicDetailsForm, this.basicDetailsFormConfig);
-    this.setForm(this.filesForm, this.filesFormConfig);
+    this.setFormColumn([
+      { group: this.basicDetailsForm, config: this.basicDetailsFormConfig },
+      { group: this.filesForm, config: this.filesFormConfig },
+    ]);
   }
 
-  private setForm(group: FormGroup, config: FormFieldConfig[]): void {
-    config.forEach((field: FormFieldConfig) => {
-      group.addControl(
-        field.name,
-        new FormControl(field.placeholder || '', field.validators)
-      );
+  private setFormColumn(column: FormTemplateConfig[]): void {
+    const currentFormColumn: FormTemplateConfig[] = [];
+    column.forEach((form) => {
+      this.setForm(form);
+      currentFormColumn.push(form);
     });
-    this.listOfFormGroups.push({ group, config });
+    this.addProductFormConfig.push(currentFormColumn);
+  }
+
+  private setForm(form: FormTemplateConfig): void {
+    form.config.forEach((field: FormFieldConfig) => {
+      if (FORM_FIELD_TYPES.includes(field.type)) {
+        form.group.addControl(
+          field.name,
+          new FormControl(field.placeholder || '', field.validators)
+        );
+      }
+    });
   }
 }
