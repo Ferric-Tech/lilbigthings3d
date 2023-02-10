@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { FormTemplateConfig } from '../../models/form-template.interface';
 import {
   FormLineType,
   FORM_FIELD_TYPES,
 } from '../../models/form-templates.enum';
 import { isEqual } from 'lodash';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-multi-column-form',
@@ -44,30 +44,43 @@ export class MultiColumnFormComponent implements OnInit {
     });
   }
 
+  get isAllFormsValid(): boolean {
+    let allFormsValid = true;
+    this.config.forEach((column) => {
+      column.forEach((form) => {
+        if (form.group.invalid) {
+          allFormsValid = false;
+        }
+      });
+    });
+    return allFormsValid;
+  }
+
   get isValidForm(): boolean {
-    return this.formFieldsWithDefaultValues.length === 0;
+    return (
+      this.formFieldsWithDefaultValues.length === 0 && this.isAllFormsValid
+    );
   }
 
   ngOnInit(): void {
-    this.getFormDefaultValues();
+    this.setFormDefaultValues();
   }
 
-  private getFormDefaultValues() {
+  private setFormDefaultValues() {
     this.config.forEach((column) => {
       column.forEach((form) => {
         form.config.forEach((field) => {
-          if (FORM_FIELD_TYPES.includes(field.type)) {
-            if (field.placeholder) {
-              this.formDefaults.push({ [field.name]: field.placeholder });
-            }
+          if (FORM_FIELD_TYPES.includes(field.type) && field.placeholder) {
+            this.formDefaults.push({ [field.name]: field.placeholder });
           }
         });
       });
     });
   }
 
-  onPrintFileSelection(event: any): void {
-    // TODO:
+  onFileSelection(form: FormGroup, field: string, event: any): void {
+    const file: File = event.target.files[0];
+    form.controls[field].setValue(file.name);
   }
 
   onSubmit(): void {

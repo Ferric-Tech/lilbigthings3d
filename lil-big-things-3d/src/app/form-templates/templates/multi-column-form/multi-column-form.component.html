@@ -1,6 +1,8 @@
 <div class="page-container">
   <div class="button-panel">
-    <button mat-button (click)="onSubmit()">Submit</button>
+    <button mat-button [disabled]="!isValidForm" (click)="onSubmit()">
+      Submit
+    </button>
   </div>
 </div>
 
@@ -80,7 +82,7 @@
               class="fake-file-selector"
               #designFileInput
               type="file"
-              (change)="onPrintFileSelection($event)"
+              (change)="onFileSelection(form.group, field.name, $event)"
             />
             <button
               class="file-selector-button"
