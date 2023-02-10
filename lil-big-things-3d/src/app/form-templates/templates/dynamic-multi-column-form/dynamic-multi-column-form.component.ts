@@ -19,6 +19,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   formFieldType = FormLineType;
   formDefaults: { [key: string]: string }[] = [];
+  importedFiles: { [key: string]: File } = {};
 
   get collectiveFormData(): { [key: string]: string }[] {
     const _collectiveFormData: { [key: string]: string }[] = [];
@@ -80,10 +81,18 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   onFileSelection(form: FormGroup, field: string, event: any): void {
     const file: File = event.target.files[0];
+    this.importedFiles[field] = file;
     form.controls[field].setValue(file.name);
   }
 
   onSubmit(): void {
-    console.log(this.isValidForm);
+    if (this.isValidForm) {
+      this.config.forEach((column) => {
+        column.forEach((form) => {
+          console.log(form.group);
+        });
+      });
+      console.log(this.importedFiles);
+    }
   }
 }
