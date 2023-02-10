@@ -10,11 +10,11 @@ import { isEqual } from 'lodash';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-multi-column-form',
-  templateUrl: './multi-column-form.component.html',
-  styleUrls: ['./multi-column-form.component.scss'],
+  selector: 'app-dynamic--multi-column-form',
+  templateUrl: './dynamic-multi-column-form.component.html',
+  styleUrls: ['./dynamic-multi-column-form.component.scss'],
 })
-export class MultiColumnFormComponent implements OnInit {
+export class DynanmicMultiColumnFormComponent implements OnInit {
   @Input() config: FormTemplateConfig[][] = [];
 
   formFieldType = FormLineType;
