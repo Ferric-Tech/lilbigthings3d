@@ -43,6 +43,7 @@
 
   .underlined-title {
     text-decoration: underline;
+    padding-right: 10px;
   }
 
   .desc-area {
@@ -63,7 +64,7 @@
     align-items: center;
 
     .indented-text {
-      margin-left: 5px;
+      padding-left: 10px;
     }
 
     .fake-file-selector {
@@ -76,6 +77,15 @@
       border-radius: 5px;
       border: none;
       padding: 3px;
+    }
+
+    .uploader-label {
+      width: 25%;
+    }
+
+    .uploader-file-name {
+      display: flex;
+      flex-grow: 1;
     }
   }
 }

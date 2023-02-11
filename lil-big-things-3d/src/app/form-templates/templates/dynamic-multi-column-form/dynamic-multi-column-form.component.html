@@ -72,13 +72,13 @@
               class="{{
                 field.type === formFieldType.UploaderMultiFileUnderlined ||
                 field.type === formFieldType.UploaderSingleFileUnderlined
-                  ? 'underlined-title'
-                  : 'indented-text'
+                  ? 'underlined-title uploader-label'
+                  : 'indented-text uploader-label'
               }}"
             >
               {{ field.label }}
             </div>
-            <div>
+            <div class="uploader-file-name">
               {{ form.group.value[field.name] }}
             </div>
             <input
