@@ -25,9 +25,8 @@ export interface Product {
 })
 export class AddProductComponent implements OnInit {
   addProductFormConfig: FormTemplateConfig[][] = [];
-  basicDetailsForm = this.fb.group({});
-  filesForm = this.fb.group({});
 
+  basicDetailsForm = this.fb.group({});
   basicDetailsFormConfig: FormFieldConfig[] = [
     {
       name: 'title',
@@ -43,6 +42,7 @@ export class AddProductComponent implements OnInit {
     },
   ];
 
+  filesForm = this.fb.group({});
   filesFormConfig: FormFieldConfig[] = [
     {
       name: 'files-label',
@@ -82,6 +82,25 @@ export class AddProductComponent implements OnInit {
     },
   ];
 
+  imagesForm = this.fb.group({});
+  imagesFormConfig: FormFieldConfig[] = [
+    {
+      name: 'images-label',
+      type: FormLineType.LabelSub,
+      label: 'Images',
+    },
+    {
+      name: 'images-design',
+      type: FormLineType.ImageUploader,
+      label: 'Design',
+    },
+    {
+      name: 'images-product',
+      type: FormLineType.ImageUploader,
+      label: 'Product',
+    },
+  ];
+
   constructor(
     readonly fs: FirestoreManagementService,
     private fb: FormBuilder
@@ -91,6 +110,9 @@ export class AddProductComponent implements OnInit {
     this.setFormColumn([
       { group: this.basicDetailsForm, config: this.basicDetailsFormConfig },
       { group: this.filesForm, config: this.filesFormConfig },
+    ]);
+    this.setFormColumn([
+      { group: this.imagesForm, config: this.imagesFormConfig },
     ]);
   }
 

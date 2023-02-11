@@ -58,7 +58,7 @@
             type="text"
           ></textarea>
 
-          <!-- Uploaders -->
+          <!-- File Uploaders -->
           <div
             *ngIf="
               field.type === formFieldType.UploaderMultiFilePlain ||
@@ -93,6 +93,33 @@
               (click)="designFileInput.click()"
             >
               Upload file
+            </button>
+          </div>
+
+          <!-- Image Uploaders -->
+          <div
+            *ngIf="field.type === formFieldType.ImageUploader"
+            class="form-line"
+          >
+            <div class="uploader-label">
+              {{ field.label }}
+            </div>
+            <div class="uploader-file-name">
+              {{ form.group.value[field.name] }}
+            </div>
+            <input
+              class="fake-file-selector"
+              #designFileInput
+              type="file"
+              multiple
+              (change)="onImagesSelection(form.group, field.name, $event)"
+            />
+            <button
+              class="file-selector-button"
+              #upload
+              (click)="designFileInput.click()"
+            >
+              Upload images
             </button>
           </div>
         </div>
