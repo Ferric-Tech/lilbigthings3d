@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormTemplateConfig } from '../../models/form-template.interface';
 import {
   FormLineType,
@@ -63,6 +63,8 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     );
   }
 
+  constructor(private readonly cd: ChangeDetectorRef) {}
+
   ngOnInit(): void {
     this.setFormDefaultValues();
   }
@@ -83,6 +85,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     const file: File = event.target.files[0];
     this.importedFiles[field] = file;
     form.controls[field].setValue(file.name);
+    this.cd.detectChanges();
   }
 
   onSubmit(): void {

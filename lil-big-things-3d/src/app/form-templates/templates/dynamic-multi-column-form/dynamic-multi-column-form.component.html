@@ -78,6 +78,9 @@
             >
               {{ field.label }}
             </div>
+            <div>
+              {{ form.group.value[field.name] }}
+            </div>
             <input
               class="fake-file-selector"
               #designFileInput
