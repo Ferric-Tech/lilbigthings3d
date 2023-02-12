@@ -27,47 +27,42 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   importedImages: { [key: string]: File[] } = {};
   importedImageUrls: { [key: string]: any[] } = {};
 
-  //   get collectiveFormData(): { [key: string]: string }[] {
-  //     const _collectiveFormData: { [key: string]: string }[] = [];
-  //     this.config?.columns.forEach((column) => {
-  //       column.forms.forEach((form) => {
-  //         Object.keys(form.group.value).forEach((key) => {
-  //           _collectiveFormData.push({ [key]: form.group.value[key] });
-  //         });
-  //       });
-  //     });
-  //     return _collectiveFormData;
-  //   }
+  get formFieldsWithDefaultValues(): string[] {
+    const fieldsWithDefualtValues: string[] = [];
 
-  //   get formFieldsWithDefaultValues(): { [key: string]: string }[] {
-  //     return this.collectiveFormData.filter((formField) => {
-  //       let isMatch = false;
-  //       this.formDefaults.forEach((defaultValue) => {
-  //         if (isEqual(formField, defaultValue)) {
-  //           isMatch = true;
-  //         }
-  //       });
-  //       return isMatch;
-  //     });
-  //   }
+    Object.keys(this.forms).forEach((formName) => {
+      Object.keys(this.forms[formName].controls).forEach((control) => {
+        if (this.formDefaults[control]) {
+          if (
+            isEqual(
+              this.forms[formName].get(control)?.value,
+              this.formDefaults[control]
+            )
+          ) {
+            fieldsWithDefualtValues.push(control);
+          }
+        }
+      });
+    });
 
-  //   get isAllFormsValid(): boolean {
-  //     let allFormsValid = true;
-  //     this.config.forEach((column) => {
-  //       column.forEach((form) => {
-  //         if (form.group.invalid) {
-  //           allFormsValid = false;
-  //         }
-  //       });
-  //     });
-  //     return allFormsValid;
-  //   }
+    return fieldsWithDefualtValues;
+  }
+
+  get isAllFormsValid(): boolean {
+    if (!this.config) return false;
+
+    let allFormsValid = true;
+    Object.keys(this.forms).forEach((formName) => {
+      if (this.forms[formName].invalid) {
+        allFormsValid = false;
+      }
+    });
+
+    return allFormsValid;
+  }
 
   get isValidForm(): boolean {
-    // return (
-    //   this.formFieldsWithDefaultValues.length === 0 && this.isAllFormsValid
-    // );
-    return true;
+    return this.isAllFormsValid && !this.formFieldsWithDefaultValues.length;
   }
 
   constructor(private readonly cd: ChangeDetectorRef) {}
@@ -110,7 +105,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     });
   }
 
-  onFieldClick(form: FormGroup, field: string): void {
+  onFieldFocus(form: FormGroup, field: string): void {
     if (form.controls[field].value === this.formDefaults[field]) {
       form.controls[field].setValue('');
     }
@@ -153,36 +148,10 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // TODO:
+    if (this.isValidForm) {
+      Object.keys(this.forms).forEach((formName) => {
+        console.log(this.forms[formName].value);
+      });
+    }
   }
 }
-
-//   ngOnInit(): void {
-//     this.setFormColumn([
-//       { group: this.basicDetailsForm, config: this.basicDetailsFormConfig },
-//       { group: this.filesForm, config: this.filesFormConfig },
-//     ]);
-//     this.setFormColumn([
-//       { group: this.imagesForm, config: this.imagesFormConfig },
-//     ]);
-//   }
-
-//   private setFormColumn(column: AppForm[]): void {
-//     const currentFormColumn: AppForm[] = [];
-//     column.forEach((form) => {
-//       this.setForm(form);
-//       currentFormColumn.push(form);
-//     });
-//     this.addProductFormConfig.push(currentFormColumn);
-//   }
-
-//   private setForm(form: AppForm): void {
-//     form.config.forEach((field: AppField) => {
-//       if (FORM_FIELD_TYPES.includes(field.type)) {
-//         form.group.addControl(
-//           field.name,
-//           new FormControl(field.placeholder || '', field.validators)
-//         );
-//       }
-//     });
-//   }

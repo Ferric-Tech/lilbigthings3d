@@ -47,7 +47,7 @@
             class="title"
             id="{{ field.name }}"
             type="text"
-            (click)="onFieldClick(forms[form.name], field.name)"
+            (focus)="onFieldFocus(forms[form.name], field.name)"
             (blur)="onFieldBlur(forms[form.name], field.name)"
           />
 
@@ -58,7 +58,7 @@
             class="desc-area"
             id="{{ field.name }}"
             type="text"
-            (click)="onFieldClick(forms[form.name], field.name)"
+            (focus)="onFieldFocus(forms[form.name], field.name)"
             (blur)="onFieldBlur(forms[form.name], field.name)"
           ></textarea>
 
