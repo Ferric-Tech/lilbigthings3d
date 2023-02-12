@@ -1,12 +1,21 @@
-import { FormGroup, ValidatorFn } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
 import { FormLineType } from './form-templates.enum';
 
-export interface FormTemplateConfig {
-  group: FormGroup;
-  config: FormFieldConfig[];
+export interface AppMultiColumnForm {
+  columns: AppFormColumn[];
 }
 
-export interface FormFieldConfig {
+export interface AppFormColumn {
+  name: string;
+  forms: AppForm[];
+}
+
+export interface AppForm {
+  name: string;
+  fields: AppField[];
+}
+
+export interface AppField {
   name: string;
   type: FormLineType;
   label?: string;

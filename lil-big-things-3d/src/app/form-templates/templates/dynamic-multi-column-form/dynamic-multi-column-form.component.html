@@ -7,14 +7,14 @@
 </div>
 
 <div class="page-container">
-  <div class="screen-container">
-    <div *ngFor="let column of config" class="column-container">
+  <div *ngIf="config" class="screen-container">
+    <div *ngFor="let column of config.columns" class="column-container">
       <form
-        *ngFor="let form of column"
+        *ngFor="let form of column.forms"
         class="form-container"
-        [formGroup]="form.group"
+        [formGroup]="forms[form.name]"
       >
-        <div *ngFor="let field of form.config">
+        <div *ngFor="let field of form.fields">
           <!-- Form Labels -->
           <div
             *ngIf="
@@ -47,6 +47,8 @@
             class="title"
             id="{{ field.name }}"
             type="text"
+            (click)="onFieldClick(forms[form.name], field.name)"
+            (blur)="onFieldBlur(forms[form.name], field.name)"
           />
 
           <!-- Text area -->
@@ -56,6 +58,8 @@
             class="desc-area"
             id="{{ field.name }}"
             type="text"
+            (click)="onFieldClick(forms[form.name], field.name)"
+            (blur)="onFieldBlur(forms[form.name], field.name)"
           ></textarea>
 
           <!-- File Uploaders -->
@@ -79,13 +83,13 @@
               {{ field.label }}
             </div>
             <div class="uploader-file-name">
-              {{ form.group.value[field.name] }}
+              {{ forms[form.name].value[field.name] }}
             </div>
             <input
               class="fake-file-selector"
               #designFileInput
               type="file"
-              (change)="onFileSelection(form.group, field.name, $event)"
+              (change)="onFileSelection(forms[form.name], field.name, $event)"
             />
             <button
               class="file-selector-button"
@@ -107,7 +111,9 @@
                 #designFileInput
                 type="file"
                 multiple
-                (change)="onImagesSelection(form.group, field.name, $event)"
+                (change)="
+                  onImagesSelection(forms[form.name], field.name, $event)
+                "
               />
               <button
                 class="file-selector-button"
