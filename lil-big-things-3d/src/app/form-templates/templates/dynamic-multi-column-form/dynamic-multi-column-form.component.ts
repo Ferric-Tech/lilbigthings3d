@@ -21,6 +21,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   formDefaults: { [key: string]: string }[] = [];
   importedFiles: { [key: string]: File } = {};
   importedImages: { [key: string]: File[] } = {};
+  importedImageUrls: { [key: string]: any[] } = {};
 
   get collectiveFormData(): { [key: string]: string }[] {
     const _collectiveFormData: { [key: string]: string }[] = [];
@@ -93,15 +94,23 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     const uploadedFiles: FileList = event.target.files;
     const uploadedImages: File[] = [];
     const uploadedImagesNames: string[] = [];
+    const uploadedImagesUrls: any[] = [];
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       uploadedImages.push(uploadedFiles[i]);
       uploadedImagesNames.push(uploadedFiles[i].name);
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[i]);
+      reader.onload = (_event) => {
+        uploadedImagesUrls.push(reader.result);
+      };
     }
 
     this.importedImages[field] = uploadedImages;
+    this.importedImageUrls[field] = uploadedImagesUrls;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
+    console.log(this.importedImageUrls);
   }
 
   onSubmit(): void {
