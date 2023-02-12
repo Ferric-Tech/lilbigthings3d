@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
+import { FormResults } from 'src/app/form-templates/models/form-template.interface';
 
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ADD_PRODUCT_FORM_CONFIG } from './add-product.constant';
@@ -19,6 +20,7 @@ export interface Product {
 export class AddProductComponent {
   addProductFormConfig = ADD_PRODUCT_FORM_CONFIG;
 
-  constructor(readonly fs: FirestoreManagementService) {}
-
+  onFormResults(formResults: FormResults): void {
+    console.log(formResults);
+  }
 }

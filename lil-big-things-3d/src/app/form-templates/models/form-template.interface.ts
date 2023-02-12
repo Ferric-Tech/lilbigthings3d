@@ -1,6 +1,12 @@
 import { ValidatorFn } from '@angular/forms';
 import { FormLineType } from './form-templates.enum';
 
+export interface FormResults {
+  formValues: { [key: string]: string };
+  formFiles: { [key: string]: File[] };
+  formImages: { [key: string]: File[] };
+}
+
 export interface AppMultiColumnForm {
   columns: AppFormColumn[];
 }

@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import {
-  AppForm,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
   AppMultiColumnForm,
+  FormResults,
 } from '../../models/form-template.interface';
 import {
   FormLineType,
@@ -19,13 +25,14 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class DynanmicMultiColumnFormComponent implements OnInit {
   @Input() config: AppMultiColumnForm | undefined;
+  @Output() formResults = new EventEmitter<FormResults>();
 
-  forms: { [key: string]: FormGroup } = {};
   formFieldType = FormLineType;
+  forms: { [key: string]: FormGroup } = {};
   formDefaults: { [key: string]: string } = {};
-  importedFiles: { [key: string]: File } = {};
+  importedFiles: { [key: string]: File[] } = {};
   importedImages: { [key: string]: File[] } = {};
-  importedImageUrls: { [key: string]: any[] } = {};
+  importedImageUrls: { [key: string]: (string | ArrayBuffer | null)[] } = {};
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];
@@ -119,7 +126,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   onFileSelection(form: FormGroup, field: string, event: any): void {
     const file: File = event.target.files[0];
-    this.importedFiles[field] = file;
+    this.importedFiles[field] = [file];
     form.controls[field].setValue(file.name);
     this.cd.detectChanges();
   }
@@ -128,14 +135,14 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     const uploadedFiles: FileList = event.target.files;
     const uploadedImages: File[] = [];
     const uploadedImagesNames: string[] = [];
-    const uploadedImagesUrls: any[] = [];
+    const uploadedImagesUrls: (string | ArrayBuffer | null)[] = [];
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       uploadedImages.push(uploadedFiles[i]);
       uploadedImagesNames.push(uploadedFiles[i].name);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[i]);
-      reader.onload = (_event) => {
+      reader.onload = () => {
         uploadedImagesUrls.push(reader.result);
       };
     }
@@ -144,13 +151,21 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     this.importedImageUrls[field] = uploadedImagesUrls;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
-    console.log(this.importedImageUrls);
   }
 
   onSubmit(): void {
     if (this.isValidForm) {
+      const collectiveFormValues: { [key: string]: string } = {};
       Object.keys(this.forms).forEach((formName) => {
-        console.log(this.forms[formName].value);
+        Object.keys(this.forms[formName].controls).forEach((control) => {
+          collectiveFormValues[control] =
+            this.forms[formName].get(control)?.value;
+        });
+      });
+      this.formResults.emit({
+        formValues: collectiveFormValues,
+        formFiles: this.importedFiles,
+        formImages: this.importedImages,
       });
     }
   }
