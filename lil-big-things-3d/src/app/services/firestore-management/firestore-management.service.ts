@@ -3,7 +3,6 @@ import { initializeApp } from '@angular/fire/app';
 import {
   addDoc,
   collection,
-  DocumentReference,
   getDocs,
   getFirestore,
 } from '@angular/fire/firestore';
@@ -28,37 +27,41 @@ export class FirestoreManagementService {
       title: product.title,
       description: product.description,
     };
-    const productRef = await addDoc(
+    const productDocRef = await addDoc(
       collection(this.db, 'products'),
       productDoc
     );
-    this.addProductFilesToStorage(product, productRef);
+    // Add design files to storage
+    const storage = getStorage();
+    let folderRef = 'products/' + productDocRef.id + '/files/';
+
+    Object.keys(product.files).forEach((fileDescription) => {
+      const fileName = productDocRef.id + '-' + fileDescription;
+      const storageRef = ref(storage, folderRef + fileName);
+      const file: File = product.files[fileDescription] as File;
+      this.addFilesToStrorage(storageRef, file);
+    });
+
+    // Add images files to storage
+    Object.keys(product.images).forEach((imageCatergory) => {
+      folderRef =
+        'products/' + productDocRef.id + '/images/' + imageCatergory + '/';
+      product.images[imageCatergory]?.forEach((file, index) => {
+        const fileName =
+          productDocRef.id + '-' + imageCatergory + '-image-' + (index + 1);
+        const storageRef = ref(storage, folderRef + fileName);
+        this.addFilesToStrorage(storageRef, file);
+      });
+    });
   }
 
-  private addProductFilesToStorage(
-    product: Product,
-    productRef: DocumentReference
+  addFilesToStrorage(
+    storageRef: StorageReference,
+    file: File
   ): Promise<StorageReference> {
     return new Promise((resolve) => {
-      const storage = getStorage();
-      let folderRef = 'products/' + productRef.id + '/files/';
-      Object.keys(product.files).forEach((key) => {
-        const storageRef = ref(storage, folderRef + product.files[key]?.name);
-        uploadBytes(storageRef, product.files[key] as File).then(() => {
-          resolve(storageRef);
-        });
-      });
-      console.log(product.images);
-      Object.keys(product.images).forEach((imageCat) => {
-        folderRef = 'products/' + productRef.id + '/images/' + imageCat + '/';
-        console.log(folderRef);
-        product.images[imageCat]?.forEach((file) => {
-          const storageRef = ref(storage, folderRef + file.name);
-          console.log(storageRef);
-          uploadBytes(storageRef, file).then(() => {
-            resolve(storageRef);
-          });
-        });
+      uploadBytes(storageRef, file).then(() => {
+        resolve(storageRef);
       });
     });
   }

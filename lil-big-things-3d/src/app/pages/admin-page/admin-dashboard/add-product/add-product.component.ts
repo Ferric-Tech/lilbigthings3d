@@ -72,9 +72,6 @@ export class AddProductComponent {
     if (formResults.formImages['images-product']) {
       newProduct.images.product = formResults.formImages['images-product'];
     }
-
-    console.log(formResults);
-    console.log(newProduct);
     this.fs.addProduct(newProduct);
   }
 }
