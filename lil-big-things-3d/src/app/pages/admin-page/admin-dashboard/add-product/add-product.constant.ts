@@ -59,7 +59,7 @@ export const ADD_PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               label: 'Optimised',
             },
             {
-              name: 'design-file-custom',
+              name: 'print-file-custom',
               type: FormLineType.UploaderSingleFilePlain,
               label: 'Custom',
             },

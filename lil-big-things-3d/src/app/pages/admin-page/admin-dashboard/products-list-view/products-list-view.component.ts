@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FirestoreManagementService,
-  ProductDoc,
-} from 'src/app/services/firestore-management/firestore-management.service';
+import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
+import { Product } from '../add-product/add-product.component';
 
 @Component({
   selector: 'app-products-list-view',
@@ -10,7 +8,7 @@ import {
   styleUrls: ['./products-list-view.component.scss'],
 })
 export class ProductsListViewComponent implements OnInit {
-  products: ProductDoc[] = [];
+  products: Product[] = [];
   displayedColumns: string[] = ['title', 'description'];
 
   constructor(private readonly fs: FirestoreManagementService) {}
@@ -19,7 +17,7 @@ export class ProductsListViewComponent implements OnInit {
     this.products = await this.fs.getAllProducts();
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onProductClicked(product: ProductDoc): void {
+  onProductClicked(product: Product): void {
     console.log(product);
   }
 }

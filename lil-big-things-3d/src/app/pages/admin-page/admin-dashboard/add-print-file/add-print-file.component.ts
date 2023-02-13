@@ -17,7 +17,7 @@ export class AddPrintFileComponent {
   }
 
   onSubmit() {
-    if (!this.printFile) return;
-    this.fs.addPrintFile(this.printFile);
+    // if (!this.printFile) return;
+    // this.fs.addPrintFile(this.printFile);
   }
 }
