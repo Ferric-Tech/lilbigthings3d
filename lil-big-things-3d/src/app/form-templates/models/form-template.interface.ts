@@ -26,6 +26,7 @@ export interface AppField {
   type: FormLineType;
   label?: string;
   placeholder?: string;
+  value?: string;
   validators?: ValidatorFn[];
   multiColumnFieldSetting?: MultiColumnFieldSetting;
 }

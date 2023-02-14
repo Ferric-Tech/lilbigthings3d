@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
-import { Product } from '../add-product/add-product.component';
-
-export interface ProductForDisplay extends Product {
-  id: string;
-}
+import { ProductForDisplay } from '../models/product.interface';
 
 @Component({
   selector: 'app-view-products',

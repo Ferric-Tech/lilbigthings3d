@@ -12,8 +12,10 @@ import {
   StorageReference,
   uploadBytes,
 } from '@angular/fire/storage';
-import { Product } from 'src/app/pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
-import { ProductForDisplay } from 'src/app/pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
+import {
+  Product,
+  ProductForDisplay,
+} from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

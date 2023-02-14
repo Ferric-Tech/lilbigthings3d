@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { AppMultiColumnForm } from 'src/app/form-templates/models/form-template.interface';
 import { FormLineType } from 'src/app/form-templates/models/form-templates.enum';
 
-export const ADD_PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
+export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
   columns: [
     {
       name: 'Basic details and files column',
