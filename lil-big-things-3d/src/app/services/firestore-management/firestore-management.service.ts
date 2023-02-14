@@ -12,7 +12,8 @@ import {
   StorageReference,
   uploadBytes,
 } from '@angular/fire/storage';
-import { Product } from 'src/app/pages/admin-page/admin-dashboard/add-product/add-product.component';
+import { Product } from 'src/app/pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
+import { ProductForDisplay } from 'src/app/pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -66,13 +67,17 @@ export class FirestoreManagementService {
     });
   }
 
-  async getAllProducts(): Promise<Product[]> {
+  async getAllProducts(): Promise<ProductForDisplay[]> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
-      const listOfProducts: Product[] = [];
+      const listOfProducts: ProductForDisplay[] = [];
       const querySnapshot = await getDocs(collection(this.db, 'products'));
       querySnapshot.forEach((doc) => {
-        listOfProducts.push(doc.data() as Product);
+        const productToBeAdded = {
+          id: doc.id,
+          ...doc.data(),
+        } as ProductForDisplay;
+        listOfProducts.push(productToBeAdded);
       });
       resolve(listOfProducts);
     });

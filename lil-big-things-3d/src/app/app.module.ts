@@ -32,11 +32,11 @@ import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 import { RegisterComponent } from './pages/home-page/register/register.component';
-import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
-import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
-import { ProductsListViewComponent } from './pages/admin-page/admin-dashboard/products-list-view/products-list-view.component';
+import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
 import { MatTableModule } from '@angular/material/table';
 import { DynanmicMultiColumnFormComponent } from './form-templates/templates/dynamic-multi-column-form/dynamic-multi-column-form.component';
+import { AddProductComponent } from './pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
+import { EditProductComponent } from './pages/admin-page/admin-dashboard/product-management/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -47,10 +47,10 @@ import { DynanmicMultiColumnFormComponent } from './form-templates/templates/dyn
     AdminDashboardComponent,
     ErrorModalComponent,
     RegisterComponent,
-    AddPrintFileComponent,
     AddProductComponent,
-    ProductsListViewComponent,
+    ViewProductsComponent,
     DynanmicMultiColumnFormComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddPrintFileComponent } from './pages/admin-page/admin-dashboard/add-print-file/add-print-file.component';
-import { AddProductComponent } from './pages/admin-page/admin-dashboard/add-product/add-product.component';
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
-import { ProductsListViewComponent } from './pages/admin-page/admin-dashboard/products-list-view/products-list-view.component';
+import { AddProductComponent } from './pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
+import { EditProductComponent } from './pages/admin-page/admin-dashboard/product-management/edit-product/edit-product.component';
+import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { HomePageComponent } from './pages/home-page/home.page';
@@ -41,14 +41,14 @@ const routes: Routes = [
             component: AddProductComponent,
           },
           {
-            path: 'products-list',
-            title: 'View all products',
-            component: ProductsListViewComponent,
+            path: 'edit-product/:productId',
+            title: 'Edit product',
+            component: EditProductComponent,
           },
           {
-            path: 'add-print',
-            title: 'Add new print',
-            component: AddPrintFileComponent,
+            path: 'products-list',
+            title: 'View all products',
+            component: ViewProductsComponent,
           },
         ],
       },

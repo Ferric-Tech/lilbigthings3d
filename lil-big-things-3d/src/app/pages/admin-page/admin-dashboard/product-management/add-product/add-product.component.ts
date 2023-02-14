@@ -6,6 +6,7 @@ import { FirestoreManagementService } from 'src/app/services/firestore-managemen
 import { ADD_PRODUCT_FORM_CONFIG } from './add-product.constant';
 
 export interface Product {
+  [key: string]: unknown;
   title: string;
   description: string;
   dimentions: { x: string; y: string; z: string };
