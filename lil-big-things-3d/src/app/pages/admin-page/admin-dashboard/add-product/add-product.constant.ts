@@ -8,7 +8,7 @@ export const ADD_PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
       name: 'Basic details and files column',
       forms: [
         {
-          name: 'Product Basic details',
+          name: 'Product basic details',
           fields: [
             {
               name: 'title',
@@ -21,6 +21,14 @@ export const ADD_PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               type: FormLineType.InputLong,
               placeholder: 'Please provide a description',
               validators: [Validators.required],
+            },
+            {
+              name: 'dimentions',
+              type: FormLineType.InputMultiColumn,
+              placeholder: '',
+              label: 'Dimentions',
+              validators: [Validators.required],
+              multiColumnFieldSetting: { labels: ['X', 'Y', 'Z'] },
             },
           ],
         },

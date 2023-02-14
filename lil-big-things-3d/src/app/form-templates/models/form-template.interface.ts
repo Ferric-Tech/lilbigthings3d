@@ -27,4 +27,9 @@ export interface AppField {
   label?: string;
   placeholder?: string;
   validators?: ValidatorFn[];
+  multiColumnFieldSetting?: MultiColumnFieldSetting;
+}
+
+export interface MultiColumnFieldSetting {
+  labels: string[];
 }

@@ -8,6 +8,7 @@ import { ADD_PRODUCT_FORM_CONFIG } from './add-product.constant';
 export interface Product {
   title: string;
   description: string;
+  dimentions: { x: string; y: string; z: string };
   files: ProductFiles;
   images: ProductImages;
 }
@@ -41,6 +42,11 @@ export class AddProductComponent {
     const newProduct: Product = {
       title: formResults.formValues['title'],
       description: formResults.formValues['description'],
+      dimentions: {
+        x: formResults.formValues['x'],
+        y: formResults.formValues['y'],
+        z: formResults.formValues['z'],
+      },
       files: {
         designFile: formResults.formFiles['design-file'][0] as File,
       },
@@ -72,6 +78,7 @@ export class AddProductComponent {
     if (formResults.formImages['images-product']) {
       newProduct.images.product = formResults.formImages['images-product'];
     }
-    this.fs.addProduct(newProduct);
+    console.log(newProduct);
+    // this.fs.addProduct(newProduct);
   }
 }

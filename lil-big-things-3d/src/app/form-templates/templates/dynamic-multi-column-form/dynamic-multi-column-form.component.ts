@@ -87,10 +87,23 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
         const formGroup = new FormGroup({});
         form.fields.forEach((field) => {
           if (FORM_FIELD_TYPES.includes(field.type)) {
-            formGroup.addControl(
-              field.name,
-              new FormControl(field.placeholder || '', field.validators)
-            );
+            switch (field.type) {
+              case FormLineType.InputMultiColumn: {
+                field.multiColumnFieldSetting?.labels.forEach((label) => {
+                  formGroup.addControl(
+                    label.toLowerCase(),
+                    new FormControl(field.placeholder || '', field.validators)
+                  );
+                });
+                break;
+              }
+              default: {
+                formGroup.addControl(
+                  field.name,
+                  new FormControl(field.placeholder || '', field.validators)
+                );
+              }
+            }
           }
         });
         this.forms[form.name] = formGroup;
