@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { Product } from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductManagementService {
+  constructor(private readonly fs: FirestoreManagementService) {}
+
   processFormResults(formResults: FormResults): void {
     const newProduct: Product = {
       title: formResults.formValues['title'],

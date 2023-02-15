@@ -92,7 +92,10 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
                 field.multiColumnFieldSetting?.labels.forEach((label) => {
                   formGroup.addControl(
                     label.toLowerCase(),
-                    new FormControl(field.placeholder || '', field.validators)
+                    new FormControl(
+                      field.value || field.placeholder || '',
+                      field.validators
+                    )
                   );
                 });
                 break;
@@ -100,7 +103,10 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
               default: {
                 formGroup.addControl(
                   field.name,
-                  new FormControl(field.placeholder || '', field.validators)
+                  new FormControl(
+                    field.value || field.placeholder || '',
+                    field.validators
+                  )
                 );
               }
             }

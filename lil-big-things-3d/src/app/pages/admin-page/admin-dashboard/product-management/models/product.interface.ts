@@ -7,7 +7,7 @@ export interface Product {
   title: string;
   description: string;
   dimentions: { x: string; y: string; z: string };
-  files: ProductFiles;
+  files: ProductFiles | ProductFilesMetaData;
   images: ProductImages;
 }
 
@@ -18,6 +18,15 @@ export interface ProductFiles {
   printFileStandard?: File;
   printFileOptimised?: File;
   printFileCustom?: File;
+}
+
+export interface ProductFilesMetaData {
+  [key: string]: string | undefined;
+  designFile: string;
+  printFileFast?: string;
+  printFileStandard?: string;
+  printFileOptimised?: string;
+  printFileCustom?: string;
 }
 
 export interface ProductImages {

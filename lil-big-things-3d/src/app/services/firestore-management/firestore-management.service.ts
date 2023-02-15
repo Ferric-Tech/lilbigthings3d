@@ -3,17 +3,21 @@ import { initializeApp } from '@angular/fire/app';
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
 } from '@angular/fire/firestore';
 import {
   getStorage,
+  listAll,
   ref,
   StorageReference,
   uploadBytes,
 } from '@angular/fire/storage';
 import {
   Product,
+  ProductFilesMetaData,
   ProductForDisplay,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { environment } from 'src/environments/environment';
@@ -82,6 +86,52 @@ export class FirestoreManagementService {
         listOfProducts.push(productToBeAdded);
       });
       resolve(listOfProducts);
+    });
+  }
+
+  async getProductByID(productID: string): Promise<Product> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const docRef = doc(this.db, 'products', productID);
+      const docSnap = await getDoc(docRef);
+      const product: Product = docSnap.data() as Product;
+      resolve(product);
+    });
+  }
+
+  async getProductFileDataByID(
+    productID: string,
+    product: Product
+  ): Promise<Product> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const storage = getStorage();
+
+      // Get files metadata
+      product.files = {} as ProductFilesMetaData;
+      const path = 'products/' + productID + '/files';
+      const folderRef = ref(storage, path);
+
+      await listAll(folderRef).then((response) => {
+        response.items.forEach((itemRef) => {
+          if (itemRef.name.includes('designFile')) {
+            product.files.designFile = itemRef.name;
+          }
+          if (itemRef.name.includes('printFileFast')) {
+            product.files.printFileFast = itemRef.name;
+          }
+          if (itemRef.name.includes('printFileStandard')) {
+            product.files.printFileStandard = itemRef.name;
+          }
+          if (itemRef.name.includes('printFileOptimised')) {
+            product.files.printFileOptimised = itemRef.name;
+          }
+          if (itemRef.name.includes('printFileCustom')) {
+            product.files.printFileCustom = itemRef.name;
+          }
+        });
+      });
+      resolve(product);
     });
   }
 }
