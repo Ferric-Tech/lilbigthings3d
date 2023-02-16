@@ -8,7 +8,7 @@ export interface Product {
   description: string;
   dimentions: { x: string; y: string; z: string };
   files: ProductFiles | ProductFilesMetaData;
-  images: ProductImages;
+  images: ProductImages | ProductImagesMetaData;
 }
 
 export interface ProductFiles {
@@ -33,4 +33,9 @@ export interface ProductImages {
   [key: string]: File[] | undefined;
   design?: File[];
   product?: File[];
+}
+export interface ProductImagesMetaData {
+  [key: string]: string[] | undefined;
+  design?: string[];
+  product?: string[];
 }

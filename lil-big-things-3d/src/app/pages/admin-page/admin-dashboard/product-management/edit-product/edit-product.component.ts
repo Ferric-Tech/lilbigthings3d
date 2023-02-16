@@ -58,6 +58,14 @@ export class EditProductComponent implements OnInit {
 
     this.editProductFormConfig.columns[0].forms[1].fields[1].value = productData
       .files.designFile as string;
+    this.editProductFormConfig.columns[0].forms[1].fields[3].value = productData
+      .files.printFileFast as string;
+    this.editProductFormConfig.columns[0].forms[1].fields[4].value = productData
+      .files.printFileFast as string;
+    this.editProductFormConfig.columns[0].forms[1].fields[5].value = productData
+      .files.printFileOptimised as string;
+    this.editProductFormConfig.columns[0].forms[1].fields[6].value = productData
+      .files.printFileCustom as string;
     this.isLoaded = true;
   }
 

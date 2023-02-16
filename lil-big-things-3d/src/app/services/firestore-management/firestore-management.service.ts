@@ -57,7 +57,7 @@ export class FirestoreManagementService {
         const fileName =
           productDocRef.id + '-' + imageCatergory + '-image-' + (index + 1);
         const storageRef = ref(storage, folderRef + fileName);
-        this.addFilesToStrorage(storageRef, file);
+        this.addFilesToStrorage(storageRef, file as File);
       });
     });
   }
@@ -109,8 +109,8 @@ export class FirestoreManagementService {
 
       // Get files metadata
       product.files = {} as ProductFilesMetaData;
-      const path = 'products/' + productID + '/files';
-      const folderRef = ref(storage, path);
+      let path = 'products/' + productID + '/files';
+      let folderRef = ref(storage, path);
 
       await listAll(folderRef).then((response) => {
         response.items.forEach((itemRef) => {
@@ -131,6 +131,32 @@ export class FirestoreManagementService {
           }
         });
       });
+
+      product.images = { design: [], product: [] };
+      // Get product images metadata
+      path = 'products/' + productID + '/images/product';
+      folderRef = ref(storage, path);
+      let filesFound: string[] = [];
+
+      await listAll(folderRef).then((response) => {
+        response.items.forEach((itemRef) => {
+          filesFound.push(itemRef.name);
+        });
+      });
+      product.images.product = filesFound;
+
+      // Get design images metadata
+      path = 'products/' + productID + '/images/design';
+      folderRef = ref(storage, path);
+      filesFound = [];
+
+      await listAll(folderRef).then((response) => {
+        response.items.forEach((itemRef) => {
+          filesFound.push(itemRef.name);
+        });
+      });
+      product.images.design = filesFound;
+
       resolve(product);
     });
   }
