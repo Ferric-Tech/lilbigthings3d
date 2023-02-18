@@ -34,7 +34,6 @@ export class EditProductComponent implements OnInit {
   }
 
   private async getProductDetail() {
-    console.log('true');
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
     let productData = await this.fs.getProductByID(this.productID);
@@ -72,7 +71,6 @@ export class EditProductComponent implements OnInit {
       .files.printFileCustom as string;
 
     this.isLoaded = true;
-    console.log('false');
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 

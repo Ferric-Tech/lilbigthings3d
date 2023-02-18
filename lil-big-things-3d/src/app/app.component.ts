@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import {
@@ -18,15 +18,18 @@ export class AppComponent implements OnInit {
   app = initializeApp(environment.firebase);
   isLoading = false;
 
-  constructor(private readonly eventService: EventManagementService) {}
+  constructor(
+    private readonly eventService: EventManagementService,
+    private readonly cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.eventService.subscribe(
       EventChannel.Product,
       EventTopic.Loading,
       (data) => {
-        console.log('Here');
         this.isLoading = data.payload as boolean;
+        this.cd.detectChanges();
       }
     );
   }
