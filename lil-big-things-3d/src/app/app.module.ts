@@ -37,6 +37,9 @@ import { MatTableModule } from '@angular/material/table';
 import { DynanmicMultiColumnFormComponent } from './form-templates/templates/dynamic-multi-column-form/dynamic-multi-column-form.component';
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
 import { EditProductComponent } from './pages/admin-page/admin-dashboard/product-management/edit-product/edit-product.component';
+import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.component';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { EditProductComponent } from './pages/admin-page/admin-dashboard/product
     ViewProductsComponent,
     DynanmicMultiColumnFormComponent,
     EditProductComponent,
+    LoadingScreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,7 @@ import { EditProductComponent } from './pages/admin-page/admin-dashboard/product
     MatCardModule,
     MatButtonModule,
     MatTableModule,
+    MatProgressSpinnerModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

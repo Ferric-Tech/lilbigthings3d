@@ -1,6 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import {
+  EventChannel,
+  EventTopic,
+} from 'src/app/services/event-management/event-management.enum';
+import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { PRODUCT_FORM_CONFIG } from '../models/product.constant';
 import { ProductManagementService } from '../services/product-management.service';
@@ -11,15 +16,12 @@ import { ProductManagementService } from '../services/product-management.service
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  // get the product detail from the DB
-  // Call the const ADD_PRODUCT_FORM_CONFIG and then add the values received from the DB
-  // Amened the multicolumn for to handle this.
-
-  editProductFormConfig = PRODUCT_FORM_CONFIG;
   productID = '';
+  editProductFormConfig = PRODUCT_FORM_CONFIG;
   isLoaded = false;
 
   constructor(
+    private readonly eventService: EventManagementService,
     private readonly productService: ProductManagementService,
     private readonly route: ActivatedRoute,
     private readonly fs: FirestoreManagementService,
@@ -32,6 +34,8 @@ export class EditProductComponent implements OnInit {
   }
 
   private async getProductDetail() {
+    console.log('true');
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
     let productData = await this.fs.getProductByID(this.productID);
 
@@ -66,7 +70,10 @@ export class EditProductComponent implements OnInit {
       .files.printFileOptimised as string;
     this.editProductFormConfig.columns[0].forms[1].fields[6].value = productData
       .files.printFileCustom as string;
+
     this.isLoaded = true;
+    console.log('false');
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   processFormResults(formResults: FormResults): void {
