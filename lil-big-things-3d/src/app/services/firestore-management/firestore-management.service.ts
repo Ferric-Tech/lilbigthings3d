@@ -30,10 +30,7 @@ export class FirestoreManagementService {
   db = getFirestore(this.app);
 
   async addProduct(product: Product): Promise<void> {
-    const productDoc = {
-      title: product.title,
-      description: product.description,
-    };
+    const productDoc = product.data;
     const productDocRef = await addDoc(
       collection(this.db, 'products'),
       productDoc

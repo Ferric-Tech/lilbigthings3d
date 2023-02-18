@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
-import { Product } from '../models/product.interface';
+import {
+  Product,
+  ProductFiles,
+  ProductFilesMetaData,
+} from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +15,31 @@ export class ProductManagementService {
 
   processFormResults(formResults: FormResults): void {
     const newProduct: Product = {
-      title: formResults.formValues['title'],
-      description: formResults.formValues['description'],
-      dimentions: {
-        x: formResults.formValues['x'],
-        y: formResults.formValues['y'],
-        z: formResults.formValues['z'],
+      data: {
+        title: formResults.formValues['title'],
+        description: formResults.formValues['description'],
+        dimentions: {
+          x: formResults.formValues['x'],
+          y: formResults.formValues['y'],
+          z: formResults.formValues['z'],
+        },
+
+        files: {
+          designFile: formResults.formValues['design-file'],
+          printFileFast: formResults.formValues['print-file-fast'],
+          printFileStandard: formResults.formValues['print-file-standard'],
+          printFileOptimised: formResults.formValues['print-file-optimised'],
+          printFileCustom: formResults.formValues['print-file-custom'],
+        },
       },
-      files: {
-        designFile: formResults.formFiles['design-file'][0] as File,
-      },
+      files: {} as ProductFiles | ProductFilesMetaData,
       images: {},
     };
+    if (formResults.formFiles['design-file']) {
+      newProduct.files['designFile'] = formResults.formFiles[
+        'design-file'
+      ][0] as File;
+    }
     if (formResults.formFiles['print-file-fast']) {
       newProduct.files['printFileFast'] = formResults.formFiles[
         'print-file-fast'
@@ -49,7 +66,6 @@ export class ProductManagementService {
     if (formResults.formImages['images-product']) {
       newProduct.images.product = formResults.formImages['images-product'];
     }
-    console.log(newProduct);
-    // this.fs.addProduct(newProduct);
+    this.fs.addProduct(newProduct);
   }
 }

@@ -4,9 +4,7 @@ export interface ProductForDisplay extends Product {
 
 export interface Product {
   [key: string]: unknown;
-  title: string;
-  description: string;
-  dimentions: { x: string; y: string; z: string };
+  data: { [key: string]: string | { [key: string]: string } };
   files: ProductFiles | ProductFilesMetaData;
   images: ProductImages | ProductImagesMetaData;
 }
