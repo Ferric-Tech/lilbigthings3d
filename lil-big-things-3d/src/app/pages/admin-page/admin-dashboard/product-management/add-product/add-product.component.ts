@@ -16,6 +16,6 @@ export class AddProductComponent {
   constructor(private readonly productService: ProductManagementService) {}
 
   processFormResults(formResults: FormResults): void {
-    this.productService.processFormResults(formResults);
+    this.productService.processFormResults(formResults, false);
   }
 }

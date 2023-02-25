@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import { FormLineType } from 'src/app/form-templates/models/form-templates.enum';
 import {
   EventChannel,
   EventTopic,
@@ -36,45 +37,52 @@ export class EditProductComponent implements OnInit {
   private async getProductDetail() {
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
-    let productData = await this.fs.getProductByID(this.productID);
+    if (!this.productID) return;
 
-    // Assign standard data
-    Object.keys(productData).forEach((key) => {
+    const productData = await this.fs.getProductByID(this.productID);
+
+    // Unpack productData into unnested object
+    const unpackedData: Record<string, unknown> = {};
+    Object.keys(productData).forEach((key1) => {
+      if (typeof productData[key1] === 'object') {
+        const focusObject = productData[key1] as Record<string, unknown>;
+        Object.keys(focusObject).forEach((key2) => {
+          unpackedData[key2] = focusObject[key2];
+        });
+      } else {
+        unpackedData[key1] = productData[key1];
+      }
+    });
+
+    // Assign data to form
+    Object.keys(unpackedData).forEach((key) => {
       this.editProductFormConfig.columns.forEach((column, colIndex) => {
         column.forms.forEach((form, formIndex) => {
           form.fields.forEach((field, fieldIndex) => {
+            const fieldContent =
+              this.editProductFormConfig.columns[colIndex].forms[formIndex]
+                .fields[fieldIndex];
+            if (fieldContent.type === FormLineType.InputMultiColumn) {
+              fieldContent.multiColumnFieldSetting?.forEach((columnField) => {
+                if (columnField.name === key) {
+                  fieldContent.value = unpackedData[key] as string;
+                }
+              });
+              return;
+            }
             if (field.name === key) {
-              this.editProductFormConfig.columns[colIndex].forms[
-                formIndex
-              ].fields[fieldIndex].value = productData[key] as string;
+              fieldContent.value = unpackedData[key] as string;
             }
           });
         });
       });
     });
 
-    // Get file data
-    productData = await this.fs.getProductFileDataByID(
-      this.productID,
-      productData
-    );
-
-    this.editProductFormConfig.columns[0].forms[1].fields[1].value = productData
-      .files.designFile as string;
-    this.editProductFormConfig.columns[0].forms[1].fields[3].value = productData
-      .files.printFileFast as string;
-    this.editProductFormConfig.columns[0].forms[1].fields[4].value = productData
-      .files.printFileFast as string;
-    this.editProductFormConfig.columns[0].forms[1].fields[5].value = productData
-      .files.printFileOptimised as string;
-    this.editProductFormConfig.columns[0].forms[1].fields[6].value = productData
-      .files.printFileCustom as string;
-
     this.isLoaded = true;
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   processFormResults(formResults: FormResults): void {
-    this.productService.processFormResults(formResults);
+    this.productService.processFormResults(formResults, true, this.productID);
   }
 }

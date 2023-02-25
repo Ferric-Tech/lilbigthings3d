@@ -7,6 +7,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  setDoc,
 } from '@angular/fire/firestore';
 import {
   getStorage,
@@ -29,18 +30,29 @@ export class FirestoreManagementService {
   app = initializeApp(environment.firebase);
   db = getFirestore(this.app);
 
-  async addProduct(product: Product): Promise<void> {
+  async addProduct(
+    product: Product,
+    isEdit: boolean,
+    productID?: string
+  ): Promise<void> {
     const productDoc = product.data;
-    const productDocRef = await addDoc(
-      collection(this.db, 'products'),
-      productDoc
-    );
+
+    if (isEdit && productID) {
+      await setDoc(doc(this.db, 'products', productID), productDoc);
+    } else {
+      const productDocRef = await addDoc(
+        collection(this.db, 'products'),
+        productDoc
+      );
+      productID = productDocRef.id;
+    }
+
     // Add design files to storage
     const storage = getStorage();
-    let folderRef = 'products/' + productDocRef.id + '/files/';
+    let folderRef = 'products/' + productID + '/files/';
 
     Object.keys(product.files).forEach((fileDescription) => {
-      const fileName = productDocRef.id + '-' + fileDescription;
+      const fileName = productID + '-' + fileDescription;
       const storageRef = ref(storage, folderRef + fileName);
       const file: File = product.files[fileDescription] as File;
       this.addFilesToStrorage(storageRef, file);
@@ -48,11 +60,10 @@ export class FirestoreManagementService {
 
     // Add images files to storage
     Object.keys(product.images).forEach((imageCatergory) => {
-      folderRef =
-        'products/' + productDocRef.id + '/images/' + imageCatergory + '/';
+      folderRef = 'products/' + productID + '/images/' + imageCatergory + '/';
       product.images[imageCatergory]?.forEach((file, index) => {
         const fileName =
-          productDocRef.id + '-' + imageCatergory + '-image-' + (index + 1);
+          productID + '-' + imageCatergory + '-image-' + (index + 1);
         const storageRef = ref(storage, folderRef + fileName);
         this.addFilesToStrorage(storageRef, file as File);
       });
@@ -91,12 +102,12 @@ export class FirestoreManagementService {
     return new Promise(async (resolve) => {
       const docRef = doc(this.db, 'products', productID);
       const docSnap = await getDoc(docRef);
-      const product: Product = docSnap.data() as Product;
+      const product = docSnap.data() as Product;
       resolve(product);
     });
   }
 
-  async getProductFileDataByID(
+  async getProductFilesDataByID(
     productID: string,
     product: Product
   ): Promise<Product> {
@@ -104,27 +115,28 @@ export class FirestoreManagementService {
     return new Promise(async (resolve) => {
       const storage = getStorage();
 
+      console.log(product);
       // Get files metadata
-      product.files = {} as ProductFilesMetaData;
+      product.data.filesMetaData = {} as ProductFilesMetaData;
       let path = 'products/' + productID + '/files';
       let folderRef = ref(storage, path);
 
       await listAll(folderRef).then((response) => {
         response.items.forEach((itemRef) => {
           if (itemRef.name.includes('designFile')) {
-            product.files.designFile = itemRef.name;
+            product.data.filesMetaData.designFile = itemRef.name;
           }
           if (itemRef.name.includes('printFileFast')) {
-            product.files.printFileFast = itemRef.name;
+            product.data.filesMetaData.printFileFast = itemRef.name;
           }
           if (itemRef.name.includes('printFileStandard')) {
-            product.files.printFileStandard = itemRef.name;
+            product.data.filesMetaData.printFileStandard = itemRef.name;
           }
           if (itemRef.name.includes('printFileOptimised')) {
-            product.files.printFileOptimised = itemRef.name;
+            product.data.filesMetaData.printFileOptimised = itemRef.name;
           }
           if (itemRef.name.includes('printFileCustom')) {
-            product.files.printFileCustom = itemRef.name;
+            product.data.filesMetaData.printFileCustom = itemRef.name;
           }
         });
       });
@@ -140,7 +152,7 @@ export class FirestoreManagementService {
           filesFound.push(itemRef.name);
         });
       });
-      product.images.product = filesFound;
+      product.data.imagesMetaData.product = filesFound;
 
       // Get design images metadata
       path = 'products/' + productID + '/images/design';
@@ -152,7 +164,7 @@ export class FirestoreManagementService {
           filesFound.push(itemRef.name);
         });
       });
-      product.images.design = filesFound;
+      product.data.imagesMetaData.design = filesFound;
 
       resolve(product);
     });

@@ -89,9 +89,9 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
           if (FORM_FIELD_TYPES.includes(field.type)) {
             switch (field.type) {
               case FormLineType.InputMultiColumn: {
-                field.multiColumnFieldSetting?.labels.forEach((label) => {
+                field.multiColumnFieldSetting?.forEach((column) => {
                   formGroup.addControl(
-                    label.toLowerCase(),
+                    column.name.toLowerCase(),
                     new FormControl(
                       field.value || field.placeholder || '',
                       field.validators

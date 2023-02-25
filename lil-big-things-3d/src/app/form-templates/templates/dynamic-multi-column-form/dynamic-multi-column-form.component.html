@@ -63,12 +63,12 @@
             <div class="multi-column-field-label">{{ field.label }}</div>
             <div
               class="multi-column-field-column"
-              *ngFor="let label of field.multiColumnFieldSetting.labels"
+              *ngFor="let column of field.multiColumnFieldSetting"
             >
-              <p>{{ label }}</p>
+              <p>{{ column.label }}</p>
               <input
-                formControlName="{{ label.toLowerCase() }}"
-                id="{{ label.toLowerCase() }}"
+                formControlName="{{ column.name.toLowerCase() }}"
+                id="{{ column.name.toLowerCase() }}"
                 type="text"
               />
             </div>

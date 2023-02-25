@@ -1,6 +1,11 @@
 import { Validators } from '@angular/forms';
 import { AppMultiColumnForm } from 'src/app/form-templates/models/form-template.interface';
 import { FormLineType } from 'src/app/form-templates/models/form-templates.enum';
+import {
+  ProductFormFields,
+  ProductFormLabels,
+  ProductFormPlaceholders,
+} from './product.enum';
 
 export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
   columns: [
@@ -11,24 +16,36 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           name: 'Product basic details',
           fields: [
             {
-              name: 'title',
+              name: ProductFormFields.Title,
               type: FormLineType.InputTitle,
-              placeholder: 'New Product',
+              placeholder: ProductFormPlaceholders.Title,
               validators: [Validators.required],
             },
             {
-              name: 'description',
+              name: ProductFormFields.Description,
               type: FormLineType.InputLong,
-              placeholder: 'Please provide a description',
+              placeholder: ProductFormPlaceholders.Description,
               validators: [Validators.required],
             },
             {
-              name: 'dimentions',
+              name: ProductFormFields.Dimentions,
               type: FormLineType.InputMultiColumn,
-              placeholder: '',
-              label: 'Dimentions',
+              label: ProductFormLabels.Dimentions,
               validators: [Validators.required],
-              multiColumnFieldSetting: { labels: ['X', 'Y', 'Z'] },
+              multiColumnFieldSetting: [
+                {
+                  name: ProductFormFields.DimentionX,
+                  label: ProductFormLabels.DimentionX,
+                },
+                {
+                  name: ProductFormFields.DimentionY,
+                  label: ProductFormLabels.DimentionY,
+                },
+                {
+                  name: ProductFormFields.DimentionZ,
+                  label: ProductFormLabels.DimentionZ,
+                },
+              ],
             },
           ],
         },
@@ -36,40 +53,40 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           name: 'Product files',
           fields: [
             {
-              name: 'files-label',
+              name: ProductFormFields.FilesLabel,
               type: FormLineType.LabelSub,
-              label: 'Files',
+              label: ProductFormLabels.Files,
             },
             {
-              name: 'design-file',
+              name: ProductFormFields.FileDesign,
               type: FormLineType.UploaderSingleFileUnderlined,
-              label: 'Design file',
+              label: ProductFormLabels.FileDesign,
               validators: [Validators.required],
             },
             {
-              name: 'print-files-label',
+              name: ProductFormFields.FilePrintLabel,
               type: FormLineType.UnderlinedLabel,
-              label: 'Print file',
+              label: ProductFormLabels.FilePrintLabel,
             },
             {
-              name: 'print-file-fast',
+              name: ProductFormFields.FilePrintFast,
               type: FormLineType.UploaderSingleFilePlain,
-              label: 'Fast',
+              label: ProductFormLabels.FilePrintFast,
             },
             {
-              name: 'print-file-standard',
+              name: ProductFormFields.FilePrintStandard,
               type: FormLineType.UploaderSingleFilePlain,
-              label: 'Standard',
+              label: ProductFormLabels.FilePrintStandard,
             },
             {
-              name: 'print-file-optimised',
+              name: ProductFormFields.FilePrintOptimised,
               type: FormLineType.UploaderSingleFilePlain,
-              label: 'Optimised',
+              label: ProductFormLabels.FilePrintOptimised,
             },
             {
-              name: 'print-file-custom',
+              name: ProductFormFields.FilePrintCustom,
               type: FormLineType.UploaderSingleFilePlain,
-              label: 'Custom',
+              label: ProductFormLabels.FilePrintCustom,
             },
           ],
         },
@@ -82,19 +99,19 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           name: 'Product images',
           fields: [
             {
-              name: 'images-label',
+              name: ProductFormFields.ImagesLabel,
               type: FormLineType.LabelSub,
-              label: 'Images',
+              label: ProductFormLabels.Images,
             },
             {
-              name: 'images-design',
+              name: ProductFormFields.ImagesDesign,
               type: FormLineType.ImageUploader,
-              label: 'Design',
+              label: ProductFormLabels.ImagesDeign,
             },
             {
-              name: 'images-product',
+              name: ProductFormFields.ImagesProduct,
               type: FormLineType.ImageUploader,
-              label: 'Product',
+              label: ProductFormLabels.ImagesProduct,
             },
           ],
         },

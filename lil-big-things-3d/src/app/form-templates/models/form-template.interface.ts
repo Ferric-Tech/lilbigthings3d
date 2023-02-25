@@ -28,9 +28,10 @@ export interface AppField {
   placeholder?: string;
   value?: string;
   validators?: ValidatorFn[];
-  multiColumnFieldSetting?: MultiColumnFieldSetting;
+  multiColumnFieldSetting?: MultiColumnFieldSetting[];
 }
 
 export interface MultiColumnFieldSetting {
-  labels: string[];
+  name: string;
+  label: string;
 }
