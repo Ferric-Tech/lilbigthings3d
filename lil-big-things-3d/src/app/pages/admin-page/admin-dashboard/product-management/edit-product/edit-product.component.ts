@@ -9,6 +9,7 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { PRODUCT_FORM_CONFIG } from '../models/product.constant';
+import { Product } from '../models/product.interface';
 import { ProductManagementService } from '../services/product-management.service';
 
 @Component({
@@ -30,18 +31,37 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.getProductDetail();
+    this.setEditProductForm();
+  }
+
+  processFormResults(formResults: FormResults): void {
+    this.productService.processFormResults(formResults, true, this.productID);
+  }
+
+  private async setEditProductForm() {
+    const productData = await this.getProductDetailFromRoute();
+
+    if (!productData) return;
+    const unpackedData = this.unpackedProductData(productData);
+
+    if (!unpackedData) return;
+    this.setEditProductFormWithReceivedData(unpackedData);
+
+    this.isLoaded = true;
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
     this.cd.detectChanges();
   }
 
-  private async getProductDetail() {
+  private async getProductDetailFromRoute(): Promise<Product | undefined> {
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
-    if (!this.productID) return;
 
-    const productData = await this.fs.getProductByID(this.productID);
+    return this.productID
+      ? await this.fs.getProductByID(this.productID)
+      : undefined;
+  }
 
-    // Unpack productData into unnested object
+  private unpackedProductData(productData: Product): Record<string, unknown> {
     const unpackedData: Record<string, unknown> = {};
     Object.keys(productData).forEach((key1) => {
       if (typeof productData[key1] === 'object') {
@@ -53,8 +73,12 @@ export class EditProductComponent implements OnInit {
         unpackedData[key1] = productData[key1];
       }
     });
+    return unpackedData;
+  }
 
-    // Assign data to form
+  setEditProductFormWithReceivedData(
+    unpackedData: Record<string, unknown>
+  ): void {
     Object.keys(unpackedData).forEach((key) => {
       this.editProductFormConfig.columns.forEach((column, colIndex) => {
         column.forms.forEach((form, formIndex) => {
@@ -77,12 +101,5 @@ export class EditProductComponent implements OnInit {
         });
       });
     });
-
-    this.isLoaded = true;
-    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
-  }
-
-  processFormResults(formResults: FormResults): void {
-    this.productService.processFormResults(formResults, true, this.productID);
   }
 }
