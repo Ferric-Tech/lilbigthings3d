@@ -78,8 +78,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   ngOnInit(): void {
     this.buildFormsFromConfigs();
     this.setFormDefaultValues();
-    console.log(this.imageUrls);
-    this.cd.detectChanges();
   }
 
   private buildFormsFromConfigs(): void {

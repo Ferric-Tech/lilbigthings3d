@@ -23,7 +23,7 @@ export enum ProductFormPlaceholders {
 }
 
 export enum ProductFormLabels {
-  Dimentions = 'Dimentions',
+  Dimentions = 'Dimentions (mm)',
   DimentionX = 'X',
   DimentionY = 'Y',
   DimentionZ = 'Z',

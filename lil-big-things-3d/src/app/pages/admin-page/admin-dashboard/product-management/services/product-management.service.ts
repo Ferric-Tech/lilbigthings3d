@@ -16,9 +16,6 @@ export class ProductManagementService {
     productID?: string
   ): void {
     const newProduct = {} as Product;
-    console.log(formResults);
-    console.log(typeof formResults.formValues[ProductFormFields.ImagesDesign]);
-    console.log(typeof formResults.formValues[ProductFormFields.ImagesProduct]);
 
     // Assign form value data
     newProduct.data = {
@@ -26,9 +23,9 @@ export class ProductManagementService {
       title: formResults.formValues[ProductFormFields.Title],
       description: formResults.formValues[ProductFormFields.Description],
       dimentions: {
-        x: parseInt(formResults.formValues[ProductFormFields.DimentionX]),
-        y: parseInt(formResults.formValues[ProductFormFields.DimentionY]),
-        z: parseInt(formResults.formValues[ProductFormFields.DimentionZ]),
+        x: parseFloat(formResults.formValues[ProductFormFields.DimentionX]),
+        y: parseFloat(formResults.formValues[ProductFormFields.DimentionY]),
+        z: parseFloat(formResults.formValues[ProductFormFields.DimentionZ]),
       },
 
       // File meta data
@@ -89,7 +86,6 @@ export class ProductManagementService {
       product:
         formResults.formImages[ProductFormFields.ImagesProduct] || undefined,
     };
-    console.log(newProduct);
 
     // Save to DB
     this.fs.addProduct(newProduct, isEdit, productID);
