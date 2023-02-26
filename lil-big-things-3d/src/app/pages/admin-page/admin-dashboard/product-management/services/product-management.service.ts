@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import {
+  EventChannel,
+  EventTopic,
+} from 'src/app/services/event-management/event-management.enum';
+import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductFormFields } from '../models/product.enum';
 import { Product, ProductImageUrls } from '../models/product.interface';
@@ -8,13 +14,17 @@ import { Product, ProductImageUrls } from '../models/product.interface';
   providedIn: 'root',
 })
 export class ProductManagementService {
-  constructor(private readonly fs: FirestoreManagementService) {}
+  constructor(
+    private readonly fs: FirestoreManagementService,
+    private router: Router,
+    private readonly eventService: EventManagementService
+  ) {}
 
-  processFormResults(
+  async processFormResults(
     formResults: FormResults,
     isEdit: boolean,
     productID?: string
-  ): void {
+  ): Promise<void> {
     const newProduct = {} as Product;
 
     // Assign form value data
@@ -88,7 +98,11 @@ export class ProductManagementService {
     };
 
     // Save to DB
-    this.fs.addProduct(newProduct, isEdit, productID);
+    await this.fs.addProduct(newProduct, isEdit, productID);
+
+    //Navigate to all products
+    this.router.navigateByUrl('/admin/dashboard/products-list');
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   async getImagesByID(productID: string): Promise<ProductImageUrls> {

@@ -32,16 +32,17 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.setEditProductForm();
-    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   processFormResults(formResults: FormResults): void {
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.productService.processFormResults(formResults, true, this.productID);
   }
 
   private async setEditProductForm() {
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
+
     if (!this.productID) return;
     const productData = await this.getProductDetailFromRoute();
 
@@ -58,6 +59,7 @@ export class EditProductComponent implements OnInit {
 
     this.isLoaded = true;
     this.cd.detectChanges();
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   private async getProductDetailFromRoute(): Promise<ProductData | undefined> {
