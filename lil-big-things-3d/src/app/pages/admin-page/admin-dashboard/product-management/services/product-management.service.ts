@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormResults } from 'src/app/form-templates/models/form-template.interface';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductFormFields } from '../models/product.enum';
-import { Product } from '../models/product.interface';
+import { Product, ProductImageUrls } from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,9 @@ export class ProductManagementService {
     productID?: string
   ): void {
     const newProduct = {} as Product;
+    console.log(formResults);
+    console.log(typeof formResults.formValues[ProductFormFields.ImagesDesign]);
+    console.log(typeof formResults.formValues[ProductFormFields.ImagesProduct]);
 
     // Assign form value data
     newProduct.data = {
@@ -41,7 +44,14 @@ export class ProductManagementService {
       },
 
       // Images meta data
-      imagesMetaData: { design: [], product: [] },
+      imagesMetaData: {
+        design: formResults.formValues[
+          ProductFormFields.ImagesDesign
+        ] as unknown as string[],
+        product: formResults.formValues[
+          ProductFormFields.ImagesProduct
+        ] as unknown as string[],
+      },
     };
 
     // Assign files
@@ -79,8 +89,13 @@ export class ProductManagementService {
       product:
         formResults.formImages[ProductFormFields.ImagesProduct] || undefined,
     };
+    console.log(newProduct);
 
     // Save to DB
     this.fs.addProduct(newProduct, isEdit, productID);
+  }
+
+  async getImagesByID(productID: string): Promise<ProductImageUrls> {
+    return await this.fs.getProductImagesUrlByID(productID);
   }
 }

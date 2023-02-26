@@ -9,7 +9,7 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { PRODUCT_FORM_CONFIG } from '../models/product.constant';
-import { Product } from '../models/product.interface';
+import { ProductData, ProductImageUrls } from '../models/product.interface';
 import { ProductManagementService } from '../services/product-management.service';
 
 @Component({
@@ -18,9 +18,10 @@ import { ProductManagementService } from '../services/product-management.service
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  productID = '';
+  productID = this.route.snapshot.paramMap.get('productId') || '';
   editProductFormConfig = PRODUCT_FORM_CONFIG;
   isLoaded = false;
+  imageUrls: Record<string, (string | ArrayBuffer | null)[]> = {};
 
   constructor(
     private readonly eventService: EventManagementService,
@@ -31,7 +32,9 @@ export class EditProductComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
     this.setEditProductForm();
+    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
   }
 
   processFormResults(formResults: FormResults): void {
@@ -39,6 +42,7 @@ export class EditProductComponent implements OnInit {
   }
 
   private async setEditProductForm() {
+    if (!this.productID) return;
     const productData = await this.getProductDetailFromRoute();
 
     if (!productData) return;
@@ -47,21 +51,24 @@ export class EditProductComponent implements OnInit {
     if (!unpackedData) return;
     this.setEditProductFormWithReceivedData(unpackedData);
 
+    this.imageUrls = (await this.getImagesForDisplay()) as Record<
+      string,
+      (string | ArrayBuffer | null)[]
+    >;
+
     this.isLoaded = true;
-    this.eventService.publish(EventChannel.Product, EventTopic.Loading, false);
     this.cd.detectChanges();
   }
 
-  private async getProductDetailFromRoute(): Promise<Product | undefined> {
-    this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
-    this.productID = this.route.snapshot.paramMap.get('productId') || '';
-
+  private async getProductDetailFromRoute(): Promise<ProductData | undefined> {
     return this.productID
-      ? await this.fs.getProductByID(this.productID)
+      ? await this.fs.getProductDataByID(this.productID)
       : undefined;
   }
 
-  private unpackedProductData(productData: Product): Record<string, unknown> {
+  private unpackedProductData(
+    productData: ProductData
+  ): Record<string, unknown> {
     const unpackedData: Record<string, unknown> = {};
     Object.keys(productData).forEach((key1) => {
       if (typeof productData[key1] === 'object') {
@@ -76,7 +83,7 @@ export class EditProductComponent implements OnInit {
     return unpackedData;
   }
 
-  setEditProductFormWithReceivedData(
+  private setEditProductFormWithReceivedData(
     unpackedData: Record<string, unknown>
   ): void {
     Object.keys(unpackedData).forEach((key) => {
@@ -101,5 +108,10 @@ export class EditProductComponent implements OnInit {
         });
       });
     });
+  }
+
+  private async getImagesForDisplay(): Promise<ProductImageUrls | undefined> {
+    if (!this.productID) return;
+    return await this.productService.getImagesByID(this.productID);
   }
 }

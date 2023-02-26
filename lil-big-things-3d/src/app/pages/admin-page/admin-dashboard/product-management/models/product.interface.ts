@@ -37,6 +37,12 @@ export interface ProductImages {
   product?: File[];
 }
 
+export interface ProductImageUrls {
+  [key: string]: string[] | undefined;
+  'images-design'?: string[];
+  'images-product'?: string[];
+}
+
 export interface ProductFilesMetaData {
   [key: string]: string | undefined;
   designFile: string;

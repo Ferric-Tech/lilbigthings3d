@@ -147,10 +147,7 @@
               </button>
             </div>
             <div class="image-container">
-              <img
-                *ngFor="let url of importedImageUrls[field.name]"
-                [src]="url"
-              />
+              <img *ngFor="let url of imageUrls[field.name]" [src]="url" />
             </div>
           </div>
         </div>

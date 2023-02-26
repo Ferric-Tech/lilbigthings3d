@@ -10,6 +10,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import {
+  getDownloadURL,
   getStorage,
   listAll,
   ref,
@@ -18,8 +19,10 @@ import {
 } from '@angular/fire/storage';
 import {
   Product,
+  ProductData,
   ProductFilesMetaData,
   ProductForDisplay,
+  ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { environment } from 'src/environments/environment';
 
@@ -97,13 +100,49 @@ export class FirestoreManagementService {
     });
   }
 
-  async getProductByID(productID: string): Promise<Product> {
+  async getProductDataByID(productID: string): Promise<ProductData> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const docRef = doc(this.db, 'products', productID);
       const docSnap = await getDoc(docRef);
-      const product = docSnap.data() as Product;
+      const product = docSnap.data() as ProductData;
       resolve(product);
+    });
+  }
+
+  getProductImagesUrlByID(productID: string): Promise<ProductImageUrls> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const images = {} as ProductImageUrls;
+      const storage = getStorage();
+
+      // Design Images
+      const designImagePath = 'products/' + productID + '/images/design';
+      const designImageFolderRef = ref(storage, designImagePath);
+      const designImageFilesFound: string[] = [];
+      await listAll(designImageFolderRef).then((response) => {
+        response.items.forEach(async (itemRef) => {
+          getDownloadURL(ref(storage, itemRef.fullPath)).then((url) => {
+            designImageFilesFound.push(url);
+          });
+        });
+      });
+      images['images-design'] = designImageFilesFound;
+
+      // Product Images
+      const productImagePath = 'products/' + productID + '/images/product';
+      const productImageFolderRef = ref(storage, productImagePath);
+      const productImageFilesFound: string[] = [];
+      await listAll(productImageFolderRef).then((response) => {
+        response.items.forEach(async (itemRef) => {
+          getDownloadURL(ref(storage, itemRef.fullPath)).then((url) => {
+            productImageFilesFound.push(url);
+          });
+        });
+      });
+      images['images-product'] = productImageFilesFound;
+
+      resolve(images);
     });
   }
 
@@ -115,7 +154,6 @@ export class FirestoreManagementService {
     return new Promise(async (resolve) => {
       const storage = getStorage();
 
-      console.log(product);
       // Get files metadata
       product.data.filesMetaData = {} as ProductFilesMetaData;
       let path = 'products/' + productID + '/files';

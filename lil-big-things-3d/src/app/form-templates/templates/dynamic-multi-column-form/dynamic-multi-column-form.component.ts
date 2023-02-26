@@ -25,14 +25,15 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class DynanmicMultiColumnFormComponent implements OnInit {
   @Input() config: AppMultiColumnForm | undefined;
+  @Input() imageUrls: Record<string, (string | ArrayBuffer | null)[]> = {};
+
   @Output() formResults = new EventEmitter<FormResults>();
 
   formFieldType = FormLineType;
-  forms: { [key: string]: FormGroup } = {};
-  formDefaults: { [key: string]: string } = {};
-  importedFiles: { [key: string]: File[] } = {};
-  importedImages: { [key: string]: File[] } = {};
-  importedImageUrls: { [key: string]: (string | ArrayBuffer | null)[] } = {};
+  forms: Record<string, FormGroup> = {};
+  formDefaults: Record<string, string> = {};
+  importedFiles: Record<string, File[]> = {};
+  importedImages: Record<string, File[]> = {};
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];
@@ -77,6 +78,8 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   ngOnInit(): void {
     this.buildFormsFromConfigs();
     this.setFormDefaultValues();
+    console.log(this.imageUrls);
+    this.cd.detectChanges();
   }
 
   private buildFormsFromConfigs(): void {
@@ -167,7 +170,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
 
     this.importedImages[field] = uploadedImages;
-    this.importedImageUrls[field] = uploadedImagesUrls;
+    this.imageUrls[field] = uploadedImagesUrls;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
   }
