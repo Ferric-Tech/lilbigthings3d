@@ -34,4 +34,8 @@ export interface AppField {
 export interface MultiColumnFieldSetting {
   name: string;
   label: string;
+  placeholder?: string;
+  value?: string;
+  validators?: ValidatorFn[];
+
 }

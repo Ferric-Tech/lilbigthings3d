@@ -31,19 +31,24 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               name: ProductFormFields.Dimentions,
               type: FormLineType.InputMultiColumn,
               label: ProductFormLabels.Dimentions,
-              validators: [Validators.required],
               multiColumnFieldSetting: [
                 {
                   name: ProductFormFields.DimentionX,
                   label: ProductFormLabels.DimentionX,
+                  placeholder: '0',
+                  validators: [Validators.required],
                 },
                 {
                   name: ProductFormFields.DimentionY,
                   label: ProductFormLabels.DimentionY,
+                  placeholder: '0',
+                  validators: [Validators.required],
                 },
                 {
                   name: ProductFormFields.DimentionZ,
                   label: ProductFormLabels.DimentionZ,
+                  placeholder: '0',
+                  validators: [Validators.required],
                 },
               ],
             },
