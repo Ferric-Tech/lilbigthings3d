@@ -1,0 +1,59 @@
+mat-card {
+  display: flex;
+  height: 100%;
+  width: auto;
+
+  .image-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: larger;
+    padding: 5px 0;
+    height: 80%;
+    background-color: hotpink;
+  }
+
+  .detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: larger;
+    background-color: lime;
+    padding: 0 10px;
+
+    .title-container {
+      display: flex;
+      width: calc(100% - 10px);
+      justify-content: start;
+      align-items: center;
+      font-weight: bold;
+      font-size: medium;
+      padding: 5px;
+      background-color: orange;
+    }
+
+    .price-container {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      font-weight: bold;
+      font-size: medium;
+      padding: 5px;
+      background-color: yellow;
+    }
+  }
+
+  .description-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    height: 30%;
+    font-size: smaller;
+    background-color: red;
+  }
+}

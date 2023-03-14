@@ -94,8 +94,8 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
                   formGroup.addControl(
                     column.name.toLowerCase(),
                     new FormControl(
-                      field.value || field.placeholder || '',
-                      field.validators
+                      column.value || column.placeholder || '',
+                      column.validators
                     )
                   );
                 });

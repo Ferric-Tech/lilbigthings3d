@@ -41,6 +41,10 @@ import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.c
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+
+import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
+import { ProductCardComponent } from './pages/home-page/product-card/product-card.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +59,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DynanmicMultiColumnFormComponent,
     EditProductComponent,
     LoadingScreenComponent,
+    FeaturedProductsComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +81,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatCardModule
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

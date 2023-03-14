@@ -98,7 +98,7 @@ export class EditProductComponent implements OnInit {
             if (fieldContent.type === FormLineType.InputMultiColumn) {
               fieldContent.multiColumnFieldSetting?.forEach((columnField) => {
                 if (columnField.name === key) {
-                  fieldContent.value = unpackedData[key] as string;
+                  columnField.value = unpackedData[key] as string;
                 }
               });
               return;

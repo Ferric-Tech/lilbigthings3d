@@ -92,7 +92,7 @@ export class FirestoreManagementService {
       querySnapshot.forEach((doc) => {
         const productToBeAdded = {
           id: doc.id,
-          ...doc.data(),
+          data: doc.data(),
         } as ProductForDisplay;
         listOfProducts.push(productToBeAdded);
       });
