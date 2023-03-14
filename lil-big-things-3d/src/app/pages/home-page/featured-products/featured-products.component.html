@@ -1,10 +1,10 @@
 <div class="main-container">
   <div class="header">This week's featured products</div>
   <div class="card-container">
-    <app-product-card class="card"></app-product-card>
-    <app-product-card class="card"></app-product-card>
-    <app-product-card class="card"></app-product-card>
-    <app-product-card class="card"></app-product-card>
-    <app-product-card class="card"></app-product-card>
+    <app-product-card
+      *ngFor="let product of productsForDisplay"
+      class="card"
+      [product]="product"
+    ></app-product-card>
   </div>
 </div>
