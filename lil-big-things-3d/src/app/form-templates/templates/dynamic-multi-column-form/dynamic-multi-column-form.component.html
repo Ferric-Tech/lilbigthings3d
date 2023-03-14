@@ -146,8 +146,17 @@
                 Upload images
               </button>
             </div>
-            <div class="image-container">
-              <img *ngFor="let url of imageUrls[field.name]" [src]="url" />
+            <div class="image-collection">
+              <div
+                *ngFor="let url of imageUrls[field.name]"
+                class="image-container"
+              >
+                <img [src]="url" />
+                <div class="overlay">
+                  <button>Delete</button>
+                  <button>Make primary</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
