@@ -44,6 +44,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
 import { ProductCardComponent } from './pages/home-page/product-card/product-card.component';
+import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ProductCardComponent } from './pages/home-page/product-card/product-car
     LoadingScreenComponent,
     FeaturedProductsComponent,
     ProductCardComponent,
+    ProductViewComponent,
   ],
   imports: [
     BrowserModule,

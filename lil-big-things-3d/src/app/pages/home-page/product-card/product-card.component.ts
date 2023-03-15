@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
@@ -16,7 +17,9 @@ export class ProductCardComponent {
       }
     | undefined;
 
+  constructor(private readonly router: Router) {}
+
   onProductcardClicked() {
-    console.log(this.product?.id);
+    this.router.navigate(['../product', this.product?.id]);
   }
 }

@@ -7,6 +7,7 @@ import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/produc
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { HomePageComponent } from './pages/home-page/home.page';
+import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
 import { RegisterComponent } from './pages/home-page/register/register.component';
 
 const routes: Routes = [
@@ -20,6 +21,11 @@ const routes: Routes = [
         component: RegisterComponent,
       },
     ],
+  },
+  {
+    path: 'product/:productId',
+    title: 'View product',
+    component: ProductViewComponent,
   },
   {
     path: 'admin',

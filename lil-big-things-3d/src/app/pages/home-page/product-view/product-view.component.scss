@@ -1,0 +1,30 @@
+.title {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 20px 0;
+  justify-content: center;
+}
+
+.primary-image {
+  display: flex;
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  margin: auto;
+}
+
+.price {
+  display: flex;
+  margin: 20px;
+  width: calc(100% - 60px);
+  justify-content: end;
+  font-weight: bold;
+}
+
+.description {
+  margin: 30px;
+  text-align: justify;
+}
