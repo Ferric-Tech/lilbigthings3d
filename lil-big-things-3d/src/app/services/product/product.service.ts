@@ -9,12 +9,14 @@ export class ProductService {
   constructor(private readonly localStorageService: LocalStorageService) {}
 
   addProductToBasket(id: string) {
-    let currentBasket =
-      (this.localStorageService.get(LocalStorageItem.Basket) as string[]) || [];
-    currentBasket.push(id);
-    this.localStorageService.set(
-      LocalStorageItem.Basket,
-      currentBasket as string[]
-    );
+    let currentBasket = this.localStorageService.get(LocalStorageItem.Basket);
+
+    if (!currentBasket) {
+      this.localStorageService.set(LocalStorageItem.Basket, [id]);
+      return;
+    }
+
+    (currentBasket as string[]).push(id);
+    this.localStorageService.set(LocalStorageItem.Basket, currentBasket);
   }
 }

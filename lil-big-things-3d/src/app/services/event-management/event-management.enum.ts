@@ -6,4 +6,5 @@ export enum EventChannel {
 export enum EventTopic {
   None = 'none',
   Loading = 'loading',
+  ProductAddedToBasket = 'product-added-to-basket',
 }

@@ -41,10 +41,11 @@ import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.c
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
 import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
 import { ProductCardComponent } from './pages/home-page/product-card/product-card.component';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
+import { NavbarComponent } from './pages/home-page/components/navbar/navbar.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ProductViewComponent } from './pages/home-page/product-view/product-vie
     FeaturedProductsComponent,
     ProductCardComponent,
     ProductViewComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ import { ProductViewComponent } from './pages/home-page/product-view/product-vie
     MatButtonModule,
     MatTableModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

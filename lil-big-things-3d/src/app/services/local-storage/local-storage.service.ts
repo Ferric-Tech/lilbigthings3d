@@ -17,6 +17,6 @@ export class LocalStorageService {
   set(item: LocalStorageItem, content: any) {
     if (!item || !content) return;
 
-    window.localStorage.setItem(item, content);
+    window.localStorage.setItem(item, JSON.stringify(content));
   }
 }

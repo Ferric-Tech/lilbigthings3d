@@ -1,5 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  EventChannel,
+  EventTopic,
+} from 'src/app/services/event-management/event-management.enum';
+import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { ProductData } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
@@ -18,7 +23,8 @@ export class ProductViewComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly fs: FirestoreManagementService,
     private readonly cd: ChangeDetectorRef,
-    private readonly productService: ProductService
+    private readonly productService: ProductService,
+    private readonly eventService: EventManagementService
   ) {}
 
   async ngOnInit() {
@@ -33,5 +39,10 @@ export class ProductViewComponent implements OnInit {
   onAddToBasketClick() {
     if (!this.productID) return;
     this.productService.addProductToBasket(this.productID);
+
+    this.eventService.publish(
+      EventChannel.Product,
+      EventTopic.ProductAddedToBasket
+    );
   }
 }
