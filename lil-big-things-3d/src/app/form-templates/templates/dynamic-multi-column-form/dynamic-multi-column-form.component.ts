@@ -189,4 +189,10 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
       });
     }
   }
+
+  setPrimaryImage(url: string | ArrayBuffer | null) {
+    this.forms['Product basic details'].controls['primary-image-url'].setValue(
+      url
+    );
+  }
 }

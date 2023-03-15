@@ -12,6 +12,7 @@ export interface Product {
 export interface ProductData {
   [key: string]: unknown;
   title: string;
+  'primary-image-url': string;
   description: string;
   dimentions: {
     x: number;

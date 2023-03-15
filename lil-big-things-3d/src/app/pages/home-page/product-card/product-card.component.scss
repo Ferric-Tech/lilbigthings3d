@@ -2,6 +2,8 @@ mat-card {
   display: flex;
   height: 100%;
   width: auto;
+  min-width: 250px;
+  background-color: white;
 
   .image-container {
     display: flex;
@@ -12,7 +14,11 @@ mat-card {
     font-size: larger;
     padding: 5px 0;
     height: 80%;
-    background-color: hotpink;
+
+    img {
+      max-width: 100%;
+      max-height: auto;
+    }
   }
 
   .detail-container {
@@ -21,7 +27,6 @@ mat-card {
     align-items: center;
     font-weight: bold;
     font-size: larger;
-    background-color: lime;
     padding: 0 10px;
 
     .title-container {
@@ -32,7 +37,6 @@ mat-card {
       font-weight: bold;
       font-size: medium;
       padding: 5px;
-      background-color: orange;
     }
 
     .price-container {
@@ -42,18 +46,17 @@ mat-card {
       font-weight: bold;
       font-size: medium;
       padding: 5px;
-      background-color: yellow;
     }
   }
 
   .description-container {
     display: flex;
-    width: 100%;
+    width: calc(100% - 30px);
     justify-content: center;
     align-items: center;
     text-align: justify;
     height: 30%;
     font-size: smaller;
-    background-color: red;
+    padding: 0 5%;
   }
 }

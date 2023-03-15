@@ -85,6 +85,17 @@
             (blur)="onFieldBlur(forms[form.name], field.name)"
           ></textarea>
 
+          <!-- Main Image -->
+          <div class="main-image-container">
+            <img
+              *ngIf="
+                field.type === formFieldType.MainImage &&
+                forms[form.name].controls[field.name].value
+              "
+              src="{{ forms[form.name].controls[field.name].value }}"
+            />
+          </div>
+
           <!-- File Uploaders -->
           <div
             *ngIf="
@@ -154,7 +165,7 @@
                 <img [src]="url" />
                 <div class="overlay">
                   <button>Delete</button>
-                  <button>Make primary</button>
+                  <button (click)="setPrimaryImage(url)">Make primary</button>
                 </div>
               </div>
             </div>

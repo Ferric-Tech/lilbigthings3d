@@ -12,6 +12,7 @@ export enum FormLineType {
   UploaderMultiFileUnderlined,
   UploaderMultiFilePlain,
   ImageUploader,
+  MainImage,
 }
 
 export const FORM_FIELD_TYPES = [
@@ -24,4 +25,5 @@ export const FORM_FIELD_TYPES = [
   FormLineType.UploaderSingleFilePlain,
   FormLineType.UploaderSingleFileUnderlined,
   FormLineType.ImageUploader,
+  FormLineType.MainImage,
 ];

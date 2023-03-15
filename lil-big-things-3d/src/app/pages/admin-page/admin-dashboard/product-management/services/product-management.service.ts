@@ -31,6 +31,8 @@ export class ProductManagementService {
     newProduct.data = {
       // General info/data
       title: formResults.formValues[ProductFormFields.Title],
+      'primary-image-url':
+        formResults.formValues[ProductFormFields.PriimaryImage],
       description: formResults.formValues[ProductFormFields.Description],
       dimentions: {
         x: parseFloat(formResults.formValues[ProductFormFields.DimentionX]),

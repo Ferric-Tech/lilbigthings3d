@@ -10,7 +10,7 @@ import {
 export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
   columns: [
     {
-      name: 'Basic details and files column',
+      name: 'Basic details and main image column',
       forms: [
         {
           name: 'Product basic details',
@@ -20,6 +20,10 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               type: FormLineType.InputTitle,
               placeholder: ProductFormPlaceholders.Title,
               validators: [Validators.required],
+            },
+            {
+              name: ProductFormFields.PriimaryImage,
+              type: FormLineType.MainImage,
             },
             {
               name: ProductFormFields.Description,
@@ -54,6 +58,11 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
             },
           ],
         },
+      ],
+    },
+    {
+      name: 'Files and images column',
+      forms: [
         {
           name: 'Product files',
           fields: [
@@ -95,11 +104,6 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
             },
           ],
         },
-      ],
-    },
-    {
-      name: 'Images column',
-      forms: [
         {
           name: 'Product images',
           fields: [

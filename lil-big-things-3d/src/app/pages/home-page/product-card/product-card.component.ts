@@ -9,13 +9,14 @@ export class ProductCardComponent {
   @Input() product:
     | {
         id: string;
+        image: string;
         title: string;
         price: number;
         description: string;
       }
     | undefined;
 
-  ngOnInit() {
-    console.log(this.product);
+  onProductcardClicked() {
+    console.log(this.product?.id);
   }
 }
