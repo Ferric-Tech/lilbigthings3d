@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
@@ -14,7 +14,7 @@ export interface BasketItem {
   templateUrl: './basket-view.component.html',
   styleUrls: ['./basket-view.component.scss'],
 })
-export class BasketViewComponent {
+export class BasketViewComponent implements OnInit {
   basketContent: BasketItem[] = [];
 
   constructor(

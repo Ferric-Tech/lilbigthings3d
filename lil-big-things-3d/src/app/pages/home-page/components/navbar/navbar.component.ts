@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   EventChannel,
@@ -13,7 +13,7 @@ import { LocalStorageService } from 'src/app/services/local-storage/local-storag
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   basketCount = 0;
 
   constructor(
@@ -21,7 +21,11 @@ export class NavbarComponent {
     private readonly localStorageService: LocalStorageService,
     private readonly cd: ChangeDetectorRef,
     private readonly router: Router
-  ) {}
+  ) {
+    this.router.events.subscribe(() => {
+      this.setBasketCounter();
+    });
+  }
 
   ngOnInit() {
     this.setBasketCounter();
@@ -47,11 +51,14 @@ export class NavbarComponent {
   }
 
   private setBasketCounter() {
-    let basket: string[] = this.localStorageService.get(
+    const basket: string[] = this.localStorageService.get(
       LocalStorageItem.Basket
     );
 
-    if (!basket) return;
+    if (!basket) {
+      this.basketCount = 0;
+      return;
+    }
 
     this.basketCount = basket.length;
     this.cd.detectChanges();
