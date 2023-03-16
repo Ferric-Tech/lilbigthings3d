@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  signOut,
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from '@angular/fire/auth';
@@ -84,5 +85,15 @@ export class AuthenticationService {
           error.code,
           error.message
         );
+  }
+
+  signOutUser() {
+    signOut(this.auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   }
 }

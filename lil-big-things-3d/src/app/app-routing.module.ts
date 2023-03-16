@@ -7,6 +7,7 @@ import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/produc
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
+import { CheckoutComponent } from './pages/home-page/checkout/checkout.component';
 import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
@@ -37,6 +38,11 @@ const routes: Routes = [
         path: 'basket',
         title: 'View basket',
         component: BasketViewComponent,
+      },
+      {
+        path: 'checkout',
+        title: 'Checkout ',
+        component: CheckoutComponent,
       },
     ],
   },

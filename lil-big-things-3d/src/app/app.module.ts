@@ -48,6 +48,9 @@ import { NavbarComponent } from './pages/home-page/components/navbar/navbar.comp
 import { MatIconModule } from '@angular/material/icon';
 import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
 import { BasketItemComponent } from './pages/home-page/basket-view/components/basket-item/basket-item.component';
+import { CheckoutComponent } from './pages/home-page/checkout/checkout.component';
+import { LoginUserComponent } from './pages/home-page/checkout/views/login-user/login-user.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,8 @@ import { BasketItemComponent } from './pages/home-page/basket-view/components/ba
     NavbarComponent,
     BasketViewComponent,
     BasketItemComponent,
+    CheckoutComponent,
+    LoginUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +96,7 @@ import { BasketItemComponent } from './pages/home-page/basket-view/components/ba
     MatProgressSpinnerModule,
     MatCardModule,
     MatIconModule,
+    MatInputModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

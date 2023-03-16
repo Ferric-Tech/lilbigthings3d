@@ -24,6 +24,7 @@ import {
   ProductForDisplay,
   ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
+import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -206,5 +207,13 @@ export class FirestoreManagementService {
 
       resolve(product);
     });
+  }
+
+  async generateOrder(basketContent: BasketItem[]): Promise<string> {
+    const orderDocRef = await addDoc(
+      collection(this.db, 'products'),
+      basketContent
+    );
+    return orderDocRef.id;
   }
 }

@@ -1,8 +1,9 @@
 <div class="title">Your basket</div>
 
 <app-basket-item
-  *ngFor="let item of basketContent"
+  *ngFor="let item of basketContent; let i = index"
   [item]="item"
+  (updatedQty)="onQtyUpdate($event, i)"
 ></app-basket-item>
 
-<button class="checkout-button">Checkout</button>
+<button class="checkout-button" (click)="onCheckoutClick()">Checkout</button>

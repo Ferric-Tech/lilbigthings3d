@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import {
   EventChannel,
   EventTopic,
@@ -15,8 +16,10 @@ import { LocalStorageService } from 'src/app/services/local-storage/local-storag
 })
 export class NavbarComponent implements OnInit {
   basketCount = 0;
+  displayMenu = false;
 
   constructor(
+    private readonly authService: AuthenticationService,
     private readonly eventService: EventManagementService,
     private readonly localStorageService: LocalStorageService,
     private readonly cd: ChangeDetectorRef,
@@ -36,8 +39,16 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  onMenuClick() {
+    this.displayMenu = !this.displayMenu;
+  }
+
   onBasketClick() {
     if (this.basketCount) this.router.navigate(['basket']);
+  }
+
+  onSignOutClick() {
+    this.authService.signOutUser();
   }
 
   private registerSubscriptions() {
