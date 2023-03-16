@@ -36,9 +36,14 @@ export class ProductViewComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  onAddToBasketClick() {
+  async onAddToBasketClick() {
     if (!this.productID) return;
-    this.productService.addProductToBasket(this.productID);
+    await this.productService.addProductToBasket({
+      id: this.productID,
+      title: this.productData?.title || '',
+      imageUrl: this.primaryImageUrl,
+      price: 10,
+    });
 
     this.eventService.publish(
       EventChannel.Product,

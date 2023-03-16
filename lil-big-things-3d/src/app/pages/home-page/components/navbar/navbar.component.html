@@ -1,5 +1,9 @@
 <div class="navbar-container">
   <div class="logo-container" (click)="onLogoClick()">lilbigthings3D</div>
-  <mat-icon class="icon-container">shopping_basket</mat-icon>
-  <button *ngIf="basketCount" class="basket-counter">{{ basketCount }}</button>
+  <mat-icon class="icon-container" (click)="onBasketClick()"
+    >shopping_basket</mat-icon
+  >
+  <button *ngIf="basketCount" class="basket-counter" (click)="onBasketClick()">
+    {{ basketCount }}
+  </button>
 </div>

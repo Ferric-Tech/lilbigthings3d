@@ -32,6 +32,10 @@ export class NavbarComponent {
     this.router.navigate(['']);
   }
 
+  onBasketClick() {
+    if (this.basketCount) this.router.navigate(['basket']);
+  }
+
   private registerSubscriptions() {
     this.eventService.subscribe(
       EventChannel.Product,
@@ -46,9 +50,10 @@ export class NavbarComponent {
     let basket: string[] = this.localStorageService.get(
       LocalStorageItem.Basket
     );
+
+    if (!basket) return;
+
     this.basketCount = basket.length;
-    console.log(basket);
-    console.log(this.basketCount);
     this.cd.detectChanges();
   }
 }

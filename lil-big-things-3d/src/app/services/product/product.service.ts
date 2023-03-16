@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { LocalStorageItem } from '../local-storage/local-storage.enum';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -8,15 +9,19 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 export class ProductService {
   constructor(private readonly localStorageService: LocalStorageService) {}
 
-  addProductToBasket(id: string) {
-    let currentBasket = this.localStorageService.get(LocalStorageItem.Basket);
+  addProductToBasket(product: BasketItem): Promise<void> {
+    return new Promise((resolve) => {
+      let currentBasket = this.localStorageService.get(LocalStorageItem.Basket);
 
-    if (!currentBasket) {
-      this.localStorageService.set(LocalStorageItem.Basket, [id]);
-      return;
-    }
+      if (!currentBasket) {
+        this.localStorageService.set(LocalStorageItem.Basket, [product]);
+        resolve();
+      }
 
-    (currentBasket as string[]).push(id);
-    this.localStorageService.set(LocalStorageItem.Basket, currentBasket);
+      (currentBasket as BasketItem[]).push(product);
+      this.localStorageService.set(LocalStorageItem.Basket, currentBasket);
+
+      resolve();
+    });
   }
 }

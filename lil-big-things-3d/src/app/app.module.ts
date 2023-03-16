@@ -46,6 +46,8 @@ import { ProductCardComponent } from './pages/home-page/product-card/product-car
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
 import { NavbarComponent } from './pages/home-page/components/navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
+import { BasketItemComponent } from './pages/home-page/basket-view/components/basket-item/basket-item.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { MatIconModule } from '@angular/material/icon';
     ProductCardComponent,
     ProductViewComponent,
     NavbarComponent,
+    BasketViewComponent,
+    BasketItemComponent,
   ],
   imports: [
     BrowserModule,

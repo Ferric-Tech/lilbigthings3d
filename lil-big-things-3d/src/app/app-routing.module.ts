@@ -6,6 +6,7 @@ import { EditProductComponent } from './pages/admin-page/admin-dashboard/product
 import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
+import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
 import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
@@ -31,6 +32,11 @@ const routes: Routes = [
         path: 'product/:productId',
         title: 'View product',
         component: ProductViewComponent,
+      },
+      {
+        path: 'basket',
+        title: 'View basket',
+        component: BasketViewComponent,
       },
     ],
   },
