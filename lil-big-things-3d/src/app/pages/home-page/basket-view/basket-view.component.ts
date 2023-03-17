@@ -1,5 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CheckoutService } from 'src/app/services/checkout/checkout.service';
+import { Router } from '@angular/router';
+import {
+  EventChannel,
+  EventTopic,
+} from 'src/app/services/event-management/event-management.enum';
+import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
@@ -22,7 +27,8 @@ export class BasketViewComponent implements OnInit {
   constructor(
     private readonly localStorageService: LocalStorageService,
     private readonly cd: ChangeDetectorRef,
-    private readonly checkoutService: CheckoutService
+    private readonly eventService: EventManagementService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -31,7 +37,12 @@ export class BasketViewComponent implements OnInit {
   }
 
   onCheckoutClick() {
-    this.checkoutService.commenseCheckout(this.basketContent);
+    this.eventService.publish(
+      EventChannel.Basket,
+      EventTopic.CheckoutRequested,
+      this.basketContent
+    );
+    this.router.navigate(['./checkout']);
   }
 
   onQtyUpdate(newQty: number, i: number) {

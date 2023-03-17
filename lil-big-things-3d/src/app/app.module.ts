@@ -51,6 +51,7 @@ import { BasketItemComponent } from './pages/home-page/basket-view/components/ba
 import { CheckoutComponent } from './pages/home-page/checkout/checkout.component';
 import { LoginUserComponent } from './pages/home-page/checkout/views/login-user/login-user.component';
 import { MatInputModule } from '@angular/material/input';
+import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-profile-form/user-profile-form.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { MatInputModule } from '@angular/material/input';
     BasketItemComponent,
     CheckoutComponent,
     LoginUserComponent,
+    UserProfileFormComponent,
   ],
   imports: [
     BrowserModule,

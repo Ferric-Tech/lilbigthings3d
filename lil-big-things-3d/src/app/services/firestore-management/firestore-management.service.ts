@@ -26,6 +26,7 @@ import {
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { environment } from 'src/environments/environment';
+import { UserProfile } from '../user/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -215,5 +216,22 @@ export class FirestoreManagementService {
       basketContent
     );
     return orderDocRef.id;
+  }
+
+  async getUserProfile(id: string): Promise<UserProfile> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const docRef = doc(this.db, 'user-profiles', id);
+      const docSnap = await getDoc(docRef);
+      const userProfile = docSnap.data() as UserProfile;
+      resolve(userProfile);
+    });
+  }
+
+  setUserProfile(userProfile: UserProfile): void {
+    if (!userProfile.id) return;
+    const userID = userProfile.id;
+    delete userProfile.id;
+    setDoc(doc(this.db, 'user-profiles', userID), userProfile);
   }
 }

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
 
@@ -10,11 +9,9 @@ import { FirestoreManagementService } from '../firestore-management/firestore-ma
 export class CheckoutService {
   constructor(
     private readonly fs: FirestoreManagementService,
-    private readonly router: Router
   ) {}
 
   commenseCheckout(basketContent: BasketItem[]) {
-    this.router.navigate(['./checkout']);
     // const orderNr = this.fs.generateOrder(basketContent);
   }
 }

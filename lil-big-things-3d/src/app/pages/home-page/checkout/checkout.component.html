@@ -1,3 +1,14 @@
 <div [ngSwitch]="currentViewState">
-  <app-login-user *ngSwitchCase="viewState.UserNotLoggedIn"></app-login-user>
+  <app-login-user
+    *ngSwitchCase="viewState.UserNotLoggedIn"
+    (user)="getUserProfile($event)"
+  ></app-login-user>
+
+  <app-user-profile-form
+    *ngSwitchCase="viewState.IncompleteProfile"
+    [currentProfile]="userProfile"
+    (updatedProfile)="setUserProfile($event)"
+  ></app-user-profile-form>
+
+  <div *ngSwitchCase="viewState.AddressRequired">Address Required</div>
 </div>

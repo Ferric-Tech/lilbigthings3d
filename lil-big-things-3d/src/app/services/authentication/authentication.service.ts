@@ -6,6 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import {
@@ -18,6 +19,7 @@ import {
 export enum SignInContext {
   Admin,
   General,
+  Checkout,
 }
 
 @Injectable({
@@ -35,6 +37,14 @@ export class AuthenticationService {
     return new Promise((resolve) => {
       onAuthStateChanged(this.auth, (user) => {
         resolve(user?.uid || null);
+      });
+    });
+  }
+
+  get user(): Promise<User | null> {
+    return new Promise((resolve) => {
+      onAuthStateChanged(this.auth, (user) => {
+        resolve(user || null);
       });
     });
   }
@@ -57,21 +67,27 @@ export class AuthenticationService {
     context: SignInContext,
     email: string,
     password: string
-  ): void {
-    signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        switch (context) {
-          case SignInContext.Admin:
-            this.router.navigate(['admin/dashboard']);
-            break;
-          case SignInContext.General:
-            this.router.navigate(['']);
-        }
-      })
-      .catch((error: { code: unknown; message: unknown }) => {
-        this.handleError(error, { email });
-      });
+  ): Promise<User> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) => {
+      await signInWithEmailAndPassword(this.auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          switch (context) {
+            case SignInContext.Admin:
+              this.router.navigate(['admin/dashboard']);
+              break;
+            case SignInContext.General:
+              this.router.navigate(['']);
+          }
+          resolve(user);
+        })
+        .catch((error: { code: unknown; message: unknown }) => {
+          this.handleError(error, { email });
+          reject();
+        });
+      reject();
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
