@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { CheckoutService } from 'src/app/services/checkout/checkout.service';
-import {
-  EventChannel,
-  EventTopic,
-} from 'src/app/services/event-management/event-management.enum';
-import { EventManagementService } from 'src/app/services/event-management/event-management.service';
+import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 import { BasketItem } from '../basket-view/basket-view.component';
@@ -26,31 +23,20 @@ export class CheckoutComponent implements OnInit {
   basketContent: BasketItem[] = [];
 
   constructor(
+    private readonly localStorageService: LocalStorageService,
     private readonly authService: AuthenticationService,
     private readonly checkoutService: CheckoutService,
-    private readonly eventService: EventManagementService,
     private readonly userService: UserService
   ) {}
 
   async ngOnInit() {
-    this.subscribeToBasket();
+    this.basketContent = this.localStorageService.get(LocalStorageItem.Basket);
     this.currentUserID = await this.authService.userID;
     if (!this.currentUserID) {
       this.currentViewState = CheckoutViewState.UserNotLoggedIn;
       return;
     }
     this.getUserProfile();
-  }
-
-  subscribeToBasket() {
-    this.eventService.subscribe(
-      EventChannel.Basket,
-      EventTopic.CheckoutRequested,
-      (data) => {
-        this.basketContent = data.payload as BasketItem[];
-      },
-      true
-    );
   }
 
   async getUserProfile(user?: User) {
@@ -111,7 +97,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onAddressSeleced(address: UserAddress) {
-    this.checkoutService.commenseCheckout(
+    this.checkoutService.generatePayFastParameters(
       this.basketContent,
       this.userProfile as UserProfile,
       address

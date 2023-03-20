@@ -13,7 +13,7 @@ export interface BasketItem {
   title: string;
   imageUrl: string;
   price: number;
-  qty?: number;
+  qty: number;
 }
 
 @Component({
@@ -37,12 +37,7 @@ export class BasketViewComponent implements OnInit {
   }
 
   onCheckoutClick() {
-    this.eventService.publish(
-      EventChannel.Basket,
-      EventTopic.CheckoutRequested,
-      this.basketContent
-    );
-    this.router.navigate(['./checkout']);
+    this.localStorageService.set(LocalStorageItem.Basket, this.basketContent);
   }
 
   onQtyUpdate(newQty: number, i: number) {

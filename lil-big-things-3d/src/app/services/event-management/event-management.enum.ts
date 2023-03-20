@@ -8,5 +8,4 @@ export enum EventTopic {
   None = 'none',
   Loading = 'loading',
   ProductAddedToBasket = 'product-added-to-basket',
-  CheckoutRequested = 'checkout-requested',
 }

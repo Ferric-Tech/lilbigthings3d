@@ -43,6 +43,7 @@ export class ProductViewComponent implements OnInit {
       title: this.productData?.title || '',
       imageUrl: this.primaryImageUrl,
       price: 10,
+      qty: 1,
     });
 
     this.eventService.publish(
