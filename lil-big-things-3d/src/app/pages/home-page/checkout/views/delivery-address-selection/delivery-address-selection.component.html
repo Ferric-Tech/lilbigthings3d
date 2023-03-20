@@ -1,0 +1,44 @@
+<app-delivery-address-form *ngIf="!userAddresses"></app-delivery-address-form>
+<div class="main-container">
+  <div class="title">Select delivery address</div>
+  <div class="sub-title">
+    Please select the required delivery address for this order (or alternative
+    add new address as required)
+  </div>
+  <form
+    *ngIf="userAddresses"
+    class="form-container"
+    [formGroup]="selectedAddressForm"
+  >
+    <mat-radio-group
+      class="radio-group-container"
+      formControlName="selectedAddress"
+    >
+      <mat-radio-button
+        *ngFor="let address of userAddresses; let i = index"
+        class="address-option"
+        value="{{ i }}"
+      >
+        <div>
+          {{ address.number }} {{ address.streetAddress1 }} ({{
+            address.addressType
+          }})
+        </div>
+        <div>{{ address.streetAddress2 }}</div>
+        <div>{{ address.city }}</div>
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <button
+      class="submit-buton"
+      type="button"
+      [disabled]="!selectedAddressForm.valid"
+      (click)="onSubmit()"
+    >
+      Proceed to payment
+    </button>
+    <button class="submit-buton" type="button" (click)="onAddNewAddressClick()">
+      Add new address
+    </button>
+  </form>
+</div>

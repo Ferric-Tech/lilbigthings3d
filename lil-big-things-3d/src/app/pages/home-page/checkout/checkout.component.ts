@@ -7,7 +7,7 @@ import {
   EventTopic,
 } from 'src/app/services/event-management/event-management.enum';
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
-import { UserProfile } from 'src/app/services/user/user.interface';
+import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 import { BasketItem } from '../basket-view/basket-view.component';
 import { CheckoutViewState } from './models/checkout.enum';
@@ -34,7 +34,6 @@ export class CheckoutComponent implements OnInit {
 
   async ngOnInit() {
     this.subscribeToBasket();
-    // this.checkoutService.commenseCheckout(this.basketContent);
     this.currentUserID = await this.authService.userID;
     if (!this.currentUserID) {
       this.currentViewState = CheckoutViewState.UserNotLoggedIn;
@@ -109,5 +108,13 @@ export class CheckoutComponent implements OnInit {
       }
     });
     return isComplete;
+  }
+
+  onAddressSeleced(address: UserAddress) {
+    this.checkoutService.commenseCheckout(
+      this.basketContent,
+      this.userProfile as UserProfile,
+      address
+    );
   }
 }

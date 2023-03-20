@@ -232,6 +232,6 @@ export class FirestoreManagementService {
     if (!userProfile.id) return;
     const userID = userProfile.id;
     delete userProfile.id;
-    setDoc(doc(this.db, 'user-profiles', userID), userProfile);
+    setDoc(doc(this.db, 'user-profiles', userID), userProfile, { merge: true });
   }
 }

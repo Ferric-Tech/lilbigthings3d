@@ -10,5 +10,9 @@
     (updatedProfile)="setUserProfile($event)"
   ></app-user-profile-form>
 
-  <div *ngSwitchCase="viewState.AddressRequired">Address Required</div>
+  <app-delivery-address-selection
+    *ngSwitchCase="viewState.AddressRequired"
+    [userProfile]="userProfile"
+    (addressSelected)="onAddressSeleced($event)"
+  ></app-delivery-address-selection>
 </div>

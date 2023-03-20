@@ -2,16 +2,20 @@
 import { Injectable } from '@angular/core';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
+import { UserAddress, UserProfile } from '../user/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CheckoutService {
-  constructor(
-    private readonly fs: FirestoreManagementService,
-  ) {}
+  constructor(private readonly fs: FirestoreManagementService) {}
 
-  commenseCheckout(basketContent: BasketItem[]) {
+  commenseCheckout(
+    basketContent: BasketItem[],
+    userProfile: UserProfile,
+    deliveryAddress: UserAddress
+  ) {
+      
     // const orderNr = this.fs.generateOrder(basketContent);
   }
 }

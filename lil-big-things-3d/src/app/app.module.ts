@@ -52,6 +52,9 @@ import { CheckoutComponent } from './pages/home-page/checkout/checkout.component
 import { LoginUserComponent } from './pages/home-page/checkout/views/login-user/login-user.component';
 import { MatInputModule } from '@angular/material/input';
 import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-profile-form/user-profile-form.component';
+import { DeliveryAddressSelectionComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-selection.component';
+import { DeliveryAddressFormComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-form/delivery-address-form.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -76,6 +79,8 @@ import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-
     CheckoutComponent,
     LoginUserComponent,
     UserProfileFormComponent,
+    DeliveryAddressSelectionComponent,
+    DeliveryAddressFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +104,7 @@ import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatRadioModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
