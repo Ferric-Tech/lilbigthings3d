@@ -55,6 +55,7 @@ import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-
 import { DeliveryAddressSelectionComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-selection.component';
 import { DeliveryAddressFormComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-form/delivery-address-form.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { OrderConfirmationComponent } from './pages/home-page/checkout/views/order-confirmation/order-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { MatRadioModule } from '@angular/material/radio';
     UserProfileFormComponent,
     DeliveryAddressSelectionComponent,
     DeliveryAddressFormComponent,
+    OrderConfirmationComponent,
   ],
   imports: [
     BrowserModule,

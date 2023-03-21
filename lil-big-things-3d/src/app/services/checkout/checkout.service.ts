@@ -42,6 +42,13 @@ export interface PayFastFormParms {
   email_confirmation: string;
   confirmation_address: string;
   payment_method: string;
+  signature: string;
+}
+
+export interface PayFastParms {
+  form: PayFastFormParms;
+  orderNr: string;
+  orderTotal: number;
 }
 
 @Injectable({
@@ -54,7 +61,7 @@ export class CheckoutService {
     basketContent: BasketItem[],
     userProfile: UserProfile,
     deliveryAddress: UserAddress
-  ) {
+  ): Promise<PayFastParms> {
     const orderNr = await this.generateOrder(
       basketContent,
       userProfile,
@@ -67,8 +74,15 @@ export class CheckoutService {
       orderTotal
     );
     const passPhrase = 'SaltAndPepperPig';
-    const signature = this.generateSignature(paymentPayload, passPhrase);
-    console.log(signature);
+    paymentPayload.signature = this.generateSignature(
+      paymentPayload,
+      passPhrase
+    );
+    return {
+      form: paymentPayload,
+      orderNr: orderNr,
+      orderTotal: orderTotal,
+    };
   }
 
   private async generateOrder(
@@ -90,7 +104,12 @@ export class CheckoutService {
   private getOrderTotal(basketContent: BasketItem[]): number {
     let total = 0;
     for (const item of basketContent) {
+      console.log(total);
+      console.log(item.price);
+      console.log(item.qty);
+
       total = total + item.price * item.qty;
+      console.log(total);
     }
     return total;
   }
@@ -99,7 +118,7 @@ export class CheckoutService {
     orderNr: string,
     userProfile: UserProfile,
     orderTotal: number
-  ) {
+  ): PayFastFormParms {
     const sandboxPostPaymentUrl = 'https://sandbox.payfast.co.za/eng/process';
     const sandboxTransactionNotificationURL =
       'https://sandbox.payfast.co.za/eng/query/validate';
@@ -111,12 +130,12 @@ export class CheckoutService {
       merchant_id: '10028928', // Test account
       //   merchant_key: '2cgbcr4cuy37f',
       merchant_key: 'epkxlr70xksdr', // Test account
-      return_url: './checkout-success',
-      cancel_url: './checkout-cancel',
-      notify_url: './checkout-notify',
+      //   return_url: './checkout-success',
+      //   cancel_url: './checkout-cancel',
+      //   notify_url: './checkout-notify',
       name_first: userProfile.firstName,
       name_last: userProfile.lastName,
-      email_address: userProfile.email,
+      //   email_address: userProfile.email,
       cell_number: userProfile.cellNumber,
       //   m_payment_id: '', Optional
       amount: orderTotal.toString(),
@@ -127,7 +146,7 @@ export class CheckoutService {
       email_confirmation: '1',
       confirmation_address: userProfile.email,
       payment_method: 'cc',
-    };
+    } as PayFastFormParms;
   }
 
   generateSignature = (

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { CheckoutService } from 'src/app/services/checkout/checkout.service';
+import {
+  CheckoutService,
+  PayFastParms,
+} from 'src/app/services/checkout/checkout.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
@@ -21,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   user: User | undefined;
   userProfile: UserProfile | null | undefined;
   basketContent: BasketItem[] = [];
+  payFastParms: PayFastParms | undefined;
 
   constructor(
     private readonly localStorageService: LocalStorageService,
@@ -96,11 +100,12 @@ export class CheckoutComponent implements OnInit {
     return isComplete;
   }
 
-  onAddressSeleced(address: UserAddress) {
-    this.checkoutService.generatePayFastParameters(
+  async onAddressSeleced(address: UserAddress) {
+    this.payFastParms = await this.checkoutService.generatePayFastParameters(
       this.basketContent,
       this.userProfile as UserProfile,
       address
     );
+    this.currentViewState = this.viewState.OrderConfirmation;
   }
 }
