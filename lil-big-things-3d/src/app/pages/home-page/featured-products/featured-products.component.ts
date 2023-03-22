@@ -59,13 +59,13 @@ export class FeaturedProductsComponent implements OnInit {
   private async setFeaturedProducts(): Promise<void> {
     const products: ProductForDisplay[] = await this.fs.getAllProducts();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < products.length; i++) {
       this.productsForDisplay.push({
-        id: products[0].id,
-        title: products[0].data.title,
-        image: products[0].data['primary-image-url'],
+        id: products[i].id,
+        title: products[i].data.title,
+        image: products[i].data['primary-image-url'],
         price: 10,
-        description: products[0].data.description.slice(0, 128),
+        description: products[i].data.description.slice(0, 128),
       });
     }
   }
