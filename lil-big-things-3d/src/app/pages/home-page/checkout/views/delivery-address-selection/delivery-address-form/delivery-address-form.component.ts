@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserAddress } from 'src/app/services/user/user.interface';
@@ -15,8 +15,10 @@ export enum AddressType {
   templateUrl: './delivery-address-form.component.html',
   styleUrls: ['./delivery-address-form.component.scss'],
 })
-export class DeliveryAddressFormComponent {
+export class DeliveryAddressFormComponent implements OnInit {
+  @Input() currentAddress: UserAddress | undefined;
   @Output() addressSubmitted: EventEmitter<UserAddress> = new EventEmitter();
+  @Output() addressUpdated: EventEmitter<UserAddress> = new EventEmitter();
 
   addressType = AddressType;
 
@@ -35,14 +37,48 @@ export class DeliveryAddressFormComponent {
     private readonly authService: AuthenticationService
   ) {}
 
+  ngOnInit() {
+    if (!this.currentAddress) {
+      return;
+    }
+
+    this.deliveryAddressForm.controls['addressType'].setValue(
+      this.currentAddress.addressType
+    );
+    this.deliveryAddressForm.controls['number'].setValue(
+      this.currentAddress.number
+    );
+    this.deliveryAddressForm.controls['streetAddress1'].setValue(
+      this.currentAddress.streetAddress1
+    );
+    this.deliveryAddressForm.controls['streetAddress2'].setValue(
+      this.currentAddress.streetAddress2
+    );
+    this.deliveryAddressForm.controls['city'].setValue(
+      this.currentAddress.city
+    );
+    this.deliveryAddressForm.controls['postalCode'].setValue(
+      this.currentAddress.postalCode
+    );
+    this.deliveryAddressForm.controls['description'].setValue(
+      this.currentAddress.description
+    );
+  }
+
   async onSubmit() {
     const userID = await this.authService.userID;
 
     if (!userID || this.deliveryAddressForm.invalid) return;
-    await this.userService.addUserDeliveryAddress(
-      userID,
-      this.deliveryAddressForm.value as UserAddress
-    );
-    this.addressSubmitted.emit(this.deliveryAddressForm.value as UserAddress);
+
+    if (!this.currentAddress) {
+      await this.userService.addUserDeliveryAddress(
+        userID,
+        this.deliveryAddressForm.value as UserAddress
+      );
+      this.addressSubmitted.emit(this.deliveryAddressForm.value as UserAddress);
+      return;
+    }
+
+    this.addressUpdated.emit(this.deliveryAddressForm.value as UserAddress);
   }
 }

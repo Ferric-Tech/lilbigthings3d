@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-delivery-address-selection',
@@ -17,6 +19,14 @@ export class DeliveryAddressSelectionComponent implements OnInit {
 
   userAddresses: UserAddress[] | undefined;
   addNewAddress = false;
+  showOptions = false;
+  addressIndexInFocus = 0;
+  currentAddress: UserAddress | undefined;
+
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthenticationService
+  ) {}
 
   async ngOnInit() {
     this.getUserAddresses();
@@ -24,6 +34,34 @@ export class DeliveryAddressSelectionComponent implements OnInit {
 
   onAddNewAddressClick() {
     this.addNewAddress = true;
+  }
+
+  onAddressOptionsClicked(index: number) {
+    this.addressIndexInFocus = index;
+    this.showOptions = true;
+  }
+
+  onAddressEditClicked() {
+    if (!this.userAddresses) {
+      return;
+    }
+    this.currentAddress = this.userAddresses[this.addressIndexInFocus];
+
+    this.showOptions = false;
+    this.addNewAddress = true;
+  }
+
+  async onAddressDeleteClicked() {
+    this.userAddresses?.splice(this.addressIndexInFocus, 1);
+    const userID = await this.authService.userID;
+    if (userID && this.userAddresses !== undefined) {
+      this.userService.updateUserDeliveryAddresses(userID, this.userAddresses);
+    }
+    this.showOptions = false;
+  }
+
+  closeOptionDialog() {
+    this.showOptions = false;
   }
 
   onSubmit() {
@@ -41,6 +79,19 @@ export class DeliveryAddressSelectionComponent implements OnInit {
     await this.getUserAddresses();
     this.userAddresses?.push(newAddress);
     this.addNewAddress = false;
+  }
+
+  async onAddressUpdated(newAddress: UserAddress) {
+    await this.getUserAddresses();
+    const userID = await this.authService.userID;
+    if (!this.userAddresses || !userID) {
+      return;
+    }
+
+    this.userAddresses[this.addressIndexInFocus] = newAddress;
+    this.addNewAddress = false;
+
+    this.userService.updateUserDeliveryAddresses(userID, this.userAddresses);
   }
 
   private getUserAddresses() {

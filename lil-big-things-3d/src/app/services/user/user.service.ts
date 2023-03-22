@@ -37,4 +37,15 @@ export class UserService {
     userProfile.id = id;
     this.setUserProfile(userProfile);
   }
+
+  async updateUserDeliveryAddresses(
+    id: string,
+    addresses: UserAddress[]
+  ): Promise<void> {
+    const userProfile = await this.fs.getUserProfile(id);
+    if (!userProfile) return;
+    userProfile.deliveryAddresses = addresses;
+    userProfile.id = id;
+    this.setUserProfile(userProfile);
+  }
 }

@@ -104,12 +104,7 @@ export class CheckoutService {
   private getOrderTotal(basketContent: BasketItem[]): number {
     let total = 0;
     for (const item of basketContent) {
-      console.log(total);
-      console.log(item.price);
-      console.log(item.qty);
-
       total = total + item.price * item.qty;
-      console.log(total);
     }
     return total;
   }

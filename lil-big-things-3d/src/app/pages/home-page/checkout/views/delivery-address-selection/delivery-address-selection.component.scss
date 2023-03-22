@@ -41,11 +41,25 @@
       margin-bottom: 20px;
       flex-direction: column;
 
-      .address-option {
+      .address-option-container {
         border: 1px solid grey;
         margin: 10px;
         border-radius: 5px;
         padding: 10px;
+        display: flex;
+        flex-direction: row;
+
+        .detail-label {
+          font-weight: bold;
+          padding: 10px 0;
+        }
+
+        .address-options-icon {
+          display: flex;
+          height: auto;
+          margin-left: auto;
+          align-items: end;
+        }
       }
     }
   }

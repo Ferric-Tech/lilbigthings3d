@@ -24,7 +24,7 @@ import {
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -58,6 +58,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { OrderConfirmationComponent } from './pages/home-page/checkout/views/order-confirmation/order-confirmation.component';
 import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/components/delete-basket-item-dialog/delete-basket-item-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AddressOptionDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/address-option-dialog/address-option-dialog.component';
+import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +88,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     DeliveryAddressFormComponent,
     OrderConfirmationComponent,
     DeleteBasketItemDialogComponent,
+    AddressOptionDialogComponent,
+    DeleteAddressDialogComponent,
   ],
   imports: [
     BrowserModule,
