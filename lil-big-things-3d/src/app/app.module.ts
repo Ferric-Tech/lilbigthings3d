@@ -60,6 +60,7 @@ import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/c
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AddressOptionDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/address-option-dialog/address-option-dialog.component';
 import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,7 @@ import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/d
     MatInputModule,
     MatRadioModule,
     MatCheckboxModule,
-    // FormsModule,
+    DragDropModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

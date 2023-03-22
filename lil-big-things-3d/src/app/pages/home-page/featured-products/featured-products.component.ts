@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductForDisplay } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
 
@@ -7,7 +7,7 @@ import { ProductForDisplay } from '../../admin-page/admin-dashboard/product-mana
   templateUrl: './featured-products.component.html',
   styleUrls: ['./featured-products.component.scss'],
 })
-export class FeaturedProductsComponent {
+export class FeaturedProductsComponent implements OnInit {
   productsForDisplay: {
     id: string;
     image: string;
@@ -15,17 +15,51 @@ export class FeaturedProductsComponent {
     price: number;
     description: string;
   }[] = [];
+  isMobileView = false;
+  cardInFocusIndex = 0;
+  dragPosition = { x: 0, y: 0 };
 
   constructor(private readonly fs: FirestoreManagementService) {}
 
   async ngOnInit(): Promise<void> {
+    this.determineView();
     await this.setFeaturedProducts();
   }
 
-  private async setFeaturedProducts(): Promise<void> {
-    let products: ProductForDisplay[] = await this.fs.getAllProducts();
+  onDragDrop(event: { distance: { x: number } }) {
+    let toggleCard = false;
+    const distanceDragged = Math.abs(event.distance.x);
+    if (distanceDragged / window.innerWidth > 0.25) {
+      toggleCard = true;
+    }
+    if (!toggleCard) return;
+    this.cardInFocusIndex =
+      event.distance.x > 0
+        ? this.cardInFocusIndex + 1
+        : this.cardInFocusIndex - 1;
 
-    for (var i = 0; i < 5; i++) {
+    this.cardInFocusIndex =
+      this.cardInFocusIndex > 0
+        ? this.cardInFocusIndex
+        : this.productsForDisplay.length - 1;
+
+    this.cardInFocusIndex =
+      this.cardInFocusIndex < this.productsForDisplay.length
+        ? this.cardInFocusIndex
+        : 0;
+
+    console.log(this.cardInFocusIndex);
+    this.dragPosition = { x: 0, y: 0 };
+  }
+
+  private determineView() {
+    this.isMobileView = window.innerWidth < 400;
+  }
+
+  private async setFeaturedProducts(): Promise<void> {
+    const products: ProductForDisplay[] = await this.fs.getAllProducts();
+
+    for (let i = 0; i < 5; i++) {
       this.productsForDisplay.push({
         id: products[0].id,
         title: products[0].data.title,

@@ -1,10 +1,26 @@
-<div class="main-container">
+<div *ngIf="!isMobileView" class="main-container">
   <div class="header">This week's featured products</div>
   <div class="card-container">
     <app-product-card
       *ngFor="let product of productsForDisplay"
       class="card"
       [product]="product"
+    ></app-product-card>
+  </div>
+</div>
+
+<div *ngIf="isMobileView" class="main-container">
+  <div class="header">This week's featured products</div>
+  <div class="sub-header">Swipe to see more</div>
+
+  <div class="card-container">
+    <app-product-card
+      cdkDragLockAxis="x"
+      cdkDrag
+      [cdkDragFreeDragPosition]="dragPosition"
+      (cdkDragEnded)="onDragDrop($event)"
+      class="card"
+      [product]="productsForDisplay[cardInFocusIndex]"
     ></app-product-card>
   </div>
 </div>

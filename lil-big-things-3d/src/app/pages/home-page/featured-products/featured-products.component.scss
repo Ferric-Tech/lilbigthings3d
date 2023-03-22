@@ -6,15 +6,26 @@
   height: fit-content;
   width: auto;
   flex-direction: column;
+  padding: 20px 0;
 
   .header {
     display: flex;
-    font-size: xx-large;
+    font-size: large;
     font-weight: bold;
     width: 100%;
     justify-content: center;
     text-align: center;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
+  }
+
+  .sub-header {
+    display: flex;
+    font-size: smaller;
+    font-weight: bold;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 15px;
   }
 
   .card-container {
