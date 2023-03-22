@@ -6,8 +6,10 @@
   </div>
 
   <div class="qty-container">
-    <span class="minus" (click)="onMinusClick()">-</span>
+    <button [disabled]="qty === 0" class="minus" (click)="onMinusClick()">
+      -
+    </button>
     <input type="text" value="{{ qty }}" />
-    <span class="plus" (click)="onPlusClick()">+</span>
+    <button class="plus" (click)="onPlusClick()">+</button>
   </div>
 </div>

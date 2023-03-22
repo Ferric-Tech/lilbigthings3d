@@ -56,6 +56,7 @@ import { DeliveryAddressSelectionComponent } from './pages/home-page/checkout/vi
 import { DeliveryAddressFormComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-form/delivery-address-form.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { OrderConfirmationComponent } from './pages/home-page/checkout/views/order-confirmation/order-confirmation.component';
+import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/components/delete-basket-item-dialog/delete-basket-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { OrderConfirmationComponent } from './pages/home-page/checkout/views/ord
     DeliveryAddressSelectionComponent,
     DeliveryAddressFormComponent,
     OrderConfirmationComponent,
+    DeleteBasketItemDialogComponent,
   ],
   imports: [
     BrowserModule,

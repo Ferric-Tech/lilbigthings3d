@@ -7,3 +7,9 @@
 ></app-basket-item>
 
 <button class="checkout-button" (click)="onCheckoutClick()">Checkout</button>
+
+<app-delete-basket-item-dialog
+  *ngIf="showDeleteDialog"
+  (closeDialog)="closeDeleteDialog()"
+  (deleteItem)="deleteItem()"
+></app-delete-basket-item-dialog>

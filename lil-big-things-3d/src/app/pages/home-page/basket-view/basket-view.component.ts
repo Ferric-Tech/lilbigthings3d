@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
@@ -19,11 +18,12 @@ export interface BasketItem {
 })
 export class BasketViewComponent implements OnInit {
   basketContent: BasketItem[] = [];
+  showDeleteDialog = false;
+  itemForDeletionIndex = 0;
 
   constructor(
     private readonly localStorageService: LocalStorageService,
     private readonly cd: ChangeDetectorRef,
-    private readonly eventService: EventManagementService,
     private readonly router: Router
   ) {}
 
@@ -37,7 +37,21 @@ export class BasketViewComponent implements OnInit {
     this.router.navigate(['checkout']);
   }
 
-  onQtyUpdate(newQty: number, i: number) {
-    this.basketContent[i].qty = newQty;
+  onQtyUpdate(newQty: number, itemIndex: number) {
+    this.basketContent[itemIndex].qty = newQty;
+    this.showDeleteDialog = !newQty;
+    if (this.showDeleteDialog) {
+      this.itemForDeletionIndex = itemIndex;
+    }
+  }
+
+  closeDeleteDialog() {
+    this.showDeleteDialog = false;
+  }
+
+  deleteItem() {
+    this.showDeleteDialog = false;
+    this.basketContent.splice(this.itemForDeletionIndex, 1);
+    this.localStorageService.set(LocalStorageItem.Basket, this.basketContent);
   }
 }

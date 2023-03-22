@@ -30,15 +30,23 @@
     </mat-radio-group>
 
     <button
-      class="submit-buton"
+      class="submit-button"
       type="button"
-      [disabled]="!selectedAddressForm.valid"
-      (click)="onSubmit()"
+      (click)="onAddNewAddressClick()"
     >
-      Proceed to order confirmation
-    </button>
-    <button class="submit-buton" type="button" (click)="onAddNewAddressClick()">
       Add new address
     </button>
   </form>
 </div>
+
+<button
+  class="{{
+    selectedAddressForm.valid
+      ? 'confirmation-button'
+      : 'confirmation-button confirmation-button-disabled '
+  }}"
+  [disabled]="!selectedAddressForm.valid"
+  (click)="onSubmit()"
+>
+  Proceed to order confirmation
+</button>
