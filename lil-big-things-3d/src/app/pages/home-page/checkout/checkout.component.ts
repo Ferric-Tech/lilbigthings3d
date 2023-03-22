@@ -25,6 +25,7 @@ export class CheckoutComponent implements OnInit {
   userProfile: UserProfile | null | undefined;
   basketContent: BasketItem[] = [];
   payFastParms: PayFastParms | undefined;
+  selectedAddress: UserAddress | undefined;
 
   constructor(
     private readonly localStorageService: LocalStorageService,
@@ -62,6 +63,10 @@ export class CheckoutComponent implements OnInit {
     }
 
     if (!this.userProfile) return;
+
+    if (!this.isUserProfileComplete(this.userProfile)) {
+      this.currentViewState = this.viewState.IncompleteProfile;
+    }
 
     this.currentViewState = this.isUserProfileComplete(this.userProfile)
       ? this.viewState.AddressRequired
@@ -101,10 +106,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   async onAddressSeleced(address: UserAddress) {
+    this.selectedAddress = address;
     this.payFastParms = await this.checkoutService.generatePayFastParameters(
       this.basketContent,
       this.userProfile as UserProfile,
-      address
+      this.selectedAddress
     );
     this.currentViewState = this.viewState.OrderConfirmation;
   }

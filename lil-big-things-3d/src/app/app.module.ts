@@ -24,7 +24,7 @@ import {
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -57,6 +57,7 @@ import { DeliveryAddressFormComponent } from './pages/home-page/checkout/views/d
 import { MatRadioModule } from '@angular/material/radio';
 import { OrderConfirmationComponent } from './pages/home-page/checkout/views/order-confirmation/order-confirmation.component';
 import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/components/delete-basket-item-dialog/delete-basket-item-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,8 @@ import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/c
     MatIconModule,
     MatInputModule,
     MatRadioModule,
+    MatCheckboxModule,
+    // FormsModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],

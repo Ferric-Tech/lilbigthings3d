@@ -8,6 +8,11 @@
     Please select the required delivery address for this order (or alternative
     add new address as required)
   </div>
+
+  <button class="add-button" type="button" (click)="onAddNewAddressClick()">
+    Add new address
+  </button>
+
   <form
     *ngIf="userAddresses"
     class="form-container"
@@ -31,14 +36,6 @@
         <div>{{ address.city }}</div>
       </mat-radio-button>
     </mat-radio-group>
-
-    <button
-      class="submit-button"
-      type="button"
-      (click)="onAddNewAddressClick()"
-    >
-      Add new address
-    </button>
   </form>
   <button
     class="{{

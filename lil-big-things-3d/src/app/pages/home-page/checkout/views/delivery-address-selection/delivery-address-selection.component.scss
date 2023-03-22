@@ -48,15 +48,19 @@
         padding: 10px;
       }
     }
-
-    .submit-button {
-      height: 35px;
-      margin: 25px 0 0 0;
-      border-radius: 5px;
-      background-color: aqua;
-      border: none;
-    }
   }
+}
+
+.add-button {
+  height: 35px;
+  border-radius: 5px;
+  background-color: aqua;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 10px auto 10px auto;
 }
 
 .confirmation-button {

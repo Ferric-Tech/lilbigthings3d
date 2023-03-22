@@ -19,5 +19,7 @@
   <app-order-confirmation
     *ngSwitchCase="viewState.OrderConfirmation"
     [payFastParms]="payFastParms"
+    [selectedAddress]="selectedAddress"
+    [basketContent]="basketContent"
   ></app-order-confirmation>
 </div>
