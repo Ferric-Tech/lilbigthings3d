@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { User } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
 
@@ -16,14 +17,14 @@ export class DeliveryAddressSelectionComponent implements OnInit {
   });
 
   userAddresses: UserAddress[] | undefined;
+  addNewAddress = false;
 
   async ngOnInit() {
-    if (!this.userProfile) return;
-    this.userAddresses = this.userProfile.deliveryAddresses;
+    this.getUserAddresses();
   }
 
   onAddNewAddressClick() {
-    //TODO
+    this.addNewAddress = true;
   }
 
   onSubmit() {
@@ -35,5 +36,16 @@ export class DeliveryAddressSelectionComponent implements OnInit {
         )
       ]
     );
+  }
+
+  async onNewAddressSubmitted(newAddress: UserAddress) {
+    await this.getUserAddresses();
+    this.userAddresses?.push(newAddress);
+    this.addNewAddress = false;
+  }
+
+  private getUserAddresses() {
+    if (!this.userProfile) return;
+    this.userAddresses = this.userProfile.deliveryAddresses;
   }
 }

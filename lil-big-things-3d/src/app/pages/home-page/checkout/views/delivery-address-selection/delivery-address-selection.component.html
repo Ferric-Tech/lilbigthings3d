@@ -1,5 +1,8 @@
-<app-delivery-address-form *ngIf="!userAddresses"></app-delivery-address-form>
-<div class="main-container">
+<app-delivery-address-form
+  *ngIf="!userAddresses || addNewAddress"
+  (addressSubmitted)="onNewAddressSubmitted($event)"
+></app-delivery-address-form>
+<div class="main-container" *ngIf="userAddresses && !addNewAddress">
   <div class="title">Select delivery address</div>
   <div class="sub-title">
     Please select the required delivery address for this order (or alternative
@@ -37,16 +40,15 @@
       Add new address
     </button>
   </form>
+  <button
+    class="{{
+      selectedAddressForm.valid
+        ? 'confirmation-button'
+        : 'confirmation-button confirmation-button-disabled '
+    }}"
+    [disabled]="!selectedAddressForm.valid"
+    (click)="onSubmit()"
+  >
+    Proceed to order confirmation
+  </button>
 </div>
-
-<button
-  class="{{
-    selectedAddressForm.valid
-      ? 'confirmation-button'
-      : 'confirmation-button confirmation-button-disabled '
-  }}"
-  [disabled]="!selectedAddressForm.valid"
-  (click)="onSubmit()"
->
-  Proceed to order confirmation
-</button>

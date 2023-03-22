@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserAddress } from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 
 export enum AddressType {
-  House,
-  FlatAppartment,
-  Farm,
+  House = 'House',
+  Flat = 'Flat/Apartment',
+  Farm = 'Farm/Small holding',
 }
 
 @Component({
@@ -16,6 +16,8 @@ export enum AddressType {
   styleUrls: ['./delivery-address-form.component.scss'],
 })
 export class DeliveryAddressFormComponent {
+  @Output() addressSubmitted: EventEmitter<UserAddress> = new EventEmitter();
+
   addressType = AddressType;
 
   deliveryAddressForm = new FormGroup({
@@ -37,9 +39,10 @@ export class DeliveryAddressFormComponent {
     const userID = await this.authService.userID;
 
     if (!userID || this.deliveryAddressForm.invalid) return;
-    this.userService.addUserDeliveryAddress(
+    await this.userService.addUserDeliveryAddress(
       userID,
       this.deliveryAddressForm.value as UserAddress
     );
+    this.addressSubmitted.emit(this.deliveryAddressForm.value as UserAddress);
   }
 }
