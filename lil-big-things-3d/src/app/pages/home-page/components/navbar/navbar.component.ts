@@ -45,16 +45,6 @@ export class NavbarComponent implements OnInit {
 
   onBasketClick() {
     this.router.navigate(['basket']);
-
-    if (this.basketCount) {
-      return;
-    }
-
-    this.eventService.publish(
-      EventChannel.Navbar,
-      EventTopic.ShowEmptyBasketNotice,
-      true
-    );
   }
 
   onSignOutClick() {

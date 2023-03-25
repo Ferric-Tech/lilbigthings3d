@@ -35,8 +35,8 @@ export class BasketViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.registerSubscriptions();
     this.basketContent = this.localStorageService.get(LocalStorageItem.Basket);
+    this.showEmptyBasketDialog = this.basketContent.length === 0;
     this.cd.detectChanges();
   }
 
@@ -70,21 +70,5 @@ export class BasketViewComponent implements OnInit {
       EventTopic.BasketContentAmended
     );
     this.showEmptyBasketDialog = this.basketContent.length === 0;
-  }
-
-  private registerSubscriptions(): void {
-    this.eventService.subscribe(
-      EventChannel.Navbar,
-      EventTopic.ShowEmptyBasketNotice,
-      (data) => {
-        this.showEmptyBasketDialog = data.payload as boolean;
-        this.eventService.publish(
-          EventChannel.Navbar,
-          EventTopic.ShowEmptyBasketNotice,
-          false
-        );
-      },
-      true
-    );
   }
 }
