@@ -7,20 +7,10 @@
     <div class="detail-label">Order number</div>
     <div>{{ payFastParms.orderNr }}</div>
     <div class="detail-label">Order content</div>
-    <div class="basket-item-container" *ngFor="let item of basketContent">
-      <img src="{{ item.imageUrl }}" alt="" />
-      <div class="detail-label-normal">{{ item.title }}</div>
-      <div class="detail-splitter"></div>
-      <div class="sub-detail-label">
-        {{ item.qty }} @ {{ item.price }} = {{ item.qty * item.price }}
-      </div>
-    </div>
-    <div class="basket-item-container">
-      <div class="detail-label">Total order value</div>
-      <div class="detail-splitter"></div>
-      <div class="sub-detail-label">{{ payFastParms.orderTotal }}</div>
-    </div>
-
+    <app-order-content-table
+      [basketContent]="basketContent"
+      [orderTotal]="payFastParms.orderTotal"
+    ></app-order-content-table>
     <div class="detail-label">Delivery details</div>
     <div>
       To {{ payFastParms.form.name_first }} {{ payFastParms.form.name_last }}

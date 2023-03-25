@@ -61,6 +61,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AddressOptionDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/address-option-dialog/address-option-dialog.component';
 import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { OrderContentTableComponent } from './pages/home-page/checkout/views/order-confirmation/order-content-table/order-content-table.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     DeleteBasketItemDialogComponent,
     AddressOptionDialogComponent,
     DeleteAddressDialogComponent,
+    OrderContentTableComponent,
   ],
   imports: [
     BrowserModule,

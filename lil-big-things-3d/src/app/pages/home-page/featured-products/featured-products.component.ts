@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductForDisplay } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
 
@@ -8,6 +8,11 @@ import { ProductForDisplay } from '../../admin-page/admin-dashboard/product-mana
   styleUrls: ['./featured-products.component.scss'],
 })
 export class FeaturedProductsComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.determineView();
+  }
+
   productsForDisplay: {
     id: string;
     image: string;
