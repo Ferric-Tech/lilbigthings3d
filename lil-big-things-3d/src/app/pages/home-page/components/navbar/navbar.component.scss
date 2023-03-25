@@ -1,6 +1,8 @@
 .navbar-container {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  z-index: 2;
 
   .navbar-bar-container {
     display: flex;
