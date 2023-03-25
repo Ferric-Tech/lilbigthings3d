@@ -48,7 +48,7 @@ export class ProductViewComponent implements OnInit {
 
     this.eventService.publish(
       EventChannel.Product,
-      EventTopic.ProductAddedToBasket
+      EventTopic.BasketContentAmended
     );
   }
 }

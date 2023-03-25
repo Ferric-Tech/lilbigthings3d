@@ -62,6 +62,7 @@ import { AddressOptionDialogComponent } from './pages/home-page/checkout/views/d
 import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OrderContentTableComponent } from './pages/home-page/checkout/views/order-confirmation/order-content-table/order-content-table.component';
+import { EmptyBasketNoticeDialogComponent } from './pages/home-page/basket-view/components/empty-basket-notice-dialog/empty-basket-notice-dialog.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { OrderContentTableComponent } from './pages/home-page/checkout/views/ord
     AddressOptionDialogComponent,
     DeleteAddressDialogComponent,
     OrderContentTableComponent,
+    EmptyBasketNoticeDialogComponent,
   ],
   imports: [
     BrowserModule,

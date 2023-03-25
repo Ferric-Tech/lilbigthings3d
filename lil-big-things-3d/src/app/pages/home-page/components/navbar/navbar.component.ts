@@ -44,7 +44,17 @@ export class NavbarComponent implements OnInit {
   }
 
   onBasketClick() {
-    if (this.basketCount) this.router.navigate(['basket']);
+    this.router.navigate(['basket']);
+
+    if (this.basketCount) {
+      return;
+    }
+
+    this.eventService.publish(
+      EventChannel.Navbar,
+      EventTopic.ShowEmptyBasketNotice,
+      true
+    );
   }
 
   onSignOutClick() {
@@ -54,7 +64,7 @@ export class NavbarComponent implements OnInit {
   private registerSubscriptions() {
     this.eventService.subscribe(
       EventChannel.Product,
-      EventTopic.ProductAddedToBasket,
+      EventTopic.BasketContentAmended,
       () => {
         this.setBasketCounter();
       }
