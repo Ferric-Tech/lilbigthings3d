@@ -1,11 +1,11 @@
 export interface UserProfile {
-  //   [key: string]: string;
   id?: string;
   firstName: string;
   lastName: string;
   email: string;
   cellNumber: string;
   deliveryAddresses: UserAddress[];
+  profilePic?: string;
 }
 
 export interface UserAddress {

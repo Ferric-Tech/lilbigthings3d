@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
 import { UserAddress, UserProfile } from './user.interface';
 
@@ -6,13 +7,22 @@ import { UserAddress, UserProfile } from './user.interface';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private readonly fs: FirestoreManagementService) {}
+  constructor(
+    private readonly fs: FirestoreManagementService,
+    private readonly authService: AuthenticationService
+  ) {}
 
-  async getUserProfileByID(id: string) {
+  async getUserProfileByID(id: string): Promise<UserProfile | null> {
     const userProfile = await this.fs.getUserProfile(id);
     if (!userProfile) return null;
     userProfile.id = id;
     return userProfile;
+  }
+
+  async getUserImage(): Promise<string> {
+    const user = await this.authService.user;
+    if (!user?.photoURL) return '';
+    return user.photoURL;
   }
 
   async setUserProfile(userProfile: UserProfile) {

@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import {
@@ -8,6 +13,8 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { UserProfile } from 'src/app/services/user/user.interface';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +22,19 @@ import { LocalStorageService } from 'src/app/services/local-storage/local-storag
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.determineView();
+  }
+
   basketCount = 0;
   displayMenu = false;
+  isMobileView = false;
+  userProfile: UserProfile | undefined;
 
   constructor(
     private readonly authService: AuthenticationService,
+    private readonly userService: UserService,
     private readonly eventService: EventManagementService,
     private readonly localStorageService: LocalStorageService,
     private readonly cd: ChangeDetectorRef,
@@ -31,6 +46,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.determineView();
     this.setBasketCounter();
     this.registerSubscriptions();
   }
@@ -40,6 +56,10 @@ export class NavbarComponent implements OnInit {
   }
 
   onMenuClick() {
+    this.displayMenu = !this.displayMenu;
+  }
+
+  onProfileClick() {
     this.displayMenu = !this.displayMenu;
   }
 
@@ -73,5 +93,21 @@ export class NavbarComponent implements OnInit {
 
     this.basketCount = basket.length;
     this.cd.detectChanges();
+  }
+
+  private determineView() {
+    this.isMobileView = window.innerWidth < 400;
+    if (!this.isMobileView) this.setProfileDetails();
+  }
+
+  private async setProfileDetails(): Promise<void> {
+    const userID = await this.authService.userID;
+    if (!userID) return;
+    this.userProfile =
+      (await this.userService.getUserProfileByID(userID)) || undefined;
+
+    if (!this.userProfile) return;
+    this.userProfile.profilePic = await this.userService.getUserImage();
+    console.log(this.userProfile.profilePic);
   }
 }
