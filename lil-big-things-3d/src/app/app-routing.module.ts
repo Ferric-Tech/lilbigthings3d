@@ -7,11 +7,12 @@ import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/produc
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
-import { CheckoutComponent } from './pages/home-page/checkout/checkout.component';
-import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
+import { CheckoutComponent } from './pages/home-page/checkout-view/checkout.component';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
-import { RegisterComponent } from './pages/home-page/register/register.component';
+import { FeaturedProductsComponent } from './pages/home-page/shared-components/featured-products/featured-products.component';
+import { RegisterComponent } from './pages/home-page/shared-components/user-register/register.component';
+import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'featured-products', pathMatch: 'full' },
@@ -23,6 +24,11 @@ const routes: Routes = [
         path: 'register',
         title: 'Register new user',
         component: RegisterComponent,
+      },
+      {
+        path: 'sign-in',
+        title: 'Sign in',
+        component: SigninUserComponent,
       },
       {
         path: 'featured-products',

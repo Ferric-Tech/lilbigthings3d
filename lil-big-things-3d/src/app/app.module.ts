@@ -31,38 +31,38 @@ import { MatButtonModule } from '@angular/material/button';
 import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './pages/admin-page/admin-dashboard/admin-dashboard.component';
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
-import { RegisterComponent } from './pages/home-page/register/register.component';
 import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products.component';
 import { MatTableModule } from '@angular/material/table';
-import { DynanmicMultiColumnFormComponent } from './form-templates/templates/dynamic-multi-column-form/dynamic-multi-column-form.component';
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
 import { EditProductComponent } from './pages/admin-page/admin-dashboard/product-management/edit-product/edit-product.component';
 import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.component';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { FeaturedProductsComponent } from './pages/home-page/featured-products/featured-products.component';
-import { ProductCardComponent } from './pages/home-page/product-card/product-card.component';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
-import { NavbarComponent } from './pages/home-page/components/navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
 import { BasketItemComponent } from './pages/home-page/basket-view/components/basket-item/basket-item.component';
-import { CheckoutComponent } from './pages/home-page/checkout/checkout.component';
-import { LoginUserComponent } from './pages/home-page/checkout/views/login-user/login-user.component';
 import { MatInputModule } from '@angular/material/input';
-import { UserProfileFormComponent } from './pages/home-page/checkout/views/user-profile-form/user-profile-form.component';
-import { DeliveryAddressSelectionComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-selection.component';
-import { DeliveryAddressFormComponent } from './pages/home-page/checkout/views/delivery-address-selection/delivery-address-form/delivery-address-form.component';
 import { MatRadioModule } from '@angular/material/radio';
-import { OrderConfirmationComponent } from './pages/home-page/checkout/views/order-confirmation/order-confirmation.component';
 import { DeleteBasketItemDialogComponent } from './pages/home-page/basket-view/components/delete-basket-item-dialog/delete-basket-item-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { AddressOptionDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/address-option-dialog/address-option-dialog.component';
-import { DeleteAddressDialogComponent } from './pages/home-page/checkout/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { OrderContentTableComponent } from './pages/home-page/checkout/views/order-confirmation/order-content-table/order-content-table.component';
 import { EmptyBasketNoticeDialogComponent } from './pages/home-page/basket-view/components/empty-basket-notice-dialog/empty-basket-notice-dialog.component';
+import { DynanmicMultiColumnFormComponent } from './forms/templates/dynamic-multi-column-form/dynamic-multi-column-form.component';
+import { CheckoutComponent } from './pages/home-page/checkout-view/checkout.component';
+import { AddressOptionDialogComponent } from './pages/home-page/checkout-view/views/delivery-address-selection/address-option-dialog/address-option-dialog.component';
+import { DeleteAddressDialogComponent } from './pages/home-page/checkout-view/views/delivery-address-selection/delete-address-dialog/delete-address-dialog.component';
+import { DeliveryAddressFormComponent } from './pages/home-page/checkout-view/views/delivery-address-selection/delivery-address-form/delivery-address-form.component';
+import { DeliveryAddressSelectionComponent } from './pages/home-page/checkout-view/views/delivery-address-selection/delivery-address-selection.component';
+import { OrderConfirmationComponent } from './pages/home-page/checkout-view/views/order-confirmation/order-confirmation.component';
+import { OrderContentTableComponent } from './pages/home-page/checkout-view/views/order-confirmation/order-content-table/order-content-table.component';
+import { UserProfileFormComponent } from './pages/home-page/checkout-view/views/user-profile-form/user-profile-form.component';
+import { FeaturedProductsComponent } from './pages/home-page/shared-components/featured-products/featured-products.component';
+import { NavbarComponent } from './pages/home-page/shared-components/navbar/navbar.component';
+import { ProductCardComponent } from './pages/home-page/shared-components/product-card/product-card.component';
+import { RegisterComponent } from './pages/home-page/shared-components/user-register/register.component';
+import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +85,7 @@ import { EmptyBasketNoticeDialogComponent } from './pages/home-page/basket-view/
     BasketViewComponent,
     BasketItemComponent,
     CheckoutComponent,
-    LoginUserComponent,
+    SigninUserComponent,
     UserProfileFormComponent,
     DeliveryAddressSelectionComponent,
     DeliveryAddressFormComponent,

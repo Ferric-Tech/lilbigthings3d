@@ -67,6 +67,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['basket']);
   }
 
+  onSignInClick() {
+    this.router.navigate(['sign-in']);
+  }
+
   onSignOutClick() {
     this.authService.signOutUser();
   }

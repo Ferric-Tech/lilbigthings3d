@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
-import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import { FormResults } from 'src/app/forms/models/form-template.interface';
 import {
   EventChannel,
   EventTopic,

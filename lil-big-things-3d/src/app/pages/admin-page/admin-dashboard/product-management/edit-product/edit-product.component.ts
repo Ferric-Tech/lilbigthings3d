@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormResults } from 'src/app/form-templates/models/form-template.interface';
-import { FormLineType } from 'src/app/form-templates/models/form-templates.enum';
+import { FormResults } from 'src/app/forms/models/form-template.interface';
+import { FormLineType } from 'src/app/forms/models/form-templates.enum';
 import {
   EventChannel,
   EventTopic,

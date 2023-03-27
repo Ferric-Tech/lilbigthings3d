@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormResults } from 'src/app/form-templates/models/form-template.interface';
+import { FormResults } from 'src/app/forms/models/form-template.interface';
 import {
   EventChannel,
   EventTopic,

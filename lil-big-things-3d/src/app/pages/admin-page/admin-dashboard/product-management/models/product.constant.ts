@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
-import { AppMultiColumnForm } from 'src/app/form-templates/models/form-template.interface';
-import { FormLineType } from 'src/app/form-templates/models/form-templates.enum';
+import { AppMultiColumnForm } from 'src/app/forms/models/form-template.interface';
+import { FormLineType } from 'src/app/forms/models/form-templates.enum';
 import {
   ProductFormFields,
   ProductFormLabels,

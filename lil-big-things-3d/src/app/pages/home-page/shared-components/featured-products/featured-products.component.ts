@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { ProductForDisplay } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
-import { ProductForDisplay } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
 
 @Component({
   selector: 'app-featured-products',

@@ -41,7 +41,7 @@
         </button>
       </div>
       <div class="sign-in-container" (click)="onProfileClick()">
-        <div *ngIf="!userProfile">Sign in</div>
+        <div *ngIf="!userProfile" (click)="onSignInClick()">Sign in</div>
         <div class="profile-container" *ngIf="userProfile">
           {{ userProfile.firstName.slice(0, 1) }} {{ userProfile.lastName }}
           <img
