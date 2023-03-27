@@ -29,6 +29,7 @@ export interface AppField {
   value?: string;
   validators?: ValidatorFn[];
   multiColumnFieldSetting?: MultiColumnFieldSetting[];
+  characterLimit?: number;
 }
 
 export interface MultiColumnFieldSetting {
@@ -37,5 +38,4 @@ export interface MultiColumnFieldSetting {
   placeholder?: string;
   value?: string;
   validators?: ValidatorFn[];
-
 }

@@ -5,7 +5,8 @@ export enum FormLineType {
   PlainLabel,
   InputTitle,
   InputPlain,
-  InputLong,
+  InputTextShort,
+  InputTextLong,
   InputMultiColumn,
   UploaderSingleFileUnderlined,
   UploaderSingleFilePlain,
@@ -16,9 +17,10 @@ export enum FormLineType {
 }
 
 export const FORM_FIELD_TYPES = [
-  FormLineType.InputLong,
   FormLineType.InputPlain,
   FormLineType.InputTitle,
+  FormLineType.InputTextShort,
+  FormLineType.InputTextLong,
   FormLineType.InputMultiColumn,
   FormLineType.UploaderMultiFilePlain,
   FormLineType.UploaderMultiFileUnderlined,

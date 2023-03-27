@@ -1,7 +1,8 @@
 export enum ProductFormFields {
   Title = 'title',
-  PriimaryImage = 'primary-image-url',
-  Description = 'description',
+  PrimaryImage = 'primary-image-url',
+  ShortDescription = 'shortDescription',
+  LongDescription = 'longDescription',
   Dimentions = 'dimentions',
   DimentionX = 'x',
   DimentionY = 'y',
@@ -20,7 +21,8 @@ export enum ProductFormFields {
 
 export enum ProductFormPlaceholders {
   Title = 'New Product',
-  Description = 'Please provide a description',
+  ShortDescription = 'Please provide a short description (128 characters max)',
+  LongDescription = 'Provide a longer extended description here',
 }
 
 export enum ProductFormLabels {

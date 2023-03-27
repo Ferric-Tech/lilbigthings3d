@@ -13,7 +13,8 @@ export interface ProductData {
   [key: string]: unknown;
   title: string;
   'primary-image-url': string;
-  description: string;
+  shortDescription: string;
+  longDescription: string;
   dimentions: {
     x: number;
     y: number;

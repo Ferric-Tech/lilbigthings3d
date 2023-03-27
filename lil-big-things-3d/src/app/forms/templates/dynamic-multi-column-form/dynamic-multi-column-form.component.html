@@ -74,11 +74,25 @@
             </div>
           </div>
 
-          <!-- Text area -->
+          <!-- Text areas -->
           <textarea
-            *ngIf="field.type === formFieldType.InputLong"
+            *ngIf="field.type === formFieldType.InputTextShort"
             formControlName="{{ field.name }}"
-            class="desc-area"
+            class="short-desc-area"
+            id="{{ field.name }}"
+            type="text"
+            (focus)="onFieldFocus(forms[form.name], field.name)"
+            (blur)="onFieldBlur(forms[form.name], field.name)"
+            maxlength="{{
+              field.characterLimit ? field.characterLimit : 'none'
+            }}"
+          ></textarea>
+          
+
+          <textarea
+            *ngIf="field.type === formFieldType.InputTextLong"
+            formControlName="{{ field.name }}"
+            class="long-desc-area"
             id="{{ field.name }}"
             type="text"
             (focus)="onFieldFocus(forms[form.name], field.name)"

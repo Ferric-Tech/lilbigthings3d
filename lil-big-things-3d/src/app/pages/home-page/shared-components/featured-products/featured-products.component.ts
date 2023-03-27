@@ -70,7 +70,7 @@ export class FeaturedProductsComponent implements OnInit {
         title: products[i].data.title,
         image: products[i].data['primary-image-url'],
         price: 10,
-        description: products[i].data.description.slice(0, 128),
+        description: products[i].data.shortDescription,
       });
     }
   }

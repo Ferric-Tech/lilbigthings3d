@@ -22,14 +22,20 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               validators: [Validators.required],
             },
             {
-              name: ProductFormFields.PriimaryImage,
+              name: ProductFormFields.PrimaryImage,
               type: FormLineType.MainImage,
             },
             {
-              name: ProductFormFields.Description,
-              type: FormLineType.InputLong,
-              placeholder: ProductFormPlaceholders.Description,
+              name: ProductFormFields.ShortDescription,
+              type: FormLineType.InputTextShort,
+              placeholder: ProductFormPlaceholders.ShortDescription,
               validators: [Validators.required],
+              characterLimit: 128,
+            },
+            {
+              name: ProductFormFields.LongDescription,
+              type: FormLineType.InputTextLong,
+              placeholder: ProductFormPlaceholders.LongDescription,
             },
             {
               name: ProductFormFields.Dimentions,

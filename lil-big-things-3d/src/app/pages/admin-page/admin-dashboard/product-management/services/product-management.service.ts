@@ -32,8 +32,12 @@ export class ProductManagementService {
       // General info/data
       title: formResults.formValues[ProductFormFields.Title],
       'primary-image-url':
-        formResults.formValues[ProductFormFields.PriimaryImage],
-      description: formResults.formValues[ProductFormFields.Description],
+        formResults.formValues[ProductFormFields.PrimaryImage],
+      shortDescription:
+        formResults.formValues[ProductFormFields.ShortDescription],
+      longDescription:
+        formResults.formValues[ProductFormFields.LongDescription],
+
       dimentions: {
         x: parseFloat(formResults.formValues[ProductFormFields.DimentionX]),
         y: parseFloat(formResults.formValues[ProductFormFields.DimentionY]),
