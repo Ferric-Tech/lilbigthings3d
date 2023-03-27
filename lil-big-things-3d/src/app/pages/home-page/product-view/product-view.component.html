@@ -1,7 +1,26 @@
-<div *ngIf="productData">
+<div *ngIf="productData" class="main-container">
   <div class="title">{{ productData.title }}</div>
   <img class="primary-image" src="{{ primaryImageUrl }}" alt="" />
   <div class="price">R10.00</div>
   <button (click)="onAddToBasketClick()">Add to basket</button>
-  <div class="description">{{ productData.shortDescription }}</div>
+
+  <!-- Descriptions  -->
+  <div class="short-description">{{ productData.shortDescription }}</div>
+  <div *ngIf="!showFullDescription">
+    <div class="long-description-capped">
+      {{ productData.longDescription }}
+    </div>
+    <div class="show-more-less-container" (click)="toggleShowDecription()">
+      Show more...
+    </div>
+  </div>
+
+  <div *ngIf="showFullDescription">
+    <div class="long-description">
+      {{ productData.longDescription }}
+    </div>
+    <div class="show-more-less-container" (click)="toggleShowDecription()">
+      Show less...
+    </div>
+  </div>
 </div>

@@ -18,6 +18,7 @@ export class ProductViewComponent implements OnInit {
   productID: string | undefined;
   productData: ProductData | undefined;
   primaryImageUrl = '';
+  showFullDescription = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -50,5 +51,9 @@ export class ProductViewComponent implements OnInit {
       EventChannel.Product,
       EventTopic.BasketContentAmended
     );
+  }
+
+  toggleShowDecription(): void {
+    this.showFullDescription = !this.showFullDescription;
   }
 }
