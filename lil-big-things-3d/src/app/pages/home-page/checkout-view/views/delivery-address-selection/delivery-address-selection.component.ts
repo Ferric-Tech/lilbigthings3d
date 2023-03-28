@@ -37,7 +37,6 @@ export class DeliveryAddressSelectionComponent implements OnInit {
   }
 
   onAddessClick(index: number) {
-    console.log('Here');
     if (!this.userAddresses) return;
     this.selectedAddressForm.controls['selectedAddress'].setValue(
       index.toString()

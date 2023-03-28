@@ -122,8 +122,8 @@ export class CheckoutService {
     //   'https://www.payfast.co.za/eng/query/validate';
     return {
       //   merchant_id: '13393193',
-      merchant_id: '10028928', // Test account
       //   merchant_key: '2cgbcr4cuy37f',
+      merchant_id: '10028928', // Test account
       merchant_key: 'epkxlr70xksdr', // Test account
       return_url: location.origin + '/payment-result/success',
       cancel_url: location.origin + '/payment-result/canceled',
