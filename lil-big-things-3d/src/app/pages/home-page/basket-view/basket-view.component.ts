@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {
   EventChannel,
@@ -31,7 +32,8 @@ export class BasketViewComponent implements OnInit {
     private readonly localStorageService: LocalStorageService,
     private readonly eventService: EventManagementService,
     private readonly cd: ChangeDetectorRef,
-    private readonly router: Router
+    private readonly router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -70,5 +72,10 @@ export class BasketViewComponent implements OnInit {
       EventTopic.BasketContentAmended
     );
     this.showEmptyBasketDialog = this.basketContent.length === 0;
+
+    this._snackBar.open('Item removed from your basket', '', {
+      panelClass: 'standard-snackbar',
+      duration: 3000,
+    });
   }
 }

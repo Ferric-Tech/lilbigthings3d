@@ -4,7 +4,8 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   EventChannel,
   EventTopic,
@@ -40,7 +41,9 @@ export class ProductViewComponent implements OnInit {
     private readonly fs: FirestoreManagementService,
     private readonly cd: ChangeDetectorRef,
     private readonly productService: ProductService,
-    private readonly eventService: EventManagementService
+    private readonly eventService: EventManagementService,
+    private _snackBar: MatSnackBar,
+    private readonly router: Router
   ) {}
 
   async ngOnInit() {
@@ -64,6 +67,13 @@ export class ProductViewComponent implements OnInit {
       EventChannel.Product,
       EventTopic.BasketContentAmended
     );
+
+    this._snackBar.open('Item added to your basket', '', {
+      panelClass: 'standard-snackbar',
+      duration: 3000,
+    });
+
+    this.router.navigate(['basket']);
   }
 
   toggleShowDecription(): void {

@@ -67,6 +67,7 @@ import { PaymentSuccessComponent } from './pages/home-page/payment-result/paymen
 import { PaymentCancelComponent } from './pages/home-page/payment-result/payment-cancel/payment-cancel.component';
 import { PaymentNotifyComponent } from './pages/home-page/payment-result/payment-notify/payment-notify.component';
 import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import { PaymentResultComponent } from './pages/home-page/payment-result/payment
     MatRadioModule,
     MatCheckboxModule,
     DragDropModule,
+    MatSnackBarModule,
   ],
   providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
