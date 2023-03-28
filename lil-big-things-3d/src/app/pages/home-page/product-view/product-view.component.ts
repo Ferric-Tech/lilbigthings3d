@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   EventChannel,
@@ -18,6 +23,11 @@ import {
   styleUrls: ['./product-view.component.scss'],
 })
 export class ProductViewComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.determineView();
+  }
+
   productID: string | undefined;
   productData: ProductData | undefined;
   primaryImageUrl = '';

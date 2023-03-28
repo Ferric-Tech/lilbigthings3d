@@ -3,6 +3,15 @@
   <div *ngIf="productData" class="mobile-container">
     <div class="title">{{ productData.title }}</div>
     <img class="primary-image" src="{{ primaryImageUrl }}" alt="" />
+    <div class="thumbnails-container">
+      <img
+        class="thumbnail-image-container"
+        *ngFor="let imageUrl of imageUrls; let i = index"
+        (click)="changePrimaryImage(i)"
+        src="{{ imageUrl }}"
+        alt=""
+      />
+    </div>
     <div class="price">R10.00</div>
     <button (click)="onAddToBasketClick()">Add to basket</button>
 

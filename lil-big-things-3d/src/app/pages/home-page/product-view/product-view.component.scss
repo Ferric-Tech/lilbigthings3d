@@ -13,10 +13,30 @@
 
   .primary-image {
     display: flex;
-    width: 100%;
-    max-width: 350px;
-    height: auto;
+    width: 300px;
+    height: 300px;
     margin: auto;
+  }
+
+  .thumbnails-container {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    margin: auto;
+    padding-top: 15px;
+
+    .thumbnail-image-container {
+      display: flex;
+      width: 75px;
+      height: 75px;
+      margin: auto;
+
+      img {
+        object-fit: cover;
+        width: 75px;
+        height: 75px;
+      }
+    }
   }
 
   .price {
@@ -64,7 +84,7 @@
 }
 
 .desktop-container {
-  padding-bottom: 50px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +95,7 @@
     display: flex;
     flex-direction: row;
     width: 80%;
-    margin: 20px 0;
+    margin-top: 20px;
     padding: 20px;
 
     .images-container {
@@ -86,9 +106,9 @@
 
       .primary-image {
         display: flex;
-        height: 350px;
-        width: 350px;
-        padding: 20px 0;
+        height: 300px;
+        width: 300px;
+        padding-bottom: 20px;
       }
 
       .thumbnails-container {
@@ -122,7 +142,7 @@
         text-align: start;
         font-size: 25px;
         font-weight: bold;
-        padding: 20px 0;
+        padding-bottom: 20px;
         justify-content: start;
       }
 
