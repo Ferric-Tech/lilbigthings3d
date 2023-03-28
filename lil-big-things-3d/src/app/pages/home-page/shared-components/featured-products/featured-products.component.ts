@@ -31,29 +31,35 @@ export class FeaturedProductsComponent implements OnInit {
     await this.setFeaturedProducts();
   }
 
-  onDragDrop(event: { distance: { x: number } }) {
+  onCardSwipe(event: { distance: { x: number } }) {
     let toggleCard = false;
     const distanceDragged = Math.abs(event.distance.x);
-    if (distanceDragged / window.innerWidth > 0.25) {
+    if (distanceDragged / window.innerWidth > 0.05) {
       toggleCard = true;
     }
+
     if (!toggleCard) return;
-    this.cardInFocusIndex =
-      event.distance.x > 0
-        ? this.cardInFocusIndex + 1
-        : this.cardInFocusIndex - 1;
 
-    this.cardInFocusIndex =
-      this.cardInFocusIndex > 0
-        ? this.cardInFocusIndex
-        : this.productsForDisplay.length - 1;
+    // Swipe left
+    if (event.distance.x < 0) {
+      if (this.cardInFocusIndex === this.productsForDisplay.length - 1) {
+        // Last card
+        this.cardInFocusIndex = 0;
+      } else {
+        this.cardInFocusIndex = this.cardInFocusIndex + 1;
+      }
+    }
 
-    this.cardInFocusIndex =
-      this.cardInFocusIndex < this.productsForDisplay.length
-        ? this.cardInFocusIndex
-        : 0;
+    // Swipe right
+    if (event.distance.x > 0) {
+      if (this.cardInFocusIndex === 0) {
+        // First card
+        this.cardInFocusIndex = this.productsForDisplay.length - 1;
+      } else {
+        this.cardInFocusIndex = this.cardInFocusIndex - 1;
+      }
+    }
 
-    console.log(this.cardInFocusIndex);
     this.dragPosition = { x: 0, y: 0 };
   }
 

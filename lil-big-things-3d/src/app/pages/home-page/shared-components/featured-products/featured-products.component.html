@@ -18,7 +18,7 @@
       cdkDragLockAxis="x"
       cdkDrag
       [cdkDragFreeDragPosition]="dragPosition"
-      (cdkDragEnded)="onDragDrop($event)"
+      (cdkDragEnded)="onCardSwipe($event)"
       class="card"
       [product]="productsForDisplay[cardInFocusIndex]"
     ></app-product-card>
