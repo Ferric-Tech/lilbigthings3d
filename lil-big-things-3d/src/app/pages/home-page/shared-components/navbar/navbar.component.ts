@@ -112,6 +112,5 @@ export class NavbarComponent implements OnInit {
 
     if (!this.userProfile) return;
     this.userProfile.profilePic = await this.userService.getUserImage();
-    console.log(this.userProfile.profilePic);
   }
 }

@@ -73,7 +73,7 @@ export class EditProductComponent implements OnInit {
   ): Record<string, unknown> {
     const unpackedData: Record<string, unknown> = {};
     Object.keys(productData).forEach((key1) => {
-      if (typeof productData[key1] === 'object') {
+      if (typeof productData[key1] === 'object' && key1 !== 'longDescription') {
         const focusObject = productData[key1] as Record<string, unknown>;
         Object.keys(focusObject).forEach((key2) => {
           unpackedData[key2] = focusObject[key2];

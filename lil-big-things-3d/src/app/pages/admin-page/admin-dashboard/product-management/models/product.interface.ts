@@ -14,7 +14,7 @@ export interface ProductData {
   title: string;
   'primary-image-url': string;
   shortDescription: string;
-  longDescription: string;
+  longDescription: string[];
   dimentions: {
     x: number;
     y: number;

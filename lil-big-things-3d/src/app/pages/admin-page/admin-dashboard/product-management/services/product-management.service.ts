@@ -26,6 +26,10 @@ export class ProductManagementService {
     productID?: string
   ): Promise<void> {
     const newProduct = {} as Product;
+    let longDescFormatted: string[] = [
+      formResults.formValues[ProductFormFields.LongDescription],
+    ];
+    longDescFormatted = longDescFormatted[0].split(/\r?\n/);
 
     // Assign form value data
     newProduct.data = {
@@ -35,9 +39,7 @@ export class ProductManagementService {
         formResults.formValues[ProductFormFields.PrimaryImage],
       shortDescription:
         formResults.formValues[ProductFormFields.ShortDescription],
-      longDescription:
-        formResults.formValues[ProductFormFields.LongDescription],
-
+      longDescription: longDescFormatted,
       dimentions: {
         x: parseFloat(formResults.formValues[ProductFormFields.DimentionX]),
         y: parseFloat(formResults.formValues[ProductFormFields.DimentionY]),

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ProductImageUrls } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
+import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
 import { LocalStorageItem } from '../local-storage/local-storage.enum';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 
@@ -7,11 +9,16 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    private readonly localStorageService: LocalStorageService,
+    private readonly fs: FirestoreManagementService
+  ) {}
 
   addProductToBasket(product: BasketItem): Promise<void> {
     return new Promise((resolve) => {
-      let currentBasket = this.localStorageService.get(LocalStorageItem.Basket);
+      const currentBasket = this.localStorageService.get(
+        LocalStorageItem.Basket
+      );
 
       if (!currentBasket) {
         this.localStorageService.set(LocalStorageItem.Basket, [product]);
@@ -23,5 +30,9 @@ export class ProductService {
 
       resolve();
     });
+  }
+
+  async getImagesByID(productID: string): Promise<ProductImageUrls> {
+    return await this.fs.getProductImagesUrlByID(productID);
   }
 }

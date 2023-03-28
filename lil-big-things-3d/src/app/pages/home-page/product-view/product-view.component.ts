@@ -7,7 +7,10 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductService } from 'src/app/services/product/product.service';
-import { ProductData } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
+import {
+  ProductData,
+  ProductImageUrls,
+} from '../../admin-page/admin-dashboard/product-management/models/product.interface';
 
 @Component({
   selector: 'app-product-view',
@@ -19,6 +22,8 @@ export class ProductViewComponent implements OnInit {
   productData: ProductData | undefined;
   primaryImageUrl = '';
   showFullDescription = false;
+  isMobileView = false;
+  imageUrls: string[] = [];
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -29,11 +34,9 @@ export class ProductViewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.productID = this.route.snapshot.paramMap.get('productId') || '';
-
-    if (!this.productID) return;
-    this.productData = await this.fs.getProductDataByID(this.productID);
-    this.primaryImageUrl = this.productData['primary-image-url'];
+    this.determineView();
+    await this.setProductData();
+    await this.setProductImages();
     this.cd.detectChanges();
   }
 
@@ -55,5 +58,35 @@ export class ProductViewComponent implements OnInit {
 
   toggleShowDecription(): void {
     this.showFullDescription = !this.showFullDescription;
+  }
+
+  changePrimaryImage(index: number) {
+    this.primaryImageUrl = this.imageUrls[index];
+  }
+
+  private determineView() {
+    this.isMobileView = window.innerWidth < 400;
+  }
+
+  private async setProductData() {
+    this.productID = this.route.snapshot.paramMap.get('productId') || '';
+    if (!this.productID) return;
+    this.productData = await this.fs.getProductDataByID(this.productID);
+    this.primaryImageUrl = this.productData['primary-image-url'];
+  }
+
+  private async setProductImages() {
+    await this.getImagesForDisplay().then((imageCollections) => {
+      if (!imageCollections) return;
+
+      Object.keys(imageCollections).forEach((collection) => {
+        this.imageUrls.push(...(imageCollections[collection] as string[]));
+      });
+    });
+  }
+
+  private async getImagesForDisplay(): Promise<ProductImageUrls> {
+    if (!this.productID) return {};
+    return await this.productService.getImagesByID(this.productID);
   }
 }

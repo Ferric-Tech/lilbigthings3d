@@ -112,7 +112,7 @@ export class FirestoreManagementService {
     });
   }
 
-  getProductImagesUrlByID(productID: string): Promise<ProductImageUrls> {
+  async getProductImagesUrlByID(productID: string): Promise<ProductImageUrls> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const images = {} as ProductImageUrls;
@@ -122,26 +122,22 @@ export class FirestoreManagementService {
       const designImagePath = 'products/' + productID + '/images/design';
       const designImageFolderRef = ref(storage, designImagePath);
       const designImageFilesFound: string[] = [];
-      await listAll(designImageFolderRef).then((response) => {
-        response.items.forEach(async (itemRef) => {
-          getDownloadURL(ref(storage, itemRef.fullPath)).then((url) => {
-            designImageFilesFound.push(url);
-          });
-        });
-      });
+      const designImagesList = await listAll(designImageFolderRef);
+      for (const itemRef of designImagesList.items) {
+        const url = await getDownloadURL(ref(storage, itemRef.fullPath));
+        designImageFilesFound.push(url);
+      }
       images['images-design'] = designImageFilesFound;
 
       // Product Images
       const productImagePath = 'products/' + productID + '/images/product';
       const productImageFolderRef = ref(storage, productImagePath);
       const productImageFilesFound: string[] = [];
-      await listAll(productImageFolderRef).then((response) => {
-        response.items.forEach(async (itemRef) => {
-          getDownloadURL(ref(storage, itemRef.fullPath)).then((url) => {
-            productImageFilesFound.push(url);
-          });
-        });
-      });
+      const productImagesList = await listAll(productImageFolderRef);
+      for (const itemRef of productImagesList.items) {
+        const url = await getDownloadURL(ref(storage, itemRef.fullPath));
+        productImageFilesFound.push(url);
+      }
       images['images-product'] = productImageFilesFound;
 
       resolve(images);
