@@ -1,14 +1,18 @@
 <!-- Basket with content  -->
-<div *ngIf="basketContent.length !== 0">
-  <div class="title">Your basket</div>
+<div class="screen-container">
+  <div class="basket-container" *ngIf="basketContent.length !== 0">
+    <div class="title">Your basket</div>
 
-  <app-basket-item
-    *ngFor="let item of basketContent; let i = index"
-    [item]="item"
-    (updatedQty)="onQtyUpdate($event, i)"
-  ></app-basket-item>
+    <app-basket-item
+      *ngFor="let item of basketContent; let i = index"
+      [item]="item"
+      (updatedQty)="onQtyUpdate($event, i)"
+    ></app-basket-item>
 
-  <button class="checkout-button" (click)="onCheckoutClick()">Checkout</button>
+    <button class="checkout-button" (click)="onCheckoutClick()">
+      Checkout
+    </button>
+  </div>
 </div>
 
 <!-- Basket without content  -->

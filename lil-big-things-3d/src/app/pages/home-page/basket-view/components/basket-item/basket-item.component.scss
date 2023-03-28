@@ -12,6 +12,8 @@
     display: flex;
     flex-direction: column;
     margin: 10px;
+    max-width: 43%;
+    flex-grow: 1;
 
     .title {
       font-size: 20px;
@@ -28,7 +30,7 @@
   .qty-container {
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
+    width: 25%;
     justify-content: center;
     align-items: center;
 
