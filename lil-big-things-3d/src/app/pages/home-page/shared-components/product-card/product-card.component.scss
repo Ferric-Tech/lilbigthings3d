@@ -5,15 +5,12 @@ mat-card {
   min-width: 250px;
   background-color: white;
 
-  .image-container {
+  .primary-image {
     display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: larger;
-    padding-bottom: 5px 0;
-    height: 80%;
+    width: 250px;
+    height: 250px;
+    margin: auto;
+    border-radius: 5px 5px 0 0;
 
     img {
       max-width: 100%;
@@ -37,6 +34,7 @@ mat-card {
       font-weight: bold;
       font-size: medium;
       padding: 5px;
+      min-height: 35px;
     }
 
     .price-container {
@@ -56,6 +54,7 @@ mat-card {
     align-items: center;
     text-align: justify;
     height: 30%;
+    min-height: 100px;
     font-size: smaller;
     padding: 0 5%;
   }

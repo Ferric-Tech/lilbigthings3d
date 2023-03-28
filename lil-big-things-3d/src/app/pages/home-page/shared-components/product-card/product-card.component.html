@@ -1,5 +1,5 @@
 <mat-card *ngIf="product" (click)="onProductcardClicked()">
-  <div class="image-container"><img src="{{ product.image }}" alt="" /></div>
+  <img class="primary-image" src="{{ product.image }}" alt="" />
   <div class="detail-container">
     <div class="title-container">{{ product.title }}</div>
     <div class="price-container">R{{ product.price | number : "1.2-2" }}</div>
