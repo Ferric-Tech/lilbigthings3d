@@ -125,9 +125,9 @@ export class CheckoutService {
       merchant_id: '10028928', // Test account
       //   merchant_key: '2cgbcr4cuy37f',
       merchant_key: 'epkxlr70xksdr', // Test account
-      //   return_url: './checkout-success',
-      //   cancel_url: './checkout-cancel',
-      //   notify_url: './checkout-notify',
+      return_url: location.origin + '/payment-result/success',
+      cancel_url: location.origin + '/payment-result/canceled',
+      notify_url: location.origin + '/payment-result/notify',
       name_first: userProfile.firstName,
       name_last: userProfile.lastName,
       //   email_address: userProfile.email,

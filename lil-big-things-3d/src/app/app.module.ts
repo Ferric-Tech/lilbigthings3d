@@ -63,6 +63,10 @@ import { NavbarComponent } from './pages/home-page/shared-components/navbar/navb
 import { ProductCardComponent } from './pages/home-page/shared-components/product-card/product-card.component';
 import { RegisterComponent } from './pages/home-page/shared-components/user-register/register.component';
 import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
+import { PaymentSuccessComponent } from './pages/home-page/payment-result/payment-success/payment-success.component';
+import { PaymentCancelComponent } from './pages/home-page/payment-result/payment-cancel/payment-cancel.component';
+import { PaymentNotifyComponent } from './pages/home-page/payment-result/payment-notify/payment-notify.component';
+import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +99,10 @@ import { SigninUserComponent } from './pages/home-page/shared-components/user-si
     DeleteAddressDialogComponent,
     OrderContentTableComponent,
     EmptyBasketNoticeDialogComponent,
+    PaymentSuccessComponent,
+    PaymentCancelComponent,
+    PaymentNotifyComponent,
+    PaymentResultComponent,
   ],
   imports: [
     BrowserModule,

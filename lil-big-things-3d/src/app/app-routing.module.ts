@@ -8,11 +8,15 @@ import { AdminLoginComponent } from './pages/admin-page/admin-login/admin-login.
 import { AdminPageComponent } from './pages/admin-page/admin.page';
 import { BasketViewComponent } from './pages/home-page/basket-view/basket-view.component';
 import { CheckoutComponent } from './pages/home-page/checkout-view/checkout.component';
+import { PaymentCancelComponent } from './pages/home-page/payment-result/payment-cancel/payment-cancel.component';
+import { PaymentNotifyComponent } from './pages/home-page/payment-result/payment-notify/payment-notify.component';
+import { PaymentSuccessComponent } from './pages/home-page/payment-result/payment-success/payment-success.component';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
 import { FeaturedProductsComponent } from './pages/home-page/shared-components/featured-products/featured-products.component';
 import { RegisterComponent } from './pages/home-page/shared-components/user-register/register.component';
 import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
+import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'featured-products', pathMatch: 'full' },
@@ -49,6 +53,28 @@ const routes: Routes = [
         path: 'checkout',
         title: 'Checkout ',
         component: CheckoutComponent,
+      },
+      {
+        path: 'payment-result',
+        title: 'Payment result ',
+        component: PaymentResultComponent,
+        children: [
+          {
+            path: 'success',
+            title: 'Payment successful',
+            component: PaymentSuccessComponent,
+          },
+          {
+            path: 'canceled',
+            title: 'Payment cancelled',
+            component: PaymentCancelComponent,
+          },
+          {
+            path: 'notify',
+            title: 'Payment cancelled',
+            component: PaymentNotifyComponent,
+          },
+        ],
       },
     ],
   },
