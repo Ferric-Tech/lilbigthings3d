@@ -72,7 +72,11 @@ export class NavbarComponent implements OnInit {
   }
 
   onSignOutClick() {
-    this.authService.signOutUser();
+    this.eventService.publish(
+      EventChannel.Auth,
+      EventTopic.SignOutAttempt,
+      true
+    );
   }
 
   private registerSubscriptions() {

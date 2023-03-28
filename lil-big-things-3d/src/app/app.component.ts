@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   title = 'lil-big-things-3d';
   app = initializeApp(environment.firebase);
   isLoading = false;
+  isSigningOut = false;
 
   constructor(
     private readonly eventService: EventManagementService,
@@ -29,6 +30,15 @@ export class AppComponent implements OnInit {
       EventTopic.Loading,
       (data) => {
         this.isLoading = data.payload as boolean;
+        this.cd.detectChanges();
+      }
+    );
+
+    this.eventService.subscribe(
+      EventChannel.Auth,
+      EventTopic.SignOutAttempt,
+      (data) => {
+        this.isSigningOut = data.payload as boolean;
         this.cd.detectChanges();
       }
     );

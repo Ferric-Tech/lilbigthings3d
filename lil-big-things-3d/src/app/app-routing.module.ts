@@ -17,6 +17,7 @@ import { FeaturedProductsComponent } from './pages/home-page/shared-components/f
 import { RegisterComponent } from './pages/home-page/shared-components/user-register/register.component';
 import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
 import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
+import { OrdersViewComponent } from './pages/home-page/orders-view/orders-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'featured-products', pathMatch: 'full' },
@@ -53,6 +54,11 @@ const routes: Routes = [
         path: 'checkout',
         title: 'Checkout ',
         component: CheckoutComponent,
+      },
+      {
+        path: 'orders',
+        title: 'Orders ',
+        component: OrdersViewComponent,
       },
       {
         path: 'payment-result',

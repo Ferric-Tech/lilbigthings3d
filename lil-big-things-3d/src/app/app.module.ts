@@ -68,6 +68,8 @@ import { PaymentCancelComponent } from './pages/home-page/payment-result/payment
 import { PaymentNotifyComponent } from './pages/home-page/payment-result/payment-notify/payment-notify.component';
 import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { OrdersViewComponent } from './pages/home-page/orders-view/orders-view.component';
+import { SignOutDialogComponent } from './shared/sign-out-dialog/sign-out-dialog.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +106,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PaymentCancelComponent,
     PaymentNotifyComponent,
     PaymentResultComponent,
+    OrdersViewComponent,
+    SignOutDialogComponent,
   ],
   imports: [
     BrowserModule,
