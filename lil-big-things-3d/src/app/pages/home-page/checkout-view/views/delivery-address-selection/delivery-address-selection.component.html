@@ -27,6 +27,7 @@
       <div
         class="address-option-container"
         *ngFor="let address of userAddresses; let i = index"
+        (click)="onAddessClick(i)"
       >
         <mat-radio-button value="{{ i }}">
           <div class="detail-label">{{ address.description }}</div>
