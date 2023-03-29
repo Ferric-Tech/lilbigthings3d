@@ -70,6 +70,8 @@ import { PaymentResultComponent } from './pages/home-page/payment-result/payment
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OrdersViewComponent } from './pages/home-page/orders-view/orders-view.component';
 import { SignOutDialogComponent } from './shared/sign-out-dialog/sign-out-dialog.component';
+import { GoogleButtonComponent } from './pages/home-page/shared-components/user-sign-in/google-button/google-button.component';
+import { FacebookButtonComponent } from './pages/home-page/shared-components/user-sign-in/facebook-button/facebook-button.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,8 @@ import { SignOutDialogComponent } from './shared/sign-out-dialog/sign-out-dialog
     PaymentResultComponent,
     OrdersViewComponent,
     SignOutDialogComponent,
+    GoogleButtonComponent,
+    FacebookButtonComponent,
   ],
   imports: [
     BrowserModule,
