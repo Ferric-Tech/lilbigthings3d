@@ -62,26 +62,6 @@
         border-radius: 50%;
       }
     }
-
-    .menu-container {
-      display: flex;
-      flex-direction: column;
-      width: calc(100% - 20px);
-      padding: 10px;
-      justify-content: center;
-      height: fit-content;
-      background-color: aqua;
-      position: fixed;
-      top: 50px;
-      box-shadow: 0 4px 2px -2px gray;
-
-      .menu-item {
-        display: flex;
-        min-height: 20px;
-        width: calc(100% - 20px);
-        justify-content: center;
-      }
-    }
   }
 }
 

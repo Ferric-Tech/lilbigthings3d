@@ -13,7 +13,7 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
-import { UserProfile } from 'src/app/services/user/user.interface';
+import { AppUserProfile } from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   basketCount = 0;
   displayMenu = false;
   isMobileView = false;
-  userProfile: UserProfile | undefined;
+  userProfile: AppUserProfile | undefined;
 
   constructor(
     private readonly authService: AuthenticationService,
@@ -45,8 +45,9 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.determineView();
+    this.setProfileDetails();
     this.setBasketCounter();
     this.registerSubscriptions();
   }
@@ -103,9 +104,8 @@ export class NavbarComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  private determineView() {
+  private async determineView() {
     this.isMobileView = window.innerWidth < 400;
-    if (!this.isMobileView) this.setProfileDetails();
   }
 
   private async setProfileDetails(): Promise<void> {

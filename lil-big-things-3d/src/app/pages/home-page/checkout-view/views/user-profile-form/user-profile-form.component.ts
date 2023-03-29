@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserProfile } from 'src/app/services/user/user.interface';
+import { AppUserProfile } from 'src/app/services/user/user.interface';
 
 @Component({
   selector: 'app-user-profile-form',
@@ -8,8 +8,8 @@ import { UserProfile } from 'src/app/services/user/user.interface';
   styleUrls: ['./user-profile-form.component.scss'],
 })
 export class UserProfileFormComponent implements OnInit {
-  @Input() currentProfile: UserProfile | null | undefined;
-  @Output() updatedProfile: EventEmitter<UserProfile> = new EventEmitter();
+  @Input() currentProfile: AppUserProfile | null | undefined;
+  @Output() updatedProfile: EventEmitter<AppUserProfile> = new EventEmitter();
 
   userProfileForm = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -33,6 +33,6 @@ export class UserProfileFormComponent implements OnInit {
     );
   }
   onSubmit() {
-    this.updatedProfile.emit(this.userProfileForm.value as UserProfile);
+    this.updatedProfile.emit(this.userProfileForm.value as AppUserProfile);
   }
 }

@@ -1,4 +1,6 @@
-export interface UserProfile {
+import { UserOrder } from '../orders.service';
+
+export interface AppUserProfile {
   id?: string;
   firstName: string;
   lastName: string;
@@ -6,6 +8,7 @@ export interface UserProfile {
   cellNumber: string;
   deliveryAddresses: UserAddress[];
   profilePic?: string;
+  orders?: UserOrder[];
 }
 
 export interface UserAddress {

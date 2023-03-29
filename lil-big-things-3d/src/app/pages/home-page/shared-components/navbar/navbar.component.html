@@ -17,14 +17,11 @@
         {{ basketCount }}
       </button>
     </div>
-    <div *ngIf="displayMenu" (click)="onMenuClick()" class="menu-container">
-      <div *ngIf="userProfile" class="menu-item" (click)="onSignOutClick()">
-        Sign out
-      </div>
-      <div *ngIf="!userProfile" class="menu-item" (click)="onSignInClick()">
-        Sign in
-      </div>
-    </div>
+    <app-navbar-menu
+      *ngIf="displayMenu"
+      [userProfile]="userProfile"
+      (click)="onMenuClick()"
+    ></app-navbar-menu>
   </div>
 </div>
 

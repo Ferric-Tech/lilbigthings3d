@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
+import {
+  UserAddress,
+  AppUserProfile,
+} from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -10,7 +13,7 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./delivery-address-selection.component.scss'],
 })
 export class DeliveryAddressSelectionComponent implements OnInit {
-  @Input() userProfile: UserProfile | null | undefined;
+  @Input() userProfile: AppUserProfile | null | undefined;
   @Output() addressSelected: EventEmitter<UserAddress> = new EventEmitter();
 
   selectedAddressForm = new FormGroup({

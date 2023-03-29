@@ -2,25 +2,9 @@
 import { Injectable } from '@angular/core';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
-import { UserAddress, UserProfile } from '../user/user.interface';
+import { UserAddress, AppUserProfile } from '../user/user.interface';
 import { Md5 } from 'ts-md5';
-
-export enum OrderStatus {
-  Pending,
-  Cancelled,
-  Paid,
-  Printing,
-  Dispatched,
-  Complete,
-}
-
-export interface UserOrder {
-  date: Date;
-  userID: string;
-  items: BasketItem[];
-  deliveryAddress: UserAddress;
-  status: OrderStatus;
-}
+import { OrdersService } from '../orders.service';
 
 export interface PayFastFormParms {
   [key: string]: string;
@@ -55,19 +39,19 @@ export interface PayFastParms {
   providedIn: 'root',
 })
 export class CheckoutService {
-  constructor(private readonly fs: FirestoreManagementService) {}
+  constructor(private readonly orderService: OrdersService) {}
 
   async generatePayFastParameters(
     basketContent: BasketItem[],
-    userProfile: UserProfile,
+    userProfile: AppUserProfile,
     deliveryAddress: UserAddress
   ): Promise<PayFastParms> {
-    const orderNr = await this.generateOrder(
+    const orderNr = await this.orderService.generateOrder(
       basketContent,
       userProfile,
       deliveryAddress
     );
-    const orderTotal = this.getOrderTotal(basketContent);
+    const orderTotal = this.orderService.getOrderTotal(basketContent);
     const paymentPayload = this.setPaymentPayload(
       orderNr,
       userProfile,
@@ -85,33 +69,9 @@ export class CheckoutService {
     };
   }
 
-  private async generateOrder(
-    basketContent: BasketItem[],
-    userProfile: UserProfile,
-    deliveryAddress: UserAddress
-  ): Promise<string> {
-    if (!userProfile.id) return '';
-    const order: UserOrder = {
-      date: new Date(),
-      userID: userProfile.id,
-      items: basketContent,
-      deliveryAddress,
-      status: OrderStatus.Pending,
-    };
-    return await this.fs.addOrder(order);
-  }
-
-  private getOrderTotal(basketContent: BasketItem[]): number {
-    let total = 0;
-    for (const item of basketContent) {
-      total = total + item.price * item.qty;
-    }
-    return total;
-  }
-
   private setPaymentPayload(
     orderNr: string,
-    userProfile: UserProfile,
+    userProfile: AppUserProfile,
     orderTotal: number
   ): PayFastFormParms {
     const sandboxPostPaymentUrl = 'https://sandbox.payfast.co.za/eng/process';

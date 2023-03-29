@@ -25,8 +25,8 @@ import {
   ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { environment } from 'src/environments/environment';
-import { UserOrder } from '../checkout/checkout.service';
-import { UserProfile } from '../user/user.interface';
+import { UserOrder } from '../orders.service';
+import { AppUserProfile } from '../user/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -208,20 +208,30 @@ export class FirestoreManagementService {
 
   async addOrder(order: UserOrder): Promise<string> {
     const orderDocRef = await addDoc(collection(this.db, 'orders'), order);
+    const userProfile = await this.getUserProfile(order.userID);
+    order.orderNr = orderDocRef.id;
+    if (!userProfile.orders) {
+      userProfile.orders = [order];
+    } else {
+      userProfile.orders.push(order);
+    }
+
+    userProfile.id = order.userID;
+    this.setUserProfile(userProfile);
     return orderDocRef.id;
   }
 
-  async getUserProfile(id: string): Promise<UserProfile> {
+  async getUserProfile(id: string): Promise<AppUserProfile> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const docRef = doc(this.db, 'user-profiles', id);
       const docSnap = await getDoc(docRef);
-      const userProfile = docSnap.data() as UserProfile;
+      const userProfile = docSnap.data() as AppUserProfile;
       resolve(userProfile);
     });
   }
 
-  setUserProfile(userProfile: UserProfile): void {
+  setUserProfile(userProfile: AppUserProfile): void {
     if (!userProfile.id) return;
     const userID = userProfile.id;
     delete userProfile.id;

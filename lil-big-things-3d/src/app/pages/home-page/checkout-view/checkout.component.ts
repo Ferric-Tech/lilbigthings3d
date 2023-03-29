@@ -7,7 +7,10 @@ import {
 } from 'src/app/services/checkout/checkout.service';
 import { LocalStorageItem } from 'src/app/services/local-storage/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
-import { UserAddress, UserProfile } from 'src/app/services/user/user.interface';
+import {
+  UserAddress,
+  AppUserProfile,
+} from 'src/app/services/user/user.interface';
 import { UserService } from 'src/app/services/user/user.service';
 import { BasketItem } from '../basket-view/basket-view.component';
 import { CheckoutViewState } from './models/checkout.enum';
@@ -22,7 +25,7 @@ export class CheckoutComponent implements OnInit {
   currentViewState: CheckoutViewState | undefined;
   currentUserID: string | null = '';
   user: User | undefined;
-  userProfile: UserProfile | null | undefined;
+  userProfile: AppUserProfile | null | undefined;
   basketContent: BasketItem[] = [];
   payFastParms: PayFastParms | undefined;
   selectedAddress: UserAddress | undefined;
@@ -73,7 +76,7 @@ export class CheckoutComponent implements OnInit {
       : this.viewState.IncompleteProfile;
   }
 
-  private buildUserProfile(user: User): UserProfile {
+  private buildUserProfile(user: User): AppUserProfile {
     const firstName =
       user.displayName?.substring(0, user.displayName?.indexOf(' ')) || '';
     const lastName =
@@ -84,21 +87,21 @@ export class CheckoutComponent implements OnInit {
       lastName,
       email: user.email,
       cellNumber: user.phoneNumber,
-    } as UserProfile;
+    } as AppUserProfile;
     return newUserProfile;
   }
 
-  setUserProfile(userProfile: UserProfile) {
+  setUserProfile(userProfile: AppUserProfile) {
     this.userProfile = userProfile;
     if (!this.currentUserID) return;
     this.userProfile.id = this.currentUserID;
     this.userService.setUserProfile(this.userProfile);
   }
 
-  isUserProfileComplete(userProfile: UserProfile): boolean {
+  isUserProfileComplete(userProfile: AppUserProfile): boolean {
     let isComplete = true;
     Object.keys(userProfile).forEach((key) => {
-      if (!userProfile[key as keyof UserProfile]) {
+      if (!userProfile[key as keyof AppUserProfile]) {
         isComplete = false;
       }
     });
@@ -109,7 +112,7 @@ export class CheckoutComponent implements OnInit {
     this.selectedAddress = address;
     this.payFastParms = await this.checkoutService.generatePayFastParameters(
       this.basketContent,
-      this.userProfile as UserProfile,
+      this.userProfile as AppUserProfile,
       this.selectedAddress
     );
     this.currentViewState = this.viewState.OrderConfirmation;

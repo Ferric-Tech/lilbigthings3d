@@ -1,6 +1,33 @@
 <div class="main-container">
   <div class="narrow-container">
     <div class="title">Your orders</div>
-    <div class="sub-title">Page under construction</div>
+    <div class="sub-title">Click on order to see full details</div>
+    <div class="order-container" *ngFor="let order of userOrders">
+      <div class="order-line-item">
+        <div class="order-line-item-label">Order:</div>
+        {{ order.orderNr }}
+      </div>
+      <div class="order-line-item">
+        <div class="order-line-item-label">Date:</div>
+        {{ order.date | date : "dd/MM/yyyy" }}
+        {{ order.date | date : " H:mm" }}
+      </div>
+      <div class="order-line-item">
+        <div class="order-line-item-label">Status:</div>
+        {{ order.status }}
+      </div>
+      <div>
+        <div class="order-line-item-label">Items:</div>
+        <div class="images-container">
+          <img
+            *ngFor="let item of order.items"
+            class="image-container"
+            src="{{ item.imageUrl }}"
+            alt=""
+          />
+        </div>
+      </div>
+      <div></div>
+    </div>
   </div>
 </div>
