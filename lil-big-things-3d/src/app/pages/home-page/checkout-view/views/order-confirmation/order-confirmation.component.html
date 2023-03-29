@@ -31,8 +31,8 @@
 </div>
 
 <form
-  *ngIf="payFastParms?.form"
-  action="https://www.payfast.co.za/eng/process"
+  *ngIf="payFastParms?.form && payFastParms?.url"
+  action="{{ payFastParms?.url }}"
   method="post"
 >
   <input

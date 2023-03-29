@@ -38,6 +38,7 @@ export interface PayFastFormParms {
 
 export interface PayFastParms {
   form: PayFastFormParms;
+  url: string;
   orderNr: string;
   orderTotal: number;
 }
@@ -76,13 +77,23 @@ export class CheckoutService {
       userProfile,
       orderTotal
     );
-    const passPhrase = 'ThisIsThe1AndOnly';
+    // const passPhrase = 'ThisIsThe1AndOnly';
+    const passPhrase = 'SaltAndPepperPig';
     paymentPayload.signature = this.generateSignature(
       paymentPayload,
       passPhrase
     );
+
+    const sandboxPostPaymentUrl = 'https://sandbox.payfast.co.za/eng/process';
+    const sandboxTransactionNotificationURL =
+      'https://sandbox.payfast.co.za/eng/query/validate';
+    // const livePostPaymentUrl = 'https://www.payfast.co.za/eng/process';
+    // const liveTransactionNotificationURL =
+    //   'https://www.payfast.co.za/eng/query/validate';
+
     return {
       form: paymentPayload,
+      url: sandboxPostPaymentUrl,
       orderNr: orderNr,
       orderTotal: orderTotal,
     };
@@ -93,17 +104,11 @@ export class CheckoutService {
     userProfile: AppUserProfile,
     orderTotal: number
   ): PayFastFormParms {
-    const sandboxPostPaymentUrl = 'https://sandbox.payfast.co.za/eng/process';
-    const sandboxTransactionNotificationURL =
-      'https://sandbox.payfast.co.za/eng/query/validate';
-    // const livePostPaymentUrl = 'https://www.payfast.co.za/eng/process';
-    // const liveTransactionNotificationURL =
-    //   'https://www.payfast.co.za/eng/query/validate';
     return {
-      merchant_id: '13393193',
-      merchant_key: '2cgbcr4cuy37f',
-      //   merchant_id: '10028928', // Test account
-      //   merchant_key: 'epkxlr70xksdr', // Test account
+      //   merchant_id: '13393193',
+      //   merchant_key: '2cgbcr4cuy37f',
+      merchant_id: '10028928', // Test account
+      merchant_key: 'epkxlr70xksdr', // Test account
       return_url: location.origin + '/payment-result/success',
       cancel_url: location.origin + '/payment-result/canceled',
       notify_url: location.origin + '/payment-result/notify',
