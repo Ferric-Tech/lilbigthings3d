@@ -5,18 +5,20 @@ import { LocalStorageItem } from './local-storage.enum';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
-
   get(item: LocalStorageItem) {
-    let content = window.localStorage.getItem(item);
+    const content = window.localStorage.getItem(item);
 
     if (!content) return;
     return JSON.parse(content);
   }
 
-  set(item: LocalStorageItem, content: any) {
+  set(item: LocalStorageItem, content: unknown) {
     if (!item || !content) return;
-
     window.localStorage.setItem(item, JSON.stringify(content));
+  }
+
+  clear(item: LocalStorageItem) {
+    if (!item) return;
+    window.localStorage.removeItem(item);
   }
 }

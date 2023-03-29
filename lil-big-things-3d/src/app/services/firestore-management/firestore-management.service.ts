@@ -217,7 +217,8 @@ export class FirestoreManagementService {
     }
 
     userProfile.id = order.userID;
-    this.setUserProfile(userProfile);
+      this.setUserProfile(userProfile);
+      
     return orderDocRef.id;
   }
 

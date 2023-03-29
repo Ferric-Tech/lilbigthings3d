@@ -5,6 +5,13 @@ import { FirestoreManagementService } from '../firestore-management/firestore-ma
 import { UserAddress, AppUserProfile } from '../user/user.interface';
 import { Md5 } from 'ts-md5';
 import { OrdersService } from '../orders.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
+import { LocalStorageItem } from '../local-storage/local-storage.enum';
+import { EventManagementService } from '../event-management/event-management.service';
+import {
+  EventChannel,
+  EventTopic,
+} from '../event-management/event-management.enum';
 
 export interface PayFastFormParms {
   [key: string]: string;
@@ -39,7 +46,11 @@ export interface PayFastParms {
   providedIn: 'root',
 })
 export class CheckoutService {
-  constructor(private readonly orderService: OrdersService) {}
+  constructor(
+    private readonly orderService: OrdersService,
+    private readonly localStorageService: LocalStorageService,
+    private readonly eventService: EventManagementService
+  ) {}
 
   async generatePayFastParameters(
     basketContent: BasketItem[],
@@ -51,6 +62,14 @@ export class CheckoutService {
       userProfile,
       deliveryAddress
     );
+    if (orderNr) {
+      this.localStorageService.clear(LocalStorageItem.Basket);
+      this.eventService.publish(
+        EventChannel.Product,
+        EventTopic.BasketContentAmended
+      );
+    }
+
     const orderTotal = this.orderService.getOrderTotal(basketContent);
     const paymentPayload = this.setPaymentPayload(
       orderNr,
