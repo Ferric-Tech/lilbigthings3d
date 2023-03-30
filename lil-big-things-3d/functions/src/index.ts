@@ -39,9 +39,10 @@ exports.processPaymentNotification = functions.https.onRequest(
 
     // Get index of order in user profile
     let userOrderIndex = 0;
+    let userOrders = [];
     if (userProfile) {
-      const userOrders = userProfile['orders'];
-      userOrderIndex = userOrders.find((order: Record<string, string>) => {
+      userOrders = userProfile['orders'];
+      userOrderIndex = userOrders.findIndex((order: Record<string, string>) => {
         return order['orderNr'] === orderNr;
       });
     }
