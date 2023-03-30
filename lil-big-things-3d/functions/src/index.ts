@@ -11,57 +11,88 @@ import axios from 'axios';
 
 exports.processPaymentNotification = functions.https.onRequest(
   async (req, res) => {
-    const pfValidPaymentData = (
-      cartTotal: string,
-      pfData: { [x: string]: string }
-    ) => {
-      return (
-        Math.abs(parseFloat(cartTotal) - parseFloat(pfData['amount_gross'])) <=
-        0.01
-      );
-    };
+    const paymentNotificationContent = req.body;
 
-    const pfValidServerConfirmation = async (
-      pfHost: unknown,
-      pfParamString: unknown
-    ) => {
-      const result = await axios
-        .post(`https://${pfHost}/eng/query/validate`, pfParamString)
-        .then((res) => {
-          return res.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      return result === 'VALID';
-    };
-
+    // Set parameters for processing
     const testingMode = true;
     const passPhrase = testingMode ? 'SaltAndPepperPig' : 'ThisIsThe1AndOnly'; // Testing
     const pfHost = testingMode ? 'sandbox.payfast.co.za' : 'www.payfast.co.za';
 
-    const paymentNotificationContent = req.body;
+    // Get order details
+    const db = admin.firestore();
+    const orderNr = paymentNotificationContent['item_name'];
+    const orderDocRef = db.collection('orders').doc(orderNr);
+    const orderDetailsDoc = await orderDocRef.get();
+    const orderDetails = orderDetailsDoc.data();
 
-    const cartTotal = paymentNotificationContent['amount_gross'];
+    let cartTotal = '';
+    let userID = '';
+    if (orderDetails) {
+      cartTotal = orderDetails['orderTotal'].toString();
+      userID = orderDetails['userID'];
+    }
+
+    // Get user profile
+    const userProfileDocRef = db.collection('user-profile').doc(userID);
+    const userProfilesDoc = await userProfileDocRef.get();
+    const userProfile = userProfilesDoc.data();
+
+    // Get index of order in user profile
+    let userOrderIndex = 0;
+    if (userProfile) {
+      const userOrders = userProfile['orders'];
+      userOrderIndex = userOrders.find((order: Record<string, string>) => {
+        return order['orderNr'] === orderNr;
+      });
+    }
+
+    // Generate param string
     const paramString = generateParamString(paymentNotificationContent);
 
+    // Perform validation checks
     const isValidSignature = isValidSignatureCheck(
       paymentNotificationContent,
       paramString,
       passPhrase
     );
     const isValidIP = await isValidIPCheck(req);
-    const check3 = pfValidPaymentData(cartTotal, paymentNotificationContent);
-    const check4 = pfValidServerConfirmation(pfHost, paramString);
+    const validPaymentData = validPaymentDataCheck(
+      cartTotal,
+      paymentNotificationContent
+    );
+    const validServerConfirmation = await validServerConfirmationCheck(
+      pfHost,
+      paramString
+    );
 
-    if (isValidSignature && isValidIP && check3 && (await check4)) {
-      // Push the new message into Firestore using the Firebase Admin SDK.
-      paymentNotificationContent['matched'] = true;
-      // Send back a message that we've successfully written the message
-    } else {
-      paymentNotificationContent['matched'] = false;
+    // Update payment notification content with validation status
+    const allChecksPassed =
+      isValidSignature &&
+      isValidIP &&
+      validPaymentData &&
+      validServerConfirmation;
+    paymentNotificationContent['notification-validated'] = allChecksPassed;
+
+    // Update user orders
+    if (allChecksPassed && userProfile) {
+      userProfile['orders'][userOrderIndex]['status'] = 'Paid';
+      const docRef = db.collection('user-profiles').doc(userID);
+      docRef.set(userProfile);
     }
 
+    // Update  order
+    if (allChecksPassed && orderDetails) {
+      orderDetails['status'] = 'Paid';
+      const docRef = db.collection('orders').doc(orderNr);
+      docRef.set(orderDetails);
+    }
+
+    await admin
+      .firestore()
+      .collection('output')
+      .add({ ...orderDetails, ...userProfile });
+
+    // Record the payment notification
     const writeResult = await admin
       .firestore()
       .collection('payment-notifications')
@@ -149,4 +180,31 @@ async function isValidIPCheck(req: functions.https.Request): Promise<boolean> {
     return true;
   }
   return false;
+}
+
+function validPaymentDataCheck(
+  cartTotal: string,
+  paymentNotificationContent: Record<string, string>
+): boolean {
+  return (
+    Math.abs(
+      parseFloat(cartTotal) -
+        parseFloat(paymentNotificationContent['amount_gross'])
+    ) <= 0.01
+  );
+}
+
+async function validServerConfirmationCheck(
+  pfHost: unknown,
+  pfParamString: unknown
+): Promise<boolean> {
+  const result = await axios
+    .post(`https://${pfHost}/eng/query/validate`, pfParamString)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return result === 'VALID';
 }

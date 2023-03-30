@@ -24,6 +24,7 @@ export interface UserOrder {
   items: BasketItem[];
   deliveryAddress: UserAddress;
   status: OrderStatus;
+  orderTotal: number;
 }
 
 @Injectable({
@@ -35,7 +36,8 @@ export class OrdersService {
   async generateOrder(
     basketContent: BasketItem[],
     userProfile: AppUserProfile,
-    deliveryAddress: UserAddress
+    deliveryAddress: UserAddress,
+    orderTotal: number
   ): Promise<string> {
     if (!userProfile.id) return '';
     const order: UserOrder = {
@@ -44,6 +46,7 @@ export class OrdersService {
       items: basketContent,
       deliveryAddress,
       status: OrderStatus.Pending,
+      orderTotal,
     };
     return await this.fs.addOrder(order);
   }

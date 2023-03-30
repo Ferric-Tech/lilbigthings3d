@@ -57,10 +57,13 @@ export class CheckoutService {
     userProfile: AppUserProfile,
     deliveryAddress: UserAddress
   ): Promise<PayFastParms> {
+    const orderTotal = this.orderService.getOrderTotal(basketContent);
+
     const orderNr = await this.orderService.generateOrder(
       basketContent,
       userProfile,
-      deliveryAddress
+      deliveryAddress,
+      orderTotal
     );
     if (orderNr) {
       this.localStorageService.clear(LocalStorageItem.Basket);
@@ -70,7 +73,6 @@ export class CheckoutService {
       );
     }
 
-    const orderTotal = this.orderService.getOrderTotal(basketContent);
     const paymentPayload = this.setPaymentPayload(
       orderNr,
       userProfile,
