@@ -3,6 +3,7 @@
   [currentAddress]="currentAddress"
   (addressSubmitted)="onNewAddressSubmitted($event)"
   (addressUpdated)="onAddressUpdated($event)"
+  (cancel)="onAddressAddCancel()"
 ></app-delivery-address-form>
 <div class="main-container" *ngIf="userAddresses && !addNewAddress">
   <div class="title">Select delivery address</div>

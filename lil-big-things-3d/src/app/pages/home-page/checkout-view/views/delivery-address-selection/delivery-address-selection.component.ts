@@ -108,4 +108,8 @@ export class DeliveryAddressSelectionComponent implements OnInit {
     if (!this.userProfile) return;
     this.userAddresses = this.userProfile.deliveryAddresses;
   }
+
+  onAddressAddCancel() {
+    this.addNewAddress = false;
+  }
 }

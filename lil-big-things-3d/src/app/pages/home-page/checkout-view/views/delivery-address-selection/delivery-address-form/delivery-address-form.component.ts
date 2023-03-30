@@ -19,6 +19,7 @@ export class DeliveryAddressFormComponent implements OnInit {
   @Input() currentAddress: UserAddress | undefined;
   @Output() addressSubmitted: EventEmitter<UserAddress> = new EventEmitter();
   @Output() addressUpdated: EventEmitter<UserAddress> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   addressType = AddressType;
 
@@ -80,5 +81,8 @@ export class DeliveryAddressFormComponent implements OnInit {
     }
 
     this.addressUpdated.emit(this.deliveryAddressForm.value as UserAddress);
+  }
+  onCancelClick() {
+    this.cancel.emit();
   }
 }
