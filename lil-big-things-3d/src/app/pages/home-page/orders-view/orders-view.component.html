@@ -1,8 +1,12 @@
 <div class="main-container">
-  <div class="narrow-container">
+  <div class="narrow-container" *ngIf="!showOrderDetail">
     <div class="title">Your orders</div>
     <div class="sub-title">Click on order to see full details</div>
-    <div class="order-container" *ngFor="let order of userOrders">
+    <div
+      class="order-container"
+      *ngFor="let order of userOrders"
+      (click)="onOrderClick(order)"
+    >
       <div class="order-line-item">
         <div class="order-line-item-label">Order:</div>
         {{ order.orderNr }}
@@ -30,4 +34,11 @@
       <div></div>
     </div>
   </div>
+
+  <app-order-detail
+    class="narrow-container"
+    *ngIf="showOrderDetail"
+    [order]="currentOrder"
+    (back)="onDetailClose()"
+  ></app-order-detail>
 </div>

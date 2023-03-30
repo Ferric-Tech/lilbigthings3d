@@ -73,6 +73,7 @@ import { SignOutDialogComponent } from './shared/sign-out-dialog/sign-out-dialog
 import { GoogleButtonComponent } from './pages/home-page/shared-components/user-sign-in/google-button/google-button.component';
 import { FacebookButtonComponent } from './pages/home-page/shared-components/user-sign-in/facebook-button/facebook-button.component';
 import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/navbar-menu/navbar-menu.component';
+import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/
     GoogleButtonComponent,
     FacebookButtonComponent,
     NavbarMenuComponent,
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,

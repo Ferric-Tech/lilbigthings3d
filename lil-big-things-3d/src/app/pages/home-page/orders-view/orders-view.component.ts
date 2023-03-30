@@ -11,6 +11,9 @@ import { OrdersService, UserOrder } from 'src/app/services/orders.service';
 })
 export class OrdersViewComponent implements OnInit {
   userOrders: UserOrder[] = [];
+  currentOrder: UserOrder | undefined;
+  showOrderDetail = false;
+
   constructor(
     private readonly orderService: OrdersService,
     private readonly authService: AuthenticationService,
@@ -31,5 +34,14 @@ export class OrdersViewComponent implements OnInit {
     }
 
     this.cd.detectChanges();
+  }
+
+  onOrderClick(order: UserOrder) {
+    this.currentOrder = order;
+    this.showOrderDetail = true;
+  }
+
+  onDetailClose() {
+    this.showOrderDetail = false;
   }
 }
