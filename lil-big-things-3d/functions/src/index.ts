@@ -33,7 +33,7 @@ exports.processPaymentNotification = functions.https.onRequest(
     }
 
     // Get user profile
-    const userProfileDocRef = db.collection('user-profile').doc(userID);
+    const userProfileDocRef = db.collection('user-profiles').doc(userID);
     const userProfilesDoc = await userProfileDocRef.get();
     const userProfile = userProfilesDoc.data();
 
@@ -86,11 +86,6 @@ exports.processPaymentNotification = functions.https.onRequest(
       const docRef = db.collection('orders').doc(orderNr);
       docRef.set(orderDetails);
     }
-
-    await admin
-      .firestore()
-      .collection('output')
-      .add({ ...orderDetails, ...userProfile });
 
     // Record the payment notification
     const writeResult = await admin
