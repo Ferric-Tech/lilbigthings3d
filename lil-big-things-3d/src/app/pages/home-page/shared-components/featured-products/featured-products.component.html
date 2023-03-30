@@ -7,7 +7,10 @@
       [product]="product"
     ></app-product-card>
   </div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div class="spinner-container" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <div class="spinner-text">One moment...</div>
+  </div>
 </div>
 
 <div *ngIf="isMobileView" class="main-container">

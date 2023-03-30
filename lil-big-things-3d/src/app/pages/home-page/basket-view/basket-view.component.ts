@@ -78,4 +78,8 @@ export class BasketViewComponent implements OnInit {
       duration: 3000,
     });
   }
+
+  onViewProductsClick() {
+    this.router.navigate(['']);
+  }
 }
