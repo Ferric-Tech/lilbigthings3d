@@ -4,9 +4,12 @@ import { FirestoreManagementService } from './firestore-management/firestore-man
 import { AppUserProfile, UserAddress } from './user/user.interface';
 
 export enum OrderStatus {
+  // Default
   Pending = 'Pending',
-  Cancelled = 'Cancelled',
+  // Pre-production
   Paid = 'Paid',
+  Cancelled = 'Cancelled',
+  // Production
   ProductionToCommense = 'Production to commense',
   Production = 'In production',
   ProductionCompletePendingDispatched = 'Production complete, pending dispatch',

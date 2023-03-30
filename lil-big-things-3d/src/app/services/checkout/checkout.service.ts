@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
-import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
 import { UserAddress, AppUserProfile } from '../user/user.interface';
 import { Md5 } from 'ts-md5';
 import { OrdersService } from '../orders.service';
@@ -111,7 +110,8 @@ export class CheckoutService {
       merchant_key: 'epkxlr70xksdr', // Test account
       return_url: location.origin + '/payment-result/success',
       cancel_url: location.origin + '/payment-result/canceled',
-      notify_url: location.origin + '/payment-result/notify',
+      notify_url:
+        'https://us-central1-lilbigthings3d.cloudfunctions.net/processPaymentNotification',
       name_first: userProfile.firstName,
       name_last: userProfile.lastName,
       //   email_address: userProfile.email,
