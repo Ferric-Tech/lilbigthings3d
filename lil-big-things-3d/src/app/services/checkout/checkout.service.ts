@@ -77,8 +77,8 @@ export class CheckoutService {
       userProfile,
       orderTotal
     );
-    // const passPhrase = 'ThisIsThe1AndOnly';
-    const passPhrase = 'SaltAndPepperPig';
+    // const passPhrase = 'ThisIsThe1AndOnly'; // Live
+    const passPhrase = 'SaltAndPepperPig'; // Testing
     paymentPayload.signature = this.generateSignature(
       paymentPayload,
       passPhrase
