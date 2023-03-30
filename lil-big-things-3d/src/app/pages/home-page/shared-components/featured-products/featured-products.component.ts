@@ -23,12 +23,14 @@ export class FeaturedProductsComponent implements OnInit {
   isMobileView = false;
   cardInFocusIndex = 0;
   dragPosition = { x: 0, y: 0 };
+  isLoading = true;
 
   constructor(private readonly fs: FirestoreManagementService) {}
 
   async ngOnInit(): Promise<void> {
     this.determineView();
     await this.setFeaturedProducts();
+    this.isLoading = false;
   }
 
   onCardSwipe(event: { distance: { x: number } }) {
@@ -41,6 +43,7 @@ export class FeaturedProductsComponent implements OnInit {
     if (!toggleCard) return;
 
     // Swipe left
+    this.isLoading = true;
     if (event.distance.x < 0) {
       if (this.cardInFocusIndex === this.productsForDisplay.length - 1) {
         // Last card
@@ -49,16 +52,27 @@ export class FeaturedProductsComponent implements OnInit {
         this.cardInFocusIndex = this.cardInFocusIndex + 1;
       }
     }
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 200);
 
     // Swipe right
+    this.isLoading = true;
     if (event.distance.x > 0) {
       if (this.cardInFocusIndex === 0) {
         // First card
+        this.isLoading = true;
         this.cardInFocusIndex = this.productsForDisplay.length - 1;
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       } else {
         this.cardInFocusIndex = this.cardInFocusIndex - 1;
       }
     }
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 200);
 
     this.dragPosition = { x: 0, y: 0 };
   }
