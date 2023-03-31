@@ -74,6 +74,7 @@ import { GoogleButtonComponent } from './pages/home-page/shared-components/user-
 import { FacebookButtonComponent } from './pages/home-page/shared-components/user-sign-in/facebook-button/facebook-button.component';
 import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/navbar-menu/navbar-menu.component';
 import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail/order-detail.component';
+import { OrderOptionDialogComponent } from './pages/home-page/orders-view/order-option-dialog/order-option-dialog.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail
     FacebookButtonComponent,
     NavbarMenuComponent,
     OrderDetailComponent,
+    OrderOptionDialogComponent,
   ],
   imports: [
     BrowserModule,

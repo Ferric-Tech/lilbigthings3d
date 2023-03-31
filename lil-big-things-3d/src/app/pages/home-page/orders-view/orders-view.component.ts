@@ -13,6 +13,8 @@ export class OrdersViewComponent implements OnInit {
   userOrders: UserOrder[] = [];
   currentOrder: UserOrder | undefined;
   showOrderDetail = false;
+  showOptions = false;
+  addressIndexInFocus = 0;
 
   constructor(
     private readonly orderService: OrdersService,
@@ -43,5 +45,29 @@ export class OrdersViewComponent implements OnInit {
 
   onDetailClose() {
     this.showOrderDetail = false;
+  }
+
+  onOrderOptionsClicked(event: Event, index: number) {
+    event.stopPropagation();
+    this.addressIndexInFocus = index;
+    this.showOptions = true;
+  }
+
+  onArchiveOrderClicked() {
+    // TODO
+  }
+
+  onOrderRepeatClicked() {
+    // TODO
+  }
+
+  onViewOrderClicked() {
+    this.currentOrder = this.userOrders[this.addressIndexInFocus];
+    this.showOrderDetail = true;
+    this.showOptions = false;
+  }
+
+  closeOptionDialog() {
+    this.showOptions = false;
   }
 }

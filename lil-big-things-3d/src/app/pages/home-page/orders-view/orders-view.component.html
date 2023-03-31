@@ -4,7 +4,7 @@
     <div class="sub-title">Click on order to see full details</div>
     <div
       class="order-container"
-      *ngFor="let order of userOrders"
+      *ngFor="let order of userOrders; let i = index"
       (click)="onOrderClick(order)"
     >
       <div class="order-line-item">
@@ -21,7 +21,6 @@
         {{ order.status }}
       </div>
       <div>
-        <div class="order-line-item-label">Items:</div>
         <div class="images-container">
           <img
             *ngFor="let item of order.items"
@@ -29,9 +28,13 @@
             src="{{ item.imageUrl }}"
             alt=""
           />
+          <mat-icon
+            class="order-options-icon"
+            (click)="onOrderOptionsClicked($event, i)"
+            >more_horiz</mat-icon
+          >
         </div>
       </div>
-      <div></div>
     </div>
   </div>
 
@@ -41,4 +44,12 @@
     [order]="currentOrder"
     (back)="onDetailClose()"
   ></app-order-detail>
+
+  <app-order-option-dialog
+    *ngIf="showOptions"
+    (archive)="onArchiveOrderClicked()"
+    (repeat)="onOrderRepeatClicked()"
+    (view)="onViewOrderClicked()"
+    (closeDialog)="closeOptionDialog()"
+  ></app-order-option-dialog>
 </div>
