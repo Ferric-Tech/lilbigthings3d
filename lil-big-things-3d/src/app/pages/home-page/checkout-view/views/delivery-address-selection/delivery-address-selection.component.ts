@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import {
@@ -16,11 +24,17 @@ export class DeliveryAddressSelectionComponent implements OnInit {
   @Input() userProfile: AppUserProfile | null | undefined;
   @Output() addressSelected: EventEmitter<UserAddress> = new EventEmitter();
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.determineView();
+  }
+
   selectedAddressForm = new FormGroup({
     selectedAddress: new FormControl('', Validators.required),
   });
 
   userAddresses: UserAddress[] | undefined;
+  isMobileView = false;
   addNewAddress = false;
   showOptions = false;
   addressIndexInFocus = 0;
@@ -28,10 +42,13 @@ export class DeliveryAddressSelectionComponent implements OnInit {
 
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthenticationService
+    private readonly authService: AuthenticationService,
+    private readonly cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
+    this.determineView();
+
     this.getUserAddresses();
   }
 
@@ -111,5 +128,10 @@ export class DeliveryAddressSelectionComponent implements OnInit {
 
   onAddressAddCancel() {
     this.addNewAddress = false;
+  }
+
+  private determineView() {
+    this.isMobileView = window.innerWidth < 400;
+    this.cd.detectChanges();
   }
 }
