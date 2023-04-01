@@ -217,8 +217,8 @@ export class FirestoreManagementService {
     }
 
     userProfile.id = order.userID;
-      this.setUserProfile(userProfile);
-      
+    this.setUserProfile(userProfile);
+
     return orderDocRef.id;
   }
 
@@ -236,6 +236,27 @@ export class FirestoreManagementService {
     if (!userProfile.id) return;
     const userID = userProfile.id;
     delete userProfile.id;
+    setDoc(doc(this.db, 'user-profiles', userID), userProfile, { merge: true });
+  }
+
+  getOrderByID(id: string): Promise<UserOrder> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const docRef = doc(this.db, 'orders', id);
+      const docSnap = await getDoc(docRef);
+      const order = docSnap.data() as UserOrder;
+      resolve(order);
+    });
+  }
+
+  updateOrder(orderNumber: string, order: UserOrder): void {
+    console.log(order);
+    setDoc(doc(this.db, 'orders', orderNumber), order, { merge: true });
+  }
+
+  async updateUserOrders(userID: string, orders: UserOrder[]): Promise<void> {
+    const userProfile = await this.getUserProfile(userID);
+    userProfile.orders = orders;
     setDoc(doc(this.db, 'user-profiles', userID), userProfile, { merge: true });
   }
 }

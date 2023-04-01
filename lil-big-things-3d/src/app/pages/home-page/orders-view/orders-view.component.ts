@@ -14,6 +14,7 @@ export class OrdersViewComponent implements OnInit {
   currentOrder: UserOrder | undefined;
   showOrderDetail = false;
   showOptions = false;
+  showArchivedOrders = false;
   addressIndexInFocus = 0;
 
   constructor(
@@ -53,8 +54,16 @@ export class OrdersViewComponent implements OnInit {
     this.showOptions = true;
   }
 
+  onShowArchivedOrdersClicked() {
+    this.showArchivedOrders = !this.showArchivedOrders;
+  }
+
   onArchiveOrderClicked() {
-    // TODO
+    this.userOrders[this.addressIndexInFocus].archived = true;
+    this.orderService.archiveOrder(
+      this.userOrders[this.addressIndexInFocus].orderNr as string
+    );
+    this.showOptions = false;
   }
 
   onOrderRepeatClicked() {

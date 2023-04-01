@@ -25,6 +25,7 @@ export interface UserOrder {
   deliveryAddress: UserAddress;
   status: OrderStatus;
   orderTotal: number;
+  archived: boolean;
 }
 
 @Injectable({
@@ -47,6 +48,7 @@ export class OrdersService {
       deliveryAddress,
       status: OrderStatus.Pending,
       orderTotal,
+      archived: false,
     };
     return await this.fs.addOrder(order);
   }
@@ -62,5 +64,17 @@ export class OrdersService {
   async getUserOrdersByID(id: string): Promise<UserOrder[]> {
     const userProfile = await this.fs.getUserProfile(id);
     return userProfile.orders ? userProfile.orders : [];
+  }
+
+  async archiveOrder(orderNumber: string) {
+    const order = await this.fs.getOrderByID(orderNumber);
+    const userOrders = await this.getUserOrdersByID(order.userID);
+    const userOrderIndex = userOrders.findIndex((focusOrder) => {
+      return focusOrder.orderNr === orderNumber;
+    });
+    order.archived = true;
+    userOrders[userOrderIndex].archived = true;
+    this.fs.updateUserOrders(order.userID, userOrders);
+    this.fs.updateOrder(orderNumber, order);
   }
 }
