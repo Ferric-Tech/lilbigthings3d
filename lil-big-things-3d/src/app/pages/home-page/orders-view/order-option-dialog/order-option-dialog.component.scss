@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   .card-container {
     z-index: 4;
     opacity: 1;
@@ -51,6 +51,7 @@
       .button-seconday {
         background-color: rgb(255, 165, 165);
         color: black;
+        background-color: rgb(165, 255, 169);
       }
     }
   }

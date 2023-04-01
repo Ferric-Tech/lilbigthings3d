@@ -19,6 +19,8 @@
         [ngStyle]="
           order.status === 'Pending'
             ? { 'background-color': 'rgb(255, 165, 165)' }
+            : order.status === 'Complete'
+            ? { 'background-color': 'rgb(165, 255, 169)' }
             : {}
         "
         *ngIf="!order.archived || showArchivedOrders"
