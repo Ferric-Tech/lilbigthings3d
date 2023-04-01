@@ -16,6 +16,11 @@
     >
       <div
         class="order-container"
+        [ngStyle]="
+          order.status === 'Pending'
+            ? { 'background-color': 'rgb(255, 165, 165)' }
+            : {}
+        "
         *ngIf="!order.archived || showArchivedOrders"
       >
         <div class="order-line-item">
