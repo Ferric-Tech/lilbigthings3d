@@ -15,7 +15,7 @@ export class OrdersViewComponent implements OnInit {
   showOrderDetail = false;
   showOptions = false;
   showArchivedOrders = false;
-  addressIndexInFocus = 0;
+  orderIndexInFocus = 0;
 
   constructor(
     private readonly orderService: OrdersService,
@@ -50,7 +50,7 @@ export class OrdersViewComponent implements OnInit {
 
   onOrderOptionsClicked(event: Event, index: number) {
     event.stopPropagation();
-    this.addressIndexInFocus = index;
+    this.orderIndexInFocus = index;
     this.showOptions = true;
   }
 
@@ -59,9 +59,17 @@ export class OrdersViewComponent implements OnInit {
   }
 
   onArchiveOrderClicked() {
-    this.userOrders[this.addressIndexInFocus].archived = true;
+    this.userOrders[this.orderIndexInFocus].archived = true;
     this.orderService.archiveOrder(
-      this.userOrders[this.addressIndexInFocus].orderNr as string
+      this.userOrders[this.orderIndexInFocus].orderNr as string
+    );
+    this.showOptions = false;
+  }
+
+  onUnArchiveOrderClicked() {
+    this.userOrders[this.orderIndexInFocus].archived = false;
+    this.orderService.unarchiveOrder(
+      this.userOrders[this.orderIndexInFocus].orderNr as string
     );
     this.showOptions = false;
   }
@@ -71,7 +79,7 @@ export class OrdersViewComponent implements OnInit {
   }
 
   onViewOrderClicked() {
-    this.currentOrder = this.userOrders[this.addressIndexInFocus];
+    this.currentOrder = this.userOrders[this.orderIndexInFocus];
     this.showOrderDetail = true;
     this.showOptions = false;
   }

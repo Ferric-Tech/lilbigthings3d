@@ -77,4 +77,16 @@ export class OrdersService {
     this.fs.updateUserOrders(order.userID, userOrders);
     this.fs.updateOrder(orderNumber, order);
   }
+
+  async unarchiveOrder(orderNumber: string) {
+    const order = await this.fs.getOrderByID(orderNumber);
+    const userOrders = await this.getUserOrdersByID(order.userID);
+    const userOrderIndex = userOrders.findIndex((focusOrder) => {
+      return focusOrder.orderNr === orderNumber;
+    });
+    order.archived = false;
+    userOrders[userOrderIndex].archived = false;
+    this.fs.updateUserOrders(order.userID, userOrders);
+    this.fs.updateOrder(orderNumber, order);
+  }
 }

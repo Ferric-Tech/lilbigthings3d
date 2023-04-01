@@ -68,7 +68,9 @@
 
   <app-order-option-dialog
     *ngIf="showOptions"
+    [isArchived]="this.userOrders[this.orderIndexInFocus].archived"
     (archive)="onArchiveOrderClicked()"
+    (unarchive)="onUnArchiveOrderClicked()"
     (repeat)="onOrderRepeatClicked()"
     (view)="onViewOrderClicked()"
     (closeDialog)="closeOptionDialog()"

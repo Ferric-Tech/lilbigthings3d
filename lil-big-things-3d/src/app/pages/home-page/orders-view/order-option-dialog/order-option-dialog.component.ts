@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-order-option-dialog',
@@ -6,7 +6,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./order-option-dialog.component.scss'],
 })
 export class OrderOptionDialogComponent {
+  @Input() isArchived: boolean | undefined;
   @Output() archive: EventEmitter<void> = new EventEmitter();
+  @Output() unarchive: EventEmitter<void> = new EventEmitter();
   @Output() repeat: EventEmitter<void> = new EventEmitter();
   @Output() view: EventEmitter<void> = new EventEmitter();
   @Output() closeDialog: EventEmitter<void> = new EventEmitter();
@@ -15,6 +17,10 @@ export class OrderOptionDialogComponent {
 
   onArchiveClicked() {
     this.archive.emit();
+  }
+
+  onUnArchiveClicked() {
+    this.unarchive.emit();
   }
 
   onRepeatClicked() {
