@@ -17,7 +17,9 @@
       <div
         class="order-container"
         [ngStyle]="
-          order.status === 'Pending'
+          order.archived
+            ? { 'background-color': 'rgb(179, 185, 179)' }
+            : order.status === 'Pending'
             ? { 'background-color': 'rgb(255, 165, 165)' }
             : order.status === 'Complete'
             ? { 'background-color': 'rgb(165, 255, 169)' }
