@@ -1,9 +1,9 @@
 mat-card {
   display: flex;
-  width: fit-content;
-  min-width: 55%;
+  width: calc(100% - 20px);
   padding: 8px;
   margin: 10px;
+  max-height: 50%;
 }
 
 .material-input-header {

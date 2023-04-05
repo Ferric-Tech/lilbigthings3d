@@ -4,6 +4,7 @@ import { Timestamp } from '@angular/fire/firestore';
 
 export enum MaterialType {
   PLA = 'PLA',
+  ABS = 'ABS',
 }
 
 export enum MeasurementBasis {

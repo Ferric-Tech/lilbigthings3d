@@ -19,6 +19,7 @@ export class NewMaterialInputDialogComponent {
   materialType = Object.values(MaterialType);
   materialTypeMapping: Record<MaterialType, string> = {
     [MaterialType.PLA]: 'PLA (Polylactic acid)',
+    [MaterialType.ABS]: 'ABS (Acrylonitrile Butadiene Styrene)',
   };
 
   MeasurementBasis = MeasurementBasis;

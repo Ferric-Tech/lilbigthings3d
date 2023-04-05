@@ -76,13 +76,15 @@ import { FacebookButtonComponent } from './pages/home-page/shared-components/use
 import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/navbar-menu/navbar-menu.component';
 import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail/order-detail.component';
 import { OrderOptionDialogComponent } from './pages/home-page/orders-view/order-option-dialog/order-option-dialog.component';
-import { CostsDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/costs-dashboard.component';
-import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/material-schedule.component';
-import { NewMaterialInputDialogComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/new-material-input-dialog/new-material-input-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PricingDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/pricing-dashboard/pricing-dashboard.component';
+import { CostsDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/costs-dashboard.component';
+import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-schedule/material-schedule.component';
+import { NewMaterialInputDialogComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-schedule/new-material-input-dialog/new-material-input-dialog.component';
+import { MaterialPricingScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/pricing-dashboard/material-pricing-schedule/material-pricing-schedule.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -130,6 +132,7 @@ import { PricingDashboardComponent } from './pages/admin-page/admin-dashboard/co
     MaterialScheduleComponent,
     NewMaterialInputDialogComponent,
     PricingDashboardComponent,
+    MaterialPricingScheduleComponent,
   ],
   imports: [
     BrowserModule,
@@ -161,6 +164,7 @@ import { PricingDashboardComponent } from './pages/admin-page/admin-dashboard/co
     MatNativeDateModule,
     MatTooltipModule,
     MatSelectModule,
+    MatExpansionModule,
   ],
   providers: [
     ScreenTrackingService,

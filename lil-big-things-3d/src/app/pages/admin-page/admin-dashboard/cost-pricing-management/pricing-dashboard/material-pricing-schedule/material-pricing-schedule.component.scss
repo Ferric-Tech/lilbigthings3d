@@ -1,0 +1,24 @@
+.bold {
+  font-weight: bold;
+}
+
+.content-row,
+.content-header-row {
+  display: flex;
+  flex-direction: row !important;
+  width: 100%;
+}
+
+.description-column {
+  display: flex;
+  width: 31%;
+}
+
+.general-column {
+  display: flex;
+  width: 23%;
+
+  .header-content {
+    padding: 0 10px;
+  }
+}
