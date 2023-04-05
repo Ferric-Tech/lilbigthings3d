@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UserOrder } from 'src/app/services/orders.service';
+import { UserOrder } from 'src/app/services/orders/orders.service';
 
 @Component({
   selector: 'app-order-detail',

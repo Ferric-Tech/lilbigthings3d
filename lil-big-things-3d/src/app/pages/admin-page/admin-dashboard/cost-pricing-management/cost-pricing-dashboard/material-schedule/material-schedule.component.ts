@@ -1,9 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MaterialService } from 'src/app/services/materials/material.service';
+import { Timestamp } from '@angular/fire/firestore';
+
+export enum MaterialType {
+  PLA = 'PLA',
+}
+
+export enum MeasurementBasis {
+  Weight = 'Weight',
+  Length = 'Length',
+}
+
+export enum MaterialInputStatus {
+  Ordered = 'Ordered',
+  Delivered = 'Delivered',
+}
 
 export interface MaterialInput {
   purchaseDate: Date;
   supplier: string;
-  materialType: string;
+  materialType: MaterialType;
   qtyUnitType: string;
   qtyPerUnit: number;
   qtyUnit: number;
@@ -21,29 +37,10 @@ export class MaterialScheduleComponent implements OnInit {
 
   showNewMaterialInputDialog = false;
 
-  ngOnInit() {
-    this.materialInputs = [
-      {
-        purchaseDate: new Date(),
-        supplier: 'A supplier',
-        materialType: 'PLA',
-        qtyUnitType: 'Weight',
-        qtyPerUnit: 2,
-        qtyUnit: 2,
-        costPerUnit: 400,
-        status: 'Delivered',
-      },
-      {
-        purchaseDate: new Date(),
-        supplier: 'A supplier',
-        materialType: 'PLA',
-        qtyUnitType: 'Weight',
-        qtyPerUnit: 1,
-        qtyUnit: 1,
-        costPerUnit: 350,
-        status: 'Delivered',
-      },
-    ];
+  constructor(private readonly materialService: MaterialService) {}
+
+  async ngOnInit() {
+    await this.getMaterialInputs();
   }
 
   onNewMaterialInputClick() {
@@ -52,5 +49,20 @@ export class MaterialScheduleComponent implements OnInit {
 
   onNewMaterialInputDialogCancel() {
     this.showNewMaterialInputDialog = false;
+  }
+
+  handleNewMaterialInput(newMaterialInput: MaterialInput) {
+    this.materialService.addNewMaterialInput(newMaterialInput);
+    this.materialInputs.push(newMaterialInput);
+    this.showNewMaterialInputDialog = false;
+  }
+
+  async getMaterialInputs() {
+    this.materialInputs = await this.materialService.getAllNewMaterialInputs();
+    for (const input of this.materialInputs) {
+      input.purchaseDate = (
+        input.purchaseDate as unknown as Timestamp
+      ).toDate();
+    }
   }
 }

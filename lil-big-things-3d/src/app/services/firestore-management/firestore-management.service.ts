@@ -25,8 +25,9 @@ import {
   ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 import { environment } from 'src/environments/environment';
-import { UserOrder } from '../orders.service';
 import { AppUserProfile } from '../user/user.interface';
+import { UserOrder } from '../orders/orders.service';
+import { MaterialInput } from 'src/app/pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/material-schedule.component';
 
 @Injectable({
   providedIn: 'root',
@@ -250,7 +251,6 @@ export class FirestoreManagementService {
   }
 
   updateOrder(orderNumber: string, order: UserOrder): void {
-    console.log(order);
     setDoc(doc(this.db, 'orders', orderNumber), order, { merge: true });
   }
 
@@ -258,5 +258,29 @@ export class FirestoreManagementService {
     const userProfile = await this.getUserProfile(userID);
     userProfile.orders = orders;
     setDoc(doc(this.db, 'user-profiles', userID), userProfile, { merge: true });
+  }
+
+  async addMaterialInput(materialInput: MaterialInput): Promise<string> {
+    const materialInoutDocRef = await addDoc(
+      collection(this.db, 'material-inputs'),
+      materialInput
+    );
+
+    return materialInoutDocRef.id;
+  }
+
+  async getAllMaterialInputs(): Promise<MaterialInput[]> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
+      const listOfMaterialInputs: MaterialInput[] = [];
+      const querySnapshot = await getDocs(
+        collection(this.db, 'material-inputs')
+      );
+      querySnapshot.forEach((doc) => {
+        const materialInputToBeAdded = doc.data() as MaterialInput;
+        listOfMaterialInputs.push(materialInputToBeAdded);
+      });
+      resolve(listOfMaterialInputs);
+    });
   }
 }

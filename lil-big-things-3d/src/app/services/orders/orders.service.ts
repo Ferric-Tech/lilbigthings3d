@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BasketItem } from '../pages/home-page/basket-view/basket-view.component';
-import { FirestoreManagementService } from './firestore-management/firestore-management.service';
-import { AppUserProfile, UserAddress } from './user/user.interface';
+import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
+import { FirestoreManagementService } from '../firestore-management/firestore-management.service';
+import { UserAddress, AppUserProfile } from '../user/user.interface';
 
 export enum OrderStatus {
   // Default

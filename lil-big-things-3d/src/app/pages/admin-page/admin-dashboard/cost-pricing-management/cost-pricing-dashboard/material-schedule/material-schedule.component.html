@@ -60,4 +60,5 @@
 <app-new-material-input-dialog
   *ngIf="showNewMaterialInputDialog"
   (cancel)="onNewMaterialInputDialogCancel()"
+  (newMaterialInput)="handleNewMaterialInput($event)"
 ></app-new-material-input-dialog>

@@ -1,4 +1,4 @@
-import { UserOrder } from '../orders.service';
+import { UserOrder } from '../orders/orders.service';
 
 export interface AppUserProfile {
   id?: string;

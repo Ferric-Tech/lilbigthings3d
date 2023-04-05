@@ -38,6 +38,7 @@ import { EditProductComponent } from './pages/admin-page/admin-dashboard/product
 import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.component';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 import { ProductViewComponent } from './pages/home-page/product-view/product-view.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -157,6 +158,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
+    MatSelectModule,
   ],
   providers: [
     ScreenTrackingService,

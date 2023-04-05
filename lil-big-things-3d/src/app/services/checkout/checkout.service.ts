@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BasketItem } from 'src/app/pages/home-page/basket-view/basket-view.component';
 import { UserAddress, AppUserProfile } from '../user/user.interface';
 import { Md5 } from 'ts-md5';
-import { OrdersService } from '../orders.service';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { LocalStorageItem } from '../local-storage/local-storage.enum';
 import { EventManagementService } from '../event-management/event-management.service';
@@ -11,6 +10,7 @@ import {
   EventChannel,
   EventTopic,
 } from '../event-management/event-management.enum';
+import { OrdersService } from '../orders/orders.service';
 
 export interface PayFastFormParms {
   [key: string]: string;

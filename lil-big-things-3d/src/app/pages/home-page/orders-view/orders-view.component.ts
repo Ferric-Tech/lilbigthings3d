@@ -2,7 +2,10 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { OrdersService, UserOrder } from 'src/app/services/orders.service';
+import {
+  UserOrder,
+  OrdersService,
+} from 'src/app/services/orders/orders.service';
 
 @Component({
   selector: 'app-orders-view',
