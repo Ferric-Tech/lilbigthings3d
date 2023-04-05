@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
+  MasurementBasisMapping,
   MaterialInput,
   MaterialInputStatus,
+  MaterialInputStatusMapping,
   MaterialType,
+  MaterialTypeMapping,
   MeasurementBasis,
 } from '../material-schedule.component';
 
@@ -17,23 +20,14 @@ export class NewMaterialInputDialogComponent {
   @Output() newMaterialInput = new EventEmitter<MaterialInput>();
 
   materialType = Object.values(MaterialType);
-  materialTypeMapping: Record<MaterialType, string> = {
-    [MaterialType.PLA]: 'PLA (Polylactic acid)',
-    [MaterialType.ABS]: 'ABS (Acrylonitrile Butadiene Styrene)',
-  };
+  materialTypeMapping = MaterialTypeMapping;
 
   MeasurementBasis = MeasurementBasis;
   measurementBasis = Object.values(MeasurementBasis);
-  measurementBasisMapping: Record<MeasurementBasis, string> = {
-    [MeasurementBasis.Weight]: 'Weight',
-    [MeasurementBasis.Length]: 'Length',
-  };
+  measurementBasisMapping = MasurementBasisMapping;
 
   materialInputStatus = Object.values(MaterialInputStatus);
-  materialInputStatusMapping: Record<MaterialInputStatus, string> = {
-    [MaterialInputStatus.Ordered]: 'Ordered',
-    [MaterialInputStatus.Delivered]: 'Delivered',
-  };
+  materialInputStatusMapping = MaterialInputStatusMapping;
 
   newMaterialInputForm = new FormGroup({
     purchaseDate: new FormControl(new Date(), Validators.required),

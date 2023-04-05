@@ -20,6 +20,9 @@
       Unit cost
     </div>
     <div class="material-input-column" [ngStyle]="{ width: '20%' }">Status</div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      Actions
+    </div>
   </div>
 
   <div class="material-input-line" *ngFor="let input of materialInputs">
@@ -46,6 +49,12 @@
     </div>
     <div class="material-input-column" [ngStyle]="{ width: '20%' }">
       {{ input.status }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      <mat-icon matTooltip="Delete">delete</mat-icon>
+      <mat-icon matTooltip="Edit">edit</mat-icon>
+      <mat-icon matTooltip="Change status">format_list_numbered</mat-icon>
+      <mat-icon matTooltip="Change log">change_history</mat-icon>
     </div>
   </div>
 
