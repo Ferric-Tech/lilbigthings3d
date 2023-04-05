@@ -99,3 +99,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.div-option-with-colour-sample {
+  display: flex !important;
+  flex-direction: row !important;
+
+  .colour-block {
+    height: 15px;
+    width: 15px;
+    margin: auto 5px;
+    border: 1px solid black;
+  }
+}

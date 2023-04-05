@@ -64,6 +64,31 @@
         </mat-error>
       </mat-form-field>
 
+      <!-- Material colour  -->
+      <mat-form-field appearance="fill">
+        <mat-label>Material colour</mat-label>
+        <mat-select matNativeControl formControlName="materialColour" required>
+          <mat-option *ngFor="let colour of materialColour" [value]="colour">
+            <div class="div-option-with-colour-sample">
+              <div
+                class="colour-block"
+                [ngStyle]="{
+                  'background-color': materialColourMapping[colour].colourCode
+                }"
+              ></div>
+              {{ materialColourMapping[colour].name }}
+            </div>
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            newMaterialInputForm.controls['materialColour'].hasError('required')
+          "
+        >
+          Material type is required
+        </mat-error>
+      </mat-form-field>
+
       <!-- Unit measurement basis -->
       <mat-form-field>
         <mat-label>Unit measurement basis</mat-label>

@@ -38,10 +38,23 @@ export enum MaterialColour {
   LightBlue = 'LightBlue',
 }
 
+export interface MaterialColourData {
+  name: string;
+  colourCode: string;
+}
+
+export const MaterialColourMapping: Record<MaterialColour, MaterialColourData> =
+  {
+    [MaterialColour.White]: { name: 'White', colourCode: '#FFFFFF' },
+    [MaterialColour.Pink]: { name: 'Pink', colourCode: '#FFC0CB' },
+    [MaterialColour.LightBlue]: { name: 'Light Blue', colourCode: '#ADD8E6' },
+  };
+
 export interface MaterialInput {
   purchaseDate: Date;
   supplier: string;
   materialType: MaterialType;
+  materialColour: MaterialColour;
   qtyUnitType: string;
   qtyPerUnit: number;
   qtyUnit: number;

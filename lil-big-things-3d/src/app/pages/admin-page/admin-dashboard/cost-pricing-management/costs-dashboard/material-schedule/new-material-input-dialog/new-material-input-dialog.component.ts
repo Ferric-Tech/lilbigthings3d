@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   MasurementBasisMapping,
+  MaterialColour,
+  MaterialColourMapping,
   MaterialInput,
   MaterialInputStatus,
   MaterialInputStatusMapping,
@@ -22,6 +24,9 @@ export class NewMaterialInputDialogComponent {
   materialType = Object.values(MaterialType);
   materialTypeMapping = MaterialTypeMapping;
 
+  materialColour = Object.values(MaterialColour);
+  materialColourMapping = MaterialColourMapping;
+
   MeasurementBasis = MeasurementBasis;
   measurementBasis = Object.values(MeasurementBasis);
   measurementBasisMapping = MasurementBasisMapping;
@@ -33,6 +38,7 @@ export class NewMaterialInputDialogComponent {
     purchaseDate: new FormControl(new Date(), Validators.required),
     supplier: new FormControl('', Validators.required),
     materialType: new FormControl('', Validators.required),
+    materialColour: new FormControl('', Validators.required),
     qtyUnitType: new FormControl('', Validators.required),
     qtyPerUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
     qtyUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
