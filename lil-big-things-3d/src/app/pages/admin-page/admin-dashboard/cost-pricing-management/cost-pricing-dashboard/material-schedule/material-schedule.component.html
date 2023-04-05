@@ -1,0 +1,56 @@
+<mat-card>
+  <div class="material-input-header">
+    <div class="material-input-column" [ngStyle]="{ width: '20%' }">
+      Purchase date
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '30%' }">
+      Supplier
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      Material
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      Unit measure
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      Unit/Qty
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">Units</div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      Unit cost
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '20%' }">Status</div>
+  </div>
+
+  <div class="material-input-line" *ngFor="let input of materialInputs">
+    <div class="material-input-column" [ngStyle]="{ width: '20%' }">
+      {{ input.purchaseDate | date : "dd/MM/yyyy" }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '30%' }">
+      {{ input.supplier }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      {{ input.materialType }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      {{ input.qtyUnitType }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      {{ input.qtyPerUnit }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      {{ input.qtyUnit }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+      {{ input.costPerUnit }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '20%' }">
+      {{ input.status }}
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    <button class="primary-button">New input</button>
+  </div>
+  
+</mat-card>

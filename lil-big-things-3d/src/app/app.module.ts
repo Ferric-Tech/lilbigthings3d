@@ -75,6 +75,8 @@ import { FacebookButtonComponent } from './pages/home-page/shared-components/use
 import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/navbar-menu/navbar-menu.component';
 import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail/order-detail.component';
 import { OrderOptionDialogComponent } from './pages/home-page/orders-view/order-option-dialog/order-option-dialog.component';
+import { CostPricingManagementComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/cost-pricing-dashboard.component';
+import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/material-schedule.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +120,8 @@ import { OrderOptionDialogComponent } from './pages/home-page/orders-view/order-
     NavbarMenuComponent,
     OrderDetailComponent,
     OrderOptionDialogComponent,
+    CostPricingManagementComponent,
+    MaterialScheduleComponent,
   ],
   imports: [
     BrowserModule,
