@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CostPricingManagementComponent } from './cost-pricing-dashboard.component';
+import { CostsDashboardComponent } from './costs-dashboard.component';
 
 describe('CostPricingManagementComponent', () => {
-  let component: CostPricingManagementComponent;
-  let fixture: ComponentFixture<CostPricingManagementComponent>;
+  let component: CostsDashboardComponent;
+  let fixture: ComponentFixture<CostsDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CostPricingManagementComponent],
+      declarations: [CostsDashboardComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CostPricingManagementComponent);
+    fixture = TestBed.createComponent(CostsDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

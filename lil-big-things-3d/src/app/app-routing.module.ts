@@ -18,7 +18,8 @@ import { RegisterComponent } from './pages/home-page/shared-components/user-regi
 import { SigninUserComponent } from './pages/home-page/shared-components/user-sign-in/login-user.component';
 import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
 import { OrdersViewComponent } from './pages/home-page/orders-view/orders-view.component';
-import { CostPricingManagementComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/cost-pricing-dashboard.component';
+import { CostsDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/costs-dashboard.component';
+import { PricingDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/pricing-dashboard/pricing-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'featured-products', pathMatch: 'full' },
@@ -115,9 +116,14 @@ const routes: Routes = [
             component: ViewProductsComponent,
           },
           {
-            path: 'cost-pricing-managenent',
-            title: 'Cost and pricing management',
-            component: CostPricingManagementComponent,
+            path: 'cost-dashboard',
+            title: 'Cost dashboard',
+            component: CostsDashboardComponent,
+          },
+          {
+            path: 'pricing-dashboard',
+            title: 'Pricing dashboard',
+            component: PricingDashboardComponent,
           },
         ],
       },
