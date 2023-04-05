@@ -16,12 +16,15 @@
     width: fit-content;
     padding: 20px;
     min-width: 400px;
+    max-height: 80%;
+    overflow-y: auto;
 
     .card-title {
       font-size: 18px;
       font-weight: bold;
       width: 100%;
       text-align: center;
+      padding: 10px 0 20px 0;
     }
 
     .form-container {
@@ -30,6 +33,10 @@
       margin: auto;
       justify-content: center;
       flex-direction: column;
+
+      mat-form-field {
+        padding-bottom: 10px;
+      }
     }
 
     .button-container {
@@ -71,4 +78,24 @@
       }
     }
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

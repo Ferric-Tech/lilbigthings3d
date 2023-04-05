@@ -2,7 +2,11 @@
   <mat-card>
     <div class="card-title">Add new material input</div>
 
-    <form class="form-container" [formGroup]="newMaterialInputForm">
+    <form
+      class="form-container"
+      [formGroup]="newMaterialInputForm"
+      (ngSubmit)="onSubmit()"
+    >
       <!-- Purchase date -->
       <mat-form-field appearance="fill">
         <mat-label>Purchase date</mat-label>
@@ -17,6 +21,13 @@
           [for]="picker"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error
+          *ngIf="
+            newMaterialInputForm.controls['purchaseDate'].hasError('required')
+          "
+        >
+          Date is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Supplier  -->
@@ -29,48 +40,88 @@
           the product"
           >info</mat-icon
         >
+        <mat-error
+          *ngIf="newMaterialInputForm.controls['supplier'].hasError('required')"
+        >
+          Supplier is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Material type  -->
       <mat-form-field>
         <mat-label>Material type</mat-label>
         <input matInput formControlName="materialType" />
+        <mat-error
+          *ngIf="
+            newMaterialInputForm.controls['materialType'].hasError('required')
+          "
+        >
+          Material type is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Unit measurement basis -->
       <mat-form-field>
         <mat-label>Unit measurement basis</mat-label>
         <input matInput formControlName="qtyUnitType" />
+        <mat-error
+          *ngIf="
+            newMaterialInputForm.controls['qtyUnitType'].hasError('required')
+          "
+        >
+          Measurement basis is required
+        </mat-error>
       </mat-form-field>
 
       <!-- Quantity per unit -->
       <mat-form-field>
         <mat-label>Quantity per unit</mat-label>
-        <input matInput formControlName="qtyPerUnit" />
+        <input matInput type="number" formControlName="qtyPerUnit" />
+        <mat-error
+          *ngIf="newMaterialInputForm.controls['qtyPerUnit'].hasError('min')"
+        >
+          Zero not permitted
+        </mat-error>
       </mat-form-field>
 
       <!-- Units -->
       <mat-form-field>
         <mat-label>Units</mat-label>
-        <input matInput formControlName="qtyUnit" />
+        <input matInput type="number" formControlName="qtyUnit" />
+        <mat-error
+          *ngIf="newMaterialInputForm.controls['qtyUnit'].hasError('min')"
+        >
+          Zero not permitted
+        </mat-error>
       </mat-form-field>
 
       <!-- Cost per unit -->
       <mat-form-field>
         <mat-label>Cost per unit</mat-label>
-        <input matInput formControlName="costPerUnit" />
+        <input matInput type="number" formControlName="costPerUnit" />
+        <mat-error
+          *ngIf="newMaterialInputForm.controls['costPerUnit'].hasError('min')"
+          >Zero not permitted
+        </mat-error>
       </mat-form-field>
 
       <!-- Status -->
       <mat-form-field>
-        <mat-label>Cost per unit</mat-label>
+        <mat-label>Status</mat-label>
         <input matInput formControlName="status" />
+        <mat-error
+          *ngIf="newMaterialInputForm.controls['status'].hasError('required')"
+        >
+          Status is required
+        </mat-error>
       </mat-form-field>
-    </form>
 
-    <div class="button-container">
-      <button class="primary-button" (click)="onSubmitClick()">Submit</button>
-      <button class="secondary-button" (click)="onCancelClick()">Cancel</button>
-    </div>
+      <div class="button-container">
+        <button class="primary-button" type="submit">Submit</button>
+        <button class="secondary-button" (click)="onCancelClick()">
+          Cancel
+        </button>
+      </div>
+    </form>
   </mat-card>
 </div>

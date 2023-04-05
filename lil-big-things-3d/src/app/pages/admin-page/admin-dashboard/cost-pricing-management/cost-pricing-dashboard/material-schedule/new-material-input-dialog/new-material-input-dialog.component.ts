@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MaterialInput } from '../material-schedule.component';
 
 @Component({
   selector: 'app-new-material-input-dialog',
@@ -8,21 +9,24 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class NewMaterialInputDialogComponent {
   @Output() cancel = new EventEmitter<void>();
+  @Output() newMaterialInput = new EventEmitter<MaterialInput>();
 
   newMaterialInputForm = new FormGroup({
-    purchaseDate: new FormControl('', Validators.required),
+    purchaseDate: new FormControl(new Date(), Validators.required),
     supplier: new FormControl('', Validators.required),
     materialType: new FormControl('', Validators.required),
     qtyUnitType: new FormControl('', Validators.required),
-    qtyPerUnit: new FormControl('', Validators.required),
-    qtyUnit: new FormControl('', Validators.required),
-    costPerUnit: new FormControl('', Validators.required),
+    qtyPerUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
+    qtyUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
+    costPerUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
     status: new FormControl('', Validators.required),
   });
 
-  onSubmitClick() {
-    console.log(this.newMaterialInputForm.value);
-    this.cancel.emit();
+  onSubmit() {
+    this.newMaterialInputForm.markAllAsTouched();
+    this.newMaterialInput.emit(
+      this.newMaterialInputForm.value as MaterialInput
+    );
   }
 
   onCancelClick() {
