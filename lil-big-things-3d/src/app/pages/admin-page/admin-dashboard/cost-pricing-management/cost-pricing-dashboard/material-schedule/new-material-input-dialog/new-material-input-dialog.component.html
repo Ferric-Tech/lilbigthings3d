@@ -1,0 +1,76 @@
+<div class="screen-container">
+  <mat-card>
+    <div class="card-title">Add new material input</div>
+
+    <form class="form-container" [formGroup]="newMaterialInputForm">
+      <!-- Purchase date -->
+      <mat-form-field appearance="fill">
+        <mat-label>Purchase date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="purchaseDate"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Supplier  -->
+      <mat-form-field>
+        <mat-label>Supplier</mat-label>
+        <input matInput formControlName="supplier" />
+        <mat-icon
+          matSuffix
+          matTooltip="Not the platform - eg Takealot - but the actual supplier who listed
+          the product"
+          >info</mat-icon
+        >
+      </mat-form-field>
+
+      <!-- Material type  -->
+      <mat-form-field>
+        <mat-label>Material type</mat-label>
+        <input matInput formControlName="materialType" />
+      </mat-form-field>
+
+      <!-- Unit measurement basis -->
+      <mat-form-field>
+        <mat-label>Unit measurement basis</mat-label>
+        <input matInput formControlName="qtyUnitType" />
+      </mat-form-field>
+
+      <!-- Quantity per unit -->
+      <mat-form-field>
+        <mat-label>Quantity per unit</mat-label>
+        <input matInput formControlName="qtyPerUnit" />
+      </mat-form-field>
+
+      <!-- Units -->
+      <mat-form-field>
+        <mat-label>Units</mat-label>
+        <input matInput formControlName="qtyUnit" />
+      </mat-form-field>
+
+      <!-- Cost per unit -->
+      <mat-form-field>
+        <mat-label>Cost per unit</mat-label>
+        <input matInput formControlName="costPerUnit" />
+      </mat-form-field>
+
+      <!-- Status -->
+      <mat-form-field>
+        <mat-label>Cost per unit</mat-label>
+        <input matInput formControlName="status" />
+      </mat-form-field>
+    </form>
+
+    <div class="button-container">
+      <button class="primary-button" (click)="onSubmitClick()">Submit</button>
+      <button class="secondary-button" (click)="onCancelClick()">Cancel</button>
+    </div>
+  </mat-card>
+</div>

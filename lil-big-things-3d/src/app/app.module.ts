@@ -77,6 +77,10 @@ import { OrderDetailComponent } from './pages/home-page/orders-view/order-detail
 import { OrderOptionDialogComponent } from './pages/home-page/orders-view/order-option-dialog/order-option-dialog.component';
 import { CostPricingManagementComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/cost-pricing-dashboard.component';
 import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/material-schedule.component';
+import { NewMaterialInputDialogComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/cost-pricing-dashboard/material-schedule/new-material-input-dialog/new-material-input-dialog.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -122,6 +126,7 @@ import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/co
     OrderOptionDialogComponent,
     CostPricingManagementComponent,
     MaterialScheduleComponent,
+    NewMaterialInputDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -149,8 +154,15 @@ import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/co
     MatCheckboxModule,
     DragDropModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTooltipModule,
   ],
-  providers: [ScreenTrackingService, UserTrackingService],
+  providers: [
+    ScreenTrackingService,
+    UserTrackingService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

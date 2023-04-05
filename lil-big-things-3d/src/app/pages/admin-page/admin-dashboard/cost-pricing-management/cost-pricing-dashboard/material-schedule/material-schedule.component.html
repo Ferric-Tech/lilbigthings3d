@@ -50,7 +50,14 @@
   </div>
 
   <div class="buttons-container">
-    <button class="primary-button">New input</button>
+    <button class="primary-button" (click)="onNewMaterialInputClick()">
+      New input
+    </button>
   </div>
-  
 </mat-card>
+
+<!-- Dialogs  -->
+<app-new-material-input-dialog
+  *ngIf="showNewMaterialInputDialog"
+  (cancel)="onNewMaterialInputDialogCancel()"
+></app-new-material-input-dialog>

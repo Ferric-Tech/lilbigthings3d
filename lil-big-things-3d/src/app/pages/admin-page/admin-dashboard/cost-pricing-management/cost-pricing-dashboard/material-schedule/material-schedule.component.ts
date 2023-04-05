@@ -19,6 +19,8 @@ export interface MaterialInput {
 export class MaterialScheduleComponent implements OnInit {
   @Input() materialInputs: MaterialInput[] = [];
 
+  showNewMaterialInputDialog = false;
+
   ngOnInit() {
     this.materialInputs = [
       {
@@ -42,5 +44,13 @@ export class MaterialScheduleComponent implements OnInit {
         status: 'Delivered',
       },
     ];
+  }
+
+  onNewMaterialInputClick() {
+    this.showNewMaterialInputDialog = true;
+  }
+
+  onNewMaterialInputDialogCancel() {
+    this.showNewMaterialInputDialog = false;
   }
 }
