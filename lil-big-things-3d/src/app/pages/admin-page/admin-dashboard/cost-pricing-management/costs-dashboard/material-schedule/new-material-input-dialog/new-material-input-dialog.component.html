@@ -64,6 +64,32 @@
         </mat-error>
       </mat-form-field>
 
+      <!-- Material diameter  -->
+      <mat-form-field appearance="fill">
+        <mat-label>Material diameter</mat-label>
+        <mat-select
+          matNativeControl
+          formControlName="materialDiameter"
+          required
+        >
+          <mat-option
+            *ngFor="let diameter of materialDiameter"
+            [value]="materialDiameterMapping[diameter]"
+          >
+            {{ diameter }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            newMaterialInputForm.controls['materialDiameter'].hasError(
+              'required'
+            )
+          "
+        >
+          Material type is required
+        </mat-error>
+      </mat-form-field>
+
       <!-- Material colour  -->
       <mat-form-field appearance="fill">
         <mat-label>Material colour</mat-label>
@@ -92,14 +118,20 @@
       <!-- Unit measurement basis -->
       <mat-form-field>
         <mat-label>Unit measurement basis</mat-label>
-        <mat-select matNativeControl formControlName="qtyUnitType" required>
+        <mat-select
+          matNativeControl
+          formControlName="measurementBasis"
+          required
+        >
           <mat-option *ngFor="let basis of measurementBasis" [value]="basis">
             {{ measurementBasisMapping[basis] }}
           </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
-            newMaterialInputForm.controls['qtyUnitType'].hasError('required')
+            newMaterialInputForm.controls['measurementBasis'].hasError(
+              'required'
+            )
           "
         >
           Measurement basis is required
@@ -108,18 +140,18 @@
 
       <!-- Quantity per unit -->
       <mat-form-field
-        *ngIf="newMaterialInputForm.controls['qtyUnitType'].value"
+        *ngIf="newMaterialInputForm.controls['measurementBasis'].value"
       >
         <mat-label
           *ngIf="
-            newMaterialInputForm.controls['qtyUnitType'].value ===
+            newMaterialInputForm.controls['measurementBasis'].value ===
             MeasurementBasis.Weight
           "
           >Kilograms per unit</mat-label
         >
         <mat-label
           *ngIf="
-            newMaterialInputForm.controls['qtyUnitType'].value ===
+            newMaterialInputForm.controls['measurementBasis'].value ===
             MeasurementBasis.Length
           "
           >Meters per unit</mat-label

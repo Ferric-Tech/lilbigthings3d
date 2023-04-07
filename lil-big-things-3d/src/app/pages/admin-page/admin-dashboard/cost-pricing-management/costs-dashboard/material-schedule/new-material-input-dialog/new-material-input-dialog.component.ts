@@ -4,6 +4,8 @@ import {
   MasurementBasisMapping,
   MaterialColour,
   MaterialColourMapping,
+  MaterialDiameters,
+  MaterialDiametersMapping,
   MaterialInput,
   MaterialInputStatus,
   MaterialInputStatusMapping,
@@ -24,6 +26,9 @@ export class NewMaterialInputDialogComponent {
   materialType = Object.values(MaterialType);
   materialTypeMapping = MaterialTypeMapping;
 
+  materialDiameter = Object.values(MaterialDiameters);
+  materialDiameterMapping = MaterialDiametersMapping;
+
   materialColour = Object.values(MaterialColour);
   materialColourMapping = MaterialColourMapping;
 
@@ -38,8 +43,9 @@ export class NewMaterialInputDialogComponent {
     purchaseDate: new FormControl(new Date(), Validators.required),
     supplier: new FormControl('', Validators.required),
     materialType: new FormControl('', Validators.required),
+    materialDiameter: new FormControl(0, Validators.required),
     materialColour: new FormControl('', Validators.required),
-    qtyUnitType: new FormControl('', Validators.required),
+    measurementBasis: new FormControl('', Validators.required),
     qtyPerUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
     qtyUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
     costPerUnit: new FormControl(0, [Validators.required, Validators.min(1)]),
@@ -48,8 +54,6 @@ export class NewMaterialInputDialogComponent {
 
   onSubmit() {
     this.newMaterialInputForm.markAllAsTouched();
-    console.log(this.newMaterialInputForm.valid);
-    console.log(this.newMaterialInputForm.value);
     if (this.newMaterialInputForm.invalid) return;
     this.newMaterialInput.emit(
       this.newMaterialInputForm.value as MaterialInput

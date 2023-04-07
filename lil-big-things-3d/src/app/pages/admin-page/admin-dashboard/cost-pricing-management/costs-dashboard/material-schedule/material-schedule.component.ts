@@ -12,6 +12,21 @@ export const MaterialTypeMapping: Record<MaterialType, string> = {
   [MaterialType.ABS]: 'ABS (Acrylonitrile Butadiene Styrene)',
 };
 
+export const MaterialTypeDensityMapping: Record<MaterialType, number> = {
+  [MaterialType.PLA]: 1.25,
+  [MaterialType.ABS]: 1.05,
+};
+
+export enum MaterialDiameters {
+  D175 = '1.75mm',
+  D285 = '2.85mm',
+}
+
+export const MaterialDiametersMapping: Record<MaterialDiameters, number> = {
+  [MaterialDiameters.D175]: 1.75,
+  [MaterialDiameters.D285]: 2.85,
+};
+
 export enum MeasurementBasis {
   Weight = 'Weight',
   Length = 'Length',
@@ -55,7 +70,8 @@ export interface MaterialInput {
   supplier: string;
   materialType: MaterialType;
   materialColour: MaterialColour;
-  qtyUnitType: string;
+  measurementBasis: string;
+  materialDiameter: number;
   qtyPerUnit: number;
   qtyUnit: number;
   costPerUnit: number;
