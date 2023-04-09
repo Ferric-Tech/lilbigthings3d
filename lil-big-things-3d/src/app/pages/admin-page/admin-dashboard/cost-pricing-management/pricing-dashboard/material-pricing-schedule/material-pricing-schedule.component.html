@@ -25,7 +25,9 @@
       class="content-row"
       *ngFor="let colour of material.value.colors | keyvalue"
     >
-      <div class="description-column">{{ colour.key }}</div>
+      <div class="description-column">
+        {{ colour.key }}
+      </div>
       <div class="general-column">
         {{ colour.value.stockOnHand | number : "1.2-2" }}
       </div>

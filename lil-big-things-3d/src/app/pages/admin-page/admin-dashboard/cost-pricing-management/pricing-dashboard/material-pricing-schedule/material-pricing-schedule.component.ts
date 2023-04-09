@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialService } from 'src/app/services/materials/material.service';
 import {
+  MaterialColour,
+  MaterialColourMapping,
   MaterialInput,
   MaterialTypeDensityMapping,
   MeasurementBasis,
@@ -18,7 +20,6 @@ export interface MaterialSummary {
 }
 
 export interface ColourSummary {
-  [key: string]: unknown;
   stockOnHand: number;
   carryingCost: number;
   costPerUnit: number;
@@ -35,6 +36,9 @@ export class MaterialPricingScheduleComponent implements OnInit {
   panelOpenState = false;
 
   materialSchedule: MaterialSchedule = {};
+  materialColour = Object.values(MaterialColour);
+  materialColourMapping = MaterialColourMapping;
+
   constructor(private readonly materialService: MaterialService) {}
 
   ngOnInit() {
@@ -60,7 +64,7 @@ export class MaterialPricingScheduleComponent implements OnInit {
           stockOnHand: 0,
           carryingCost: 0,
           costPerUnit: 0,
-          colors: {},
+          colors: {} as Record<MaterialColour, ColourSummary>,
         };
       }
 
@@ -78,7 +82,7 @@ export class MaterialPricingScheduleComponent implements OnInit {
 
       if (!isColourInMaterialTypeObject) {
         this.materialSchedule[materialInput.materialType].colors[
-          materialInput.materialColour
+          this.materialColourMapping[materialInput.materialColour].name
         ] = {
           stockOnHand: 0,
           carryingCost: 0,
