@@ -21,11 +21,20 @@
         </div>
       </div>
     </mat-expansion-panel-header>
-    <div class="content-row">
-      <div class="description-column">Colour</div>
-      <div class="general-column">On hand</div>
-      <div class="general-column">Carrying cost</div>
-      <div class="general-column">Cost per meter</div>
+    <div
+      class="content-row"
+      *ngFor="let colour of material.value.colors | keyvalue"
+    >
+      <div class="description-column">{{ colour.key }}</div>
+      <div class="general-column">
+        {{ colour.value.stockOnHand | number : "1.2-2" }}
+      </div>
+      <div class="general-column">
+        {{ colour.value.carryingCost | currency : "R" }}
+      </div>
+      <div class="general-column">
+        {{ colour.value.costPerUnit | currency : "R" }}
+      </div>
     </div>
   </mat-expansion-panel>
 </mat-accordion>

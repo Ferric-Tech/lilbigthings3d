@@ -14,7 +14,7 @@ export interface MaterialSummary {
   stockOnHand: number;
   carryingCost: number;
   costPerUnit: number;
-  colors: ColourSummary[];
+  colors: Record<string, ColourSummary>;
 }
 
 export interface ColourSummary {
@@ -44,31 +44,64 @@ export class MaterialPricingScheduleComponent implements OnInit {
   private async generateCostSummary() {
     const allMaterialInputs =
       await this.materialService.getAllNewMaterialInputs();
+
     allMaterialInputs.forEach((materialInput) => {
       const stockInHandDelta =
         materialInput.measurementBasis === MeasurementBasis.Length
           ? materialInput.qtyPerUnit * materialInput.qtyUnit
           : this.getLengthFromWeight(materialInput);
+      const carryValueDelta = materialInput.qtyUnit * materialInput.costPerUnit;
 
-      const materialTypeInSchedule =
+      const isMaterialTypeInSchedule =
         materialInput.materialType in this.materialSchedule;
 
-      if (!materialTypeInSchedule) {
+      if (!isMaterialTypeInSchedule) {
         this.materialSchedule[materialInput.materialType] = {
           stockOnHand: 0,
           carryingCost: 0,
           costPerUnit: 0,
-          colors: [],
+          colors: {},
         };
       }
 
       this.materialSchedule[materialInput.materialType].stockOnHand +=
         stockInHandDelta;
       this.materialSchedule[materialInput.materialType].carryingCost +=
-        materialInput.qtyUnit * materialInput.costPerUnit;
+        carryValueDelta;
       this.materialSchedule[materialInput.materialType].costPerUnit =
         this.materialSchedule[materialInput.materialType].carryingCost /
         this.materialSchedule[materialInput.materialType].stockOnHand;
+
+      const isColourInMaterialTypeObject =
+        materialInput.materialColour in
+        this.materialSchedule[materialInput.materialType].colors;
+
+      if (!isColourInMaterialTypeObject) {
+        this.materialSchedule[materialInput.materialType].colors[
+          materialInput.materialColour
+        ] = {
+          stockOnHand: 0,
+          carryingCost: 0,
+          costPerUnit: 0,
+          margin: 0,
+          roundedToNearest: 5,
+        };
+      }
+      this.materialSchedule[materialInput.materialType].colors[
+        materialInput.materialColour
+      ].stockOnHand += stockInHandDelta;
+      this.materialSchedule[materialInput.materialType].colors[
+        materialInput.materialColour
+      ].carryingCost += carryValueDelta;
+      this.materialSchedule[materialInput.materialType].colors[
+        materialInput.materialColour
+      ].costPerUnit =
+        this.materialSchedule[materialInput.materialType].colors[
+          materialInput.materialColour
+        ].carryingCost /
+        this.materialSchedule[materialInput.materialType].colors[
+          materialInput.materialColour
+        ].stockOnHand;
     });
   }
 
