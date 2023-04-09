@@ -6,7 +6,7 @@ import {
   MaterialInput,
   MaterialTypeDensityMapping,
   MeasurementBasis,
-} from '../../costs-dashboard/material-schedule/material-schedule.component';
+} from '../material-schedule/material-schedule.component';
 
 export interface MaterialSchedule {
   [key: string]: MaterialSummary;

@@ -83,7 +83,7 @@ import { PricingDashboardComponent } from './pages/admin-page/admin-dashboard/co
 import { CostsDashboardComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/costs-dashboard.component';
 import { MaterialScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-schedule/material-schedule.component';
 import { NewMaterialInputDialogComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-schedule/new-material-input-dialog/new-material-input-dialog.component';
-import { MaterialPricingScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/pricing-dashboard/material-pricing-schedule/material-pricing-schedule.component';
+import { MaterialPricingScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-pricing-schedule/material-pricing-schedule.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
