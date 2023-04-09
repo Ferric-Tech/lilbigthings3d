@@ -1,5 +1,5 @@
 <mat-card>
-  <div class="material-input-header main-header">Material inputs</div>
+  <div class="material-input-header main-header">Material orders</div>
   <div class="material-input-header">
     <div class="material-input-column" [ngStyle]="{ width: '20%' }">
       Purchase date
@@ -17,8 +17,11 @@
       Unit/Qty
     </div>
     <div class="material-input-column" [ngStyle]="{ width: '10%' }">Units</div>
-    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
+    <div class="material-input-column" [ngStyle]="{ width: '13%' }">
       Unit cost
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '13%' }">
+      Total cost
     </div>
     <div class="material-input-column" [ngStyle]="{ width: '20%' }">Status</div>
     <div class="material-input-column" [ngStyle]="{ width: '10%' }">
@@ -45,8 +48,11 @@
     <div class="material-input-column" [ngStyle]="{ width: '10%' }">
       {{ input.qtyUnit }}
     </div>
-    <div class="material-input-column" [ngStyle]="{ width: '10%' }">
-      {{ input.costPerUnit }}
+    <div class="material-input-column" [ngStyle]="{ width: '13%' }">
+      {{ input.costPerUnit | currency : "R" }}
+    </div>
+    <div class="material-input-column" [ngStyle]="{ width: '13%' }">
+      {{ input.costPerUnit * input.qtyUnit | currency : "R" }}
     </div>
     <div class="material-input-column" [ngStyle]="{ width: '20%' }">
       {{ input.status }}
