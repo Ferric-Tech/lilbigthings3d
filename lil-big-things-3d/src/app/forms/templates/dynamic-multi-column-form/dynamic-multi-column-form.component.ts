@@ -17,7 +17,7 @@ import {
 } from '../../models/form-templates.enum';
 import { isEqual } from 'lodash';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PrintFileParameters } from '../../dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
+import { FileWithParameters } from '../form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 
 @Component({
   selector: 'app-dynamic--multi-column-form',
@@ -38,7 +38,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   formDefaults: Record<string, string> = {};
   importedFiles: Record<string, File[]> = {};
   importedImages: Record<string, File[]> = {};
-  showPrintFileParameterDialog = false;
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];
@@ -167,15 +166,19 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   onFileSelection(form: FormGroup, field: string, file: File): void {
     if (!file) return;
     this.importedFiles[field] = [file];
-    form.controls[field].setValue(file.name);
+    form.controls[field].setValue({ file: file });
   }
 
-  onFileWithParamettersSelection(form: FormGroup, field: string, event: any) {
-    const file: File = event.target.files[0];
+  onFileWithParametersSelection(
+    form: FormGroup,
+    field: string,
+    fileWithParameters: FileWithParameters
+  ) {
+    if (!fileWithParameters.file) return;
+    const file: File = fileWithParameters.file;
     this.importedFiles[field] = [file];
-    form.controls[field].setValue(file.name);
-    this.cd.detectChanges();
-    this.showPrintFileParameterDialog = true;
+    form.controls[field].setValue(fileWithParameters);
+    console.log(form);
   }
 
   onImagesSelection(form: FormGroup, field: string, event: any) {
@@ -197,11 +200,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     this.importedImages[field] = uploadedImages;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
-  }
-
-  onPrintFileParametersSubmited(PrintFileParameters: PrintFileParameters) {
-    console.log(PrintFileParameters);
-    this.showPrintFileParameterDialog = false;
   }
 
   onSubmit(): void {

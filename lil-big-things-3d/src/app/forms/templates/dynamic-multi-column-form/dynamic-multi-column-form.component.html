@@ -85,36 +85,17 @@
           ></app-file-uploader>
 
           <!-- File Uploaders with Parameters -->
-          <div
+          <app-file-uploader-with-parameters
             *ngIf="field.type === formFieldType.UploaderSingleFileWithParams"
-            class="form-line"
-          >
-            <div class="indented-text uploader-label">
-              {{ field.label }}
-            </div>
-            <div class="uploader-file-name">
-              {{ forms[form.name].value[field.name] }}
-            </div>
-            <input
-              class="fake-file-selector"
-              #designFileInput
-              type="file"
-              (change)="
-                onFileWithParamettersSelection(
-                  forms[form.name],
-                  field.name,
-                  $event
-                )
-              "
-            />
-            <button
-              class="file-selector-button"
-              #upload
-              (click)="designFileInput.click()"
-            >
-              Upload file
-            </button>
-          </div>
+            [field]="field"
+            (fileSelectedWithParameters)="
+              onFileWithParametersSelection(
+                forms[form.name],
+                field.name,
+                $event
+              )
+            "
+          ></app-file-uploader-with-parameters>
 
           <!-- Image Uploaders -->
           <div *ngIf="field.type === formFieldType.ImageUploader">
@@ -157,9 +138,3 @@
     </div>
   </div>
 </div>
-
-<!-- Dialogs  -->
-<app-print-file-parameters-dialog
-  *ngIf="showPrintFileParameterDialog"
-  (parametersSubmitted)="onPrintFileParametersSubmited($event)"
-></app-print-file-parameters-dialog>

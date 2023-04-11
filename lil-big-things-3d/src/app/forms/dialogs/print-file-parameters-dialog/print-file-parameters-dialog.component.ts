@@ -7,6 +7,12 @@ export interface PrintFileParameters {
   printDurationMinutes: number;
 }
 
+export const PrintFileParametersMapping: Record<string, string> = {
+  materialLength: 'Material length',
+  printDurationHours: 'Hours',
+  printDurationMinutes: 'Minutes',
+};
+
 @Component({
   selector: 'app-print-file-parameters-dialog',
   templateUrl: './print-file-parameters-dialog.component.html',

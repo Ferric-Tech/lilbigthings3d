@@ -91,6 +91,7 @@ import { TitleInputComponent } from './forms/templates/form-fields/title-input/t
 import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-column-field/multi-column-field.component';
 import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-area.component';
 import { FileUploaderComponent } from './forms/templates/form-fields/file-uploader/file-uploader.component';
+import { FileUploaderWithParametersComponent } from './forms/templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 
 @NgModule({
   declarations: [
@@ -145,6 +146,7 @@ import { FileUploaderComponent } from './forms/templates/form-fields/file-upload
     MultiColumnFieldComponent,
     TextAreaComponent,
     FileUploaderComponent,
+    FileUploaderWithParametersComponent,
   ],
   imports: [
     BrowserModule,

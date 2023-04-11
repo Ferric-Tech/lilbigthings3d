@@ -6,6 +6,7 @@ import {
   ProductFormLabels,
   ProductFormPlaceholders,
 } from './product.enum';
+import { FileParamaterType } from 'src/app/forms/templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 
 export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
   columns: [
@@ -92,16 +93,19 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               name: ProductFormFields.FilePrintFast,
               type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintFast,
+              parameterType: FileParamaterType.PrintFile,
             },
             {
               name: ProductFormFields.FilePrintStandard,
               type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintStandard,
+              parameterType: FileParamaterType.PrintFile,
             },
             {
               name: ProductFormFields.FilePrintOptimised,
               type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintOptimised,
+              parameterType: FileParamaterType.PrintFile,
             },
           ],
         },
