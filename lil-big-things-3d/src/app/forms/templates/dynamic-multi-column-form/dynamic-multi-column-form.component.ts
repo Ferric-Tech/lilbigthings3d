@@ -17,6 +17,7 @@ import {
 } from '../../models/form-templates.enum';
 import { isEqual } from 'lodash';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PrintFileParameters } from '../../dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
 
 @Component({
   selector: 'app-dynamic--multi-column-form',
@@ -152,6 +153,14 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+  onFileWithParamettersSelection(form: FormGroup, field: string, event: any) {
+    const file: File = event.target.files[0];
+    this.importedFiles[field] = [file];
+    form.controls[field].setValue(file.name);
+    this.cd.detectChanges();
+    this.showPrintFileParameterDialog = true;
+  }
+
   onImagesSelection(form: FormGroup, field: string, event: any) {
     const uploadedFiles: FileList = event.target.files;
     const uploadedImages: File[] = [];
@@ -172,6 +181,11 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     this.imageUrls[field] = uploadedImagesUrls;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
+  }
+
+  onPrintFileParametersSubmited(PrintFileParameters: PrintFileParameters) {
+    console.log(PrintFileParameters);
+    this.showPrintFileParameterDialog = false;
   }
 
   onSubmit(): void {
