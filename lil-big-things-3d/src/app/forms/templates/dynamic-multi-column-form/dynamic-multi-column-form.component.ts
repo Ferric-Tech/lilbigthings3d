@@ -34,6 +34,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   formDefaults: Record<string, string> = {};
   importedFiles: Record<string, File[]> = {};
   importedImages: Record<string, File[]> = {};
+  showPrintFileParameterDialog = false;
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];

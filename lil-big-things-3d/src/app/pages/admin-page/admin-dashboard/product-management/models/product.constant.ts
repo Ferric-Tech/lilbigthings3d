@@ -90,23 +90,18 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
             },
             {
               name: ProductFormFields.FilePrintFast,
-              type: FormLineType.UploaderSingleFilePlain,
+              type: FormLineType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintFast,
             },
             {
               name: ProductFormFields.FilePrintStandard,
-              type: FormLineType.UploaderSingleFilePlain,
+              type: FormLineType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintStandard,
             },
             {
               name: ProductFormFields.FilePrintOptimised,
-              type: FormLineType.UploaderSingleFilePlain,
+              type: FormLineType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintOptimised,
-            },
-            {
-              name: ProductFormFields.FilePrintCustom,
-              type: FormLineType.UploaderSingleFilePlain,
-              label: ProductFormLabels.FilePrintCustom,
             },
           ],
         },
