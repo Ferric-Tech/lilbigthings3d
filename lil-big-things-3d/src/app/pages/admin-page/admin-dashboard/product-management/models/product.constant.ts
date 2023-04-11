@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { AppMultiColumnForm } from 'src/app/forms/models/form-template.interface';
-import { FormLineType } from 'src/app/forms/models/form-templates.enum';
+import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 import {
   ProductFormFields,
   ProductFormLabels,
@@ -17,29 +17,29 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           fields: [
             {
               name: ProductFormFields.Title,
-              type: FormLineType.InputTitle,
+              type: AppFieldType.InputTitle,
               placeholder: ProductFormPlaceholders.Title,
               validators: [Validators.required],
             },
             {
               name: ProductFormFields.PrimaryImage,
-              type: FormLineType.MainImage,
+              type: AppFieldType.MainImage,
             },
             {
               name: ProductFormFields.ShortDescription,
-              type: FormLineType.InputTextShort,
+              type: AppFieldType.InputTextShort,
               placeholder: ProductFormPlaceholders.ShortDescription,
               validators: [Validators.required],
               characterLimit: 128,
             },
             {
               name: ProductFormFields.LongDescription,
-              type: FormLineType.InputTextLong,
+              type: AppFieldType.InputTextLong,
               placeholder: ProductFormPlaceholders.LongDescription,
             },
             {
               name: ProductFormFields.Dimentions,
-              type: FormLineType.InputMultiColumn,
+              type: AppFieldType.InputMultiColumn,
               label: ProductFormLabels.Dimentions,
               multiColumnFieldSetting: [
                 {
@@ -74,33 +74,33 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           fields: [
             {
               name: ProductFormFields.FilesLabel,
-              type: FormLineType.LabelSub,
+              type: AppFieldType.LabelSub,
               label: ProductFormLabels.Files,
             },
             {
               name: ProductFormFields.FileDesign,
-              type: FormLineType.UploaderSingleFileUnderlined,
+              type: AppFieldType.UploaderSingleFileUnderlined,
               label: ProductFormLabels.FileDesign,
               validators: [Validators.required],
             },
             {
               name: ProductFormFields.FilePrintLabel,
-              type: FormLineType.UnderlinedLabel,
+              type: AppFieldType.UnderlinedLabel,
               label: ProductFormLabels.FilePrintLabel,
             },
             {
               name: ProductFormFields.FilePrintFast,
-              type: FormLineType.UploaderSingleFileWithParams,
+              type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintFast,
             },
             {
               name: ProductFormFields.FilePrintStandard,
-              type: FormLineType.UploaderSingleFileWithParams,
+              type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintStandard,
             },
             {
               name: ProductFormFields.FilePrintOptimised,
-              type: FormLineType.UploaderSingleFileWithParams,
+              type: AppFieldType.UploaderSingleFileWithParams,
               label: ProductFormLabels.FilePrintOptimised,
             },
           ],
@@ -110,17 +110,17 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           fields: [
             {
               name: ProductFormFields.ImagesLabel,
-              type: FormLineType.LabelSub,
+              type: AppFieldType.LabelSub,
               label: ProductFormLabels.Images,
             },
             {
               name: ProductFormFields.ImagesDesign,
-              type: FormLineType.ImageUploader,
+              type: AppFieldType.ImageUploader,
               label: ProductFormLabels.ImagesDeign,
             },
             {
               name: ProductFormFields.ImagesProduct,
-              type: FormLineType.ImageUploader,
+              type: AppFieldType.ImageUploader,
               label: ProductFormLabels.ImagesProduct,
             },
           ],

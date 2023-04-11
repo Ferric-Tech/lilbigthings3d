@@ -1,4 +1,4 @@
-export enum FormLineType {
+export enum AppFieldType {
   MainLabel,
   LabelSub,
   UnderlinedLabel,
@@ -18,16 +18,16 @@ export enum FormLineType {
 }
 
 export const FORM_FIELD_TYPES = [
-  FormLineType.InputPlain,
-  FormLineType.InputTitle,
-  FormLineType.InputTextShort,
-  FormLineType.InputTextLong,
-  FormLineType.InputMultiColumn,
-  FormLineType.UploaderSingleFilePlain,
-  FormLineType.UploaderSingleFileWithParams,
-  FormLineType.UploaderMultiFilePlain,
-  FormLineType.UploaderMultiFileUnderlined,
-  FormLineType.UploaderSingleFileUnderlined,
-  FormLineType.ImageUploader,
-  FormLineType.MainImage,
+  AppFieldType.InputPlain,
+  AppFieldType.InputTitle,
+  AppFieldType.InputTextShort,
+  AppFieldType.InputTextLong,
+  AppFieldType.InputMultiColumn,
+  AppFieldType.UploaderSingleFilePlain,
+  AppFieldType.UploaderSingleFileWithParams,
+  AppFieldType.UploaderMultiFilePlain,
+  AppFieldType.UploaderMultiFileUnderlined,
+  AppFieldType.UploaderSingleFileUnderlined,
+  AppFieldType.ImageUploader,
+  AppFieldType.MainImage,
 ];

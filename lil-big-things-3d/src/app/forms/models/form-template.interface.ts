@@ -1,5 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
-import { FormLineType } from './form-templates.enum';
+import { AppFieldType } from './form-templates.enum';
 
 export interface FormResults {
   formValues: { [key: string]: string };
@@ -23,10 +23,11 @@ export interface AppForm {
 
 export interface AppField {
   name: string;
-  type: FormLineType;
+  type: AppFieldType;
   label?: string;
   placeholder?: string;
   value?: string;
+  urls?: string[];
   validators?: ValidatorFn[];
   multiColumnFieldSetting?: MultiColumnFieldSetting[];
   characterLimit?: number;

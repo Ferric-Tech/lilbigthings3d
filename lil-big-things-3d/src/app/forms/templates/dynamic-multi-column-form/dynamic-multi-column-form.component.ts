@@ -12,7 +12,7 @@ import {
   FormResults,
 } from '../../models/form-template.interface';
 import {
-  FormLineType,
+  AppFieldType,
   FORM_FIELD_TYPES,
 } from '../../models/form-templates.enum';
 import { isEqual } from 'lodash';
@@ -25,12 +25,17 @@ import { PrintFileParameters } from '../../dialogs/print-file-parameters-dialog/
   styleUrls: ['./dynamic-multi-column-form.component.scss'],
 })
 export class DynanmicMultiColumnFormComponent implements OnInit {
+  // This component's object is to provide a template for a dynamic form
+  // that can be split into multiple columns as may be required - specfically
+  // for use of complex input screens as found in the admin portal of the application
+
+  // The component requires a config strucuted as a AppMultiColumnForm as well
   @Input() config: AppMultiColumnForm | undefined;
   @Input() imageUrls: Record<string, (string | ArrayBuffer | null)[]> = {};
 
   @Output() formResults = new EventEmitter<FormResults>();
 
-  formFieldType = FormLineType;
+  formFieldType = AppFieldType;
   forms: Record<string, FormGroup> = {};
   formDefaults: Record<string, string> = {};
   importedFiles: Record<string, File[]> = {};
@@ -91,7 +96,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
         form.fields.forEach((field) => {
           if (FORM_FIELD_TYPES.includes(field.type)) {
             switch (field.type) {
-              case FormLineType.InputMultiColumn: {
+              case AppFieldType.InputMultiColumn: {
                 field.multiColumnFieldSetting?.forEach((column) => {
                   formGroup.addControl(
                     column.name.toLowerCase(),

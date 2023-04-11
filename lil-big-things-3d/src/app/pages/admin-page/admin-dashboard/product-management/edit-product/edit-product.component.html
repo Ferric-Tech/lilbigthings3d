@@ -1,5 +1,5 @@
 <app-dynamic--multi-column-form
-  *ngIf="isLoaded"
+  *ngIf="!isLoading"
   [config]="editProductFormConfig"
   [imageUrls]="imageUrls"
   (formResults)="processFormResults($event)"
