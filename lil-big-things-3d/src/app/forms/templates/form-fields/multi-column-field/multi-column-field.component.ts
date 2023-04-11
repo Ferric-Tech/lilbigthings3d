@@ -33,10 +33,9 @@ export class MultiColumnFieldComponent implements OnInit {
   onFieldBlur(fieldColumnName: string, index: number): void {
     if (!this.field?.multiColumnFieldSetting) return;
     if (this.fieldValues[fieldColumnName] === '') {
-      this.fieldValues[fieldColumnName] ===
+      this.fieldValues[fieldColumnName] =
         this.field?.multiColumnFieldSetting[index].placeholder || '';
-    } else {
-      this.updateFieldValues.emit(this.fieldValues);
     }
+    this.updateFieldValues.emit(this.fieldValues);
   }
 }

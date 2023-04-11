@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppField } from 'src/app/forms/models/form-template.interface';
+import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 
 @Component({
-  selector: 'app-title-input',
-  templateUrl: './title-input.component.html',
-  styleUrls: ['./title-input.component.scss'],
+  selector: 'app-text-area',
+  templateUrl: './text-area.component.html',
+  styleUrls: ['./text-area.component.scss'],
 })
-export class TitleInputComponent implements OnInit {
+export class TextAreaComponent implements OnInit {
   @Input() field: AppField | undefined;
   @Output() updateFieldValue = new EventEmitter<string>();
 
+  formFieldType = AppFieldType;
   fieldValue = '';
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class TitleInputComponent implements OnInit {
     if (this.fieldValue === '') {
       this.fieldValue = this.field?.placeholder || '';
     }
+
     this.updateFieldValue.emit(this.fieldValue);
   }
 }

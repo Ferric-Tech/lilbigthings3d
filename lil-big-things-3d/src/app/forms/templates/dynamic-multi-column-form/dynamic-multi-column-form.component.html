@@ -25,8 +25,7 @@
             [field]="field"
           ></app-form-label>
 
-          <!-- Inputs -->
-          <!-- Title -->
+          <!-- Title input -->
           <app-title-input
             *ngIf="field.type === formFieldType.InputTitle"
             [field]="field"
@@ -48,29 +47,17 @@
             "
           ></app-multi-column-field>
 
-          <!-- Text areas -->
-          <textarea
-            *ngIf="field.type === formFieldType.InputTextShort"
-            formControlName="{{ field.name }}"
-            class="short-desc-area"
-            id="{{ field.name }}"
-            type="text"
-            (focus)="onFieldFocus(forms[form.name], field.name)"
-            (blur)="onFieldBlur(forms[form.name], field.name)"
-            maxlength="{{
-              field.characterLimit ? field.characterLimit : 'none'
-            }}"
-          ></textarea>
-
-          <textarea
-            *ngIf="field.type === formFieldType.InputTextLong"
-            formControlName="{{ field.name }}"
-            class="long-desc-area"
-            id="{{ field.name }}"
-            type="text"
-            (focus)="onFieldFocus(forms[form.name], field.name)"
-            (blur)="onFieldBlur(forms[form.name], field.name)"
-          ></textarea>
+          <!-- Text area -->
+          <app-text-area
+            *ngIf="
+              field.type === formFieldType.InputTextShort ||
+              field.type === formFieldType.InputTextLong
+            "
+            [field]="field"
+            (updateFieldValue)="
+              updateFieldValue($event, forms[form.name], field.name)
+            "
+          ></app-text-area>
 
           <!-- Main Image -->
           <div class="main-image-container">

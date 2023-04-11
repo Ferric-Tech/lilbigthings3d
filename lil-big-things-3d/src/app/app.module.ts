@@ -89,6 +89,7 @@ import { PrintFileParametersDialogComponent } from './forms/dialogs/print-file-p
 import { FormLabelComponent } from './forms/templates/form-fields/form-label/form-label.component';
 import { TitleInputComponent } from './forms/templates/form-fields/title-input/title-input.component';
 import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-column-field/multi-column-field.component';
+import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-area.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,7 @@ import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-c
     FormLabelComponent,
     TitleInputComponent,
     MultiColumnFieldComponent,
+    TextAreaComponent,
   ],
   imports: [
     BrowserModule,
