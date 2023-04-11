@@ -204,7 +204,7 @@
             </div>
             <div class="image-collection">
               <div
-                *ngFor="let url of imageUrls[field.name]"
+                *ngFor="let url of forms[form.name].value[field.name]"
                 class="image-container"
               >
                 <img [src]="url" />

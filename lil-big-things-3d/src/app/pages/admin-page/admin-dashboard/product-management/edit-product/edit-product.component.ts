@@ -24,10 +24,10 @@ export interface FieldLocationData {
   styleUrls: ['./edit-product.component.scss'],
 })
 export class EditProductComponent implements OnInit {
-  productID = this.route.snapshot.paramMap.get('productId') || '';
+  productID = '';
+  unpackedData: Record<string, unknown> = {};
   editProductFormConfig = PRODUCT_FORM_CONFIG;
   isLoading = true;
-  imageUrls: Record<string, (string | ArrayBuffer | null)[]> = {};
 
   constructor(
     private readonly eventService: EventManagementService,
@@ -39,8 +39,11 @@ export class EditProductComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.updateLoadingState(true);
+    this.productID = this.route.snapshot.paramMap.get('productId') || '';
     await this.setEditProductForm();
     await this.setImagesForForm();
+    if (!this.unpackedData) return;
+    this.setEditProductFormWithUnpackedData(this.unpackedData);
     this.updateLoadingState(false);
   }
 
@@ -61,10 +64,10 @@ export class EditProductComponent implements OnInit {
     const productData = await this.getProductDetailFromID();
 
     if (!productData) return;
-    const unpackedData = this.unpackedProductData(productData);
-
-    if (!unpackedData) return;
-    this.setEditProductFormWithUnpackedData(unpackedData);
+    this.unpackedData = {
+      ...this.unpackedData,
+      ...this.unpackedProductData(productData),
+    };
   }
 
   private async getProductDetailFromID(): Promise<ProductData | undefined> {
@@ -197,9 +200,10 @@ export class EditProductComponent implements OnInit {
   /********************************************** Set form images *********************************************/
   private async setImagesForForm() {
     if (!this.productID) return;
-    this.imageUrls = (await this.productService.getImagesByID(
+    const imageUrls = (await this.productService.getImagesByID(
       this.productID
     )) as Record<string, (string | ArrayBuffer | null)[]>;
+    this.unpackedData = { ...this.unpackedData, ...imageUrls };
   }
 
   /********************************************** Utility methods *********************************************/
