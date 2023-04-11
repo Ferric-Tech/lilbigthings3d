@@ -15,8 +15,8 @@
         [formGroup]="forms[form.name]"
       >
         <div *ngFor="let field of form.fields">
-          <!-- Form Labels -->
-          <div
+          <!-- Form labels  -->
+          <app-form-label
             *ngIf="
               field.type === formFieldType.MainLabel ||
               field.type === formFieldType.LabelSub ||
@@ -24,21 +24,8 @@
               field.type === formFieldType.PlainLabel
             "
             class="form-line"
-          >
-            <div
-              class="{{
-                field.type === formFieldType.MainLabel
-                  ? 'title'
-                  : field.type === formFieldType.LabelSub
-                  ? 'sub-title'
-                  : field.type === formFieldType.UnderlinedLabel
-                  ? 'underlined-title'
-                  : ''
-              }}"
-            >
-              {{ field.label }}
-            </div>
-          </div>
+            [field]="field"
+          ></app-form-label>
 
           <!-- Inputs -->
           <!-- Title -->
@@ -147,7 +134,7 @@
             </button>
           </div>
 
-          <!-- File Uploaders -->
+          <!-- File Uploaders with Parameters -->
           <div
             *ngIf="field.type === formFieldType.UploaderSingleFileWithParams"
             class="form-line"

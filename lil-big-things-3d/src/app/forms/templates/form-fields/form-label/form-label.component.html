@@ -1,0 +1,16 @@
+<!-- Form Labels -->
+<div *ngIf="field">
+  <div
+    class="{{
+      field.type === formFieldType.MainLabel
+        ? 'title'
+        : field.type === formFieldType.LabelSub
+        ? 'sub-title'
+        : field.type === formFieldType.UnderlinedLabel
+        ? 'underlined-title'
+        : ''
+    }}"
+  >
+    {{ field.label }}
+  </div>
+</div>

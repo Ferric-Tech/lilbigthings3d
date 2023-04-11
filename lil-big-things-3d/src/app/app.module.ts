@@ -86,6 +86,7 @@ import { NewMaterialInputDialogComponent } from './pages/admin-page/admin-dashbo
 import { MaterialPricingScheduleComponent } from './pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-pricing-schedule/material-pricing-schedule.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PrintFileParametersDialogComponent } from './forms/dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
+import { FormLabelComponent } from './forms/templates/form-fields/form-label/form-label.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { PrintFileParametersDialogComponent } from './forms/dialogs/print-file-p
     PricingDashboardComponent,
     MaterialPricingScheduleComponent,
     PrintFileParametersDialogComponent,
+    FormLabelComponent,
   ],
   imports: [
     BrowserModule,

@@ -31,8 +31,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   // The component requires a config strucuted as a AppMultiColumnForm as well
   @Input() config: AppMultiColumnForm | undefined;
-  @Input() imageUrls: Record<string, (string | ArrayBuffer | null)[]> = {};
-
   @Output() formResults = new EventEmitter<FormResults>();
 
   formFieldType = AppFieldType;
@@ -183,7 +181,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
 
     this.importedImages[field] = uploadedImages;
-    this.imageUrls[field] = uploadedImagesUrls;
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
   }
