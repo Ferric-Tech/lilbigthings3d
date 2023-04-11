@@ -70,43 +70,19 @@
             />
           </div>
 
-          <!-- File Uploaders -->
-          <div
+          <!-- File Uploader -->
+          <app-file-uploader
             *ngIf="
               field.type === formFieldType.UploaderMultiFilePlain ||
               field.type === formFieldType.UploaderMultiFileUnderlined ||
               field.type === formFieldType.UploaderSingleFilePlain ||
               field.type === formFieldType.UploaderSingleFileUnderlined
             "
-            class="form-line"
-          >
-            <div
-              class="{{
-                field.type === formFieldType.UploaderMultiFileUnderlined ||
-                field.type === formFieldType.UploaderSingleFileUnderlined
-                  ? 'underlined-title uploader-label'
-                  : 'indented-text uploader-label'
-              }}"
-            >
-              {{ field.label }}
-            </div>
-            <div class="uploader-file-name">
-              {{ forms[form.name].value[field.name] }}
-            </div>
-            <input
-              class="fake-file-selector"
-              #designFileInput
-              type="file"
-              (change)="onFileSelection(forms[form.name], field.name, $event)"
-            />
-            <button
-              class="file-selector-button"
-              #upload
-              (click)="designFileInput.click()"
-            >
-              Upload file
-            </button>
-          </div>
+            [field]="field"
+            (fileSelected)="
+              onFileSelection(forms[form.name], field.name, $event)
+            "
+          ></app-file-uploader>
 
           <!-- File Uploaders with Parameters -->
           <div

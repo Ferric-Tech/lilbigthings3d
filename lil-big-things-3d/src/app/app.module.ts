@@ -90,6 +90,7 @@ import { FormLabelComponent } from './forms/templates/form-fields/form-label/for
 import { TitleInputComponent } from './forms/templates/form-fields/title-input/title-input.component';
 import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-column-field/multi-column-field.component';
 import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-area.component';
+import { FileUploaderComponent } from './forms/templates/form-fields/file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
@@ -143,6 +144,7 @@ import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-
     TitleInputComponent,
     MultiColumnFieldComponent,
     TextAreaComponent,
+    FileUploaderComponent,
   ],
   imports: [
     BrowserModule,

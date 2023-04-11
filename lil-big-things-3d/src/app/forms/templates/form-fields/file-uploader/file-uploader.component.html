@@ -1,0 +1,30 @@
+<div *ngIf="field" class="form-line">
+  <!-- Lable  -->
+  <div
+    class="{{
+      field.type === formFieldType.UploaderMultiFileUnderlined ||
+      field.type === formFieldType.UploaderSingleFileUnderlined
+        ? 'underlined-title uploader-label'
+        : 'indented-text uploader-label'
+    }}"
+  >
+    {{ field.label }}
+  </div>
+
+  <!-- File name  -->
+  <div class="uploader-file-name">
+    {{ fieldValue }}
+  </div>
+
+  <!-- Import button  -->
+  <input
+    class="fake-file-selector"
+    #FileInput
+    type="file"
+    (change)="onFileSelection($event)"
+    [multiple]="multiFileImport"
+  />
+  <button class="file-selector-button" #upload (click)="FileInput.click()">
+    Upload file
+  </button>
+</div>

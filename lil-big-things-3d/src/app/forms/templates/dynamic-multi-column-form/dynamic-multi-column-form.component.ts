@@ -164,11 +164,10 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     console.log(form.value);
   }
 
-  onFileSelection(form: FormGroup, field: string, event: any): void {
-    const file: File = event.target.files[0];
+  onFileSelection(form: FormGroup, field: string, file: File): void {
+    if (!file) return;
     this.importedFiles[field] = [file];
     form.controls[field].setValue(file.name);
-    this.cd.detectChanges();
   }
 
   onFileWithParamettersSelection(form: FormGroup, field: string, event: any) {
