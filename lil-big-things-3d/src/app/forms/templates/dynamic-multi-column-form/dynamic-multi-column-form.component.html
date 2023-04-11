@@ -1,13 +1,11 @@
-<div class="page-container">
+<div *ngIf="config" class="page-container">
   <div class="button-panel">
     <button mat-button [disabled]="!isValidForm" (click)="onSubmit()">
       Submit
     </button>
   </div>
-</div>
 
-<div class="page-container">
-  <div *ngIf="config" class="screen-container">
+  <div class="screen-container">
     <div *ngFor="let column of config.columns" class="column-container">
       <form
         *ngFor="let form of column.forms"
@@ -38,26 +36,17 @@
           ></app-title-input>
 
           <!-- Multi column -->
-          <div
+          <app-multi-column-field
             *ngIf="
               field.type === formFieldType.InputMultiColumn &&
               field.multiColumnFieldSetting
             "
             class="form-line"
-          >
-            <div class="multi-column-field-label">{{ field.label }}</div>
-            <div
-              class="multi-column-field-column"
-              *ngFor="let column of field.multiColumnFieldSetting"
-            >
-              <p>{{ column.label }}</p>
-              <input
-                formControlName="{{ column.name.toLowerCase() }}"
-                id="{{ column.name.toLowerCase() }}"
-                type="text"
-              />
-            </div>
-          </div>
+            [field]="field"
+            (updateFieldValues)="
+              updateMultiColumnFieldValues($event, forms[form.name])
+            "
+          ></app-multi-column-field>
 
           <!-- Text areas -->
           <textarea

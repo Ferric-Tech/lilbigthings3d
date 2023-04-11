@@ -151,6 +151,17 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   updateFieldValue(updatedValue: string, form: FormGroup, field: string) {
     form.controls[field].setValue(updatedValue);
+    console.log(form.value);
+  }
+
+  updateMultiColumnFieldValues(
+    updatedValues: Record<string, string>,
+    form: FormGroup
+  ) {
+    Object.keys(updatedValues).forEach((fieldColumnName) => {
+      form.controls[fieldColumnName].setValue(updatedValues[fieldColumnName]);
+    });
+    console.log(form.value);
   }
 
   onFileSelection(form: FormGroup, field: string, event: any): void {

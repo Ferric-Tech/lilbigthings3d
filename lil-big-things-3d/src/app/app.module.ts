@@ -88,6 +88,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PrintFileParametersDialogComponent } from './forms/dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
 import { FormLabelComponent } from './forms/templates/form-fields/form-label/form-label.component';
 import { TitleInputComponent } from './forms/templates/form-fields/title-input/title-input.component';
+import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-column-field/multi-column-field.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { TitleInputComponent } from './forms/templates/form-fields/title-input/t
     PrintFileParametersDialogComponent,
     FormLabelComponent,
     TitleInputComponent,
+    MultiColumnFieldComponent,
   ],
   imports: [
     BrowserModule,
