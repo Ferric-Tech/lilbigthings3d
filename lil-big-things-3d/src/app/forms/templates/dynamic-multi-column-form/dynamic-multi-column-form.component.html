@@ -29,15 +29,13 @@
 
           <!-- Inputs -->
           <!-- Title -->
-          <input
+          <app-title-input
             *ngIf="field.type === formFieldType.InputTitle"
-            formControlName="{{ field.name }}"
-            class="title"
-            id="{{ field.name }}"
-            type="text"
-            (focus)="onFieldFocus(forms[form.name], field.name)"
-            (blur)="onFieldBlur(forms[form.name], field.name)"
-          />
+            [field]="field"
+            (updateFieldValue)="
+              updateFieldValue($event, forms[form.name], field.name)
+            "
+          ></app-title-input>
 
           <!-- Multi column -->
           <div

@@ -24,7 +24,7 @@ import {
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home.page';
 import { AdminPageComponent } from './pages/admin-page/admin.page';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -87,6 +87,7 @@ import { MaterialPricingScheduleComponent } from './pages/admin-page/admin-dashb
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PrintFileParametersDialogComponent } from './forms/dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
 import { FormLabelComponent } from './forms/templates/form-fields/form-label/form-label.component';
+import { TitleInputComponent } from './forms/templates/form-fields/title-input/title-input.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { FormLabelComponent } from './forms/templates/form-fields/form-label/for
     MaterialPricingScheduleComponent,
     PrintFileParametersDialogComponent,
     FormLabelComponent,
+    TitleInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -169,6 +171,7 @@ import { FormLabelComponent } from './forms/templates/form-fields/form-label/for
     MatTooltipModule,
     MatSelectModule,
     MatExpansionModule,
+    FormsModule,
   ],
   providers: [
     ScreenTrackingService,

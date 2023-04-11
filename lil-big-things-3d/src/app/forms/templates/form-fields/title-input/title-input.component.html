@@ -1,0 +1,10 @@
+<div *ngIf="field">
+  <input
+    class="title"
+    id="{{ field.name }}"
+    type="text"
+    [(ngModel)]="fieldValue"
+    (focus)="onFieldFocus()"
+    (blur)="onFieldBlur()"
+  />
+</div>
