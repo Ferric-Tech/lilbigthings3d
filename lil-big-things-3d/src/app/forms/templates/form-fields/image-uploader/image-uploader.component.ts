@@ -39,6 +39,11 @@ export class ImageUploaderComponent {
     }
   }
 
+  deleteImage(index: number) {
+    this.uploadedImagesData.splice(index, 1);
+    this.filesSelected.emit(this.uploadedImagesData);
+  }
+
   setPrimaryImage(image: ImageData) {
     this.primaryImageSelected.emit(image);
   }

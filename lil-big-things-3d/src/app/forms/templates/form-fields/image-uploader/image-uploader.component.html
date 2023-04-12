@@ -18,10 +18,13 @@
   </button>
 </div>
 <div class="image-collection">
-  <div *ngFor="let image of uploadedImagesData" class="image-container">
+  <div
+    *ngFor="let image of uploadedImagesData; let i = index"
+    class="image-container"
+  >
     <img [src]="image.url" />
     <div class="overlay">
-      <button>Delete</button>
+      <button (click)="deleteImage(i)">Delete</button>
       <button (click)="setPrimaryImage(image)">Make primary</button>
     </div>
   </div>
