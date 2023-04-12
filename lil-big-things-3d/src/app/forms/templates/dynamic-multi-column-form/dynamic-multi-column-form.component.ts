@@ -151,7 +151,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   updateFieldValue(updatedValue: string, form: FormGroup, field: string) {
     form.controls[field].setValue(updatedValue);
-    console.log(form.value);
   }
 
   updateMultiColumnFieldValues(
@@ -161,7 +160,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     Object.keys(updatedValues).forEach((fieldColumnName) => {
       form.controls[fieldColumnName].setValue(updatedValues[fieldColumnName]);
     });
-    console.log(form.value);
   }
 
   onFileSelection(form: FormGroup, field: string, file: File): void {
@@ -182,23 +180,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     console.log(form);
   }
 
-  onImagesSelection(form: FormGroup, field: string, event: any) {
-    const uploadedFiles: FileList = event.target.files;
-    const uploadedImages: File[] = [];
-    const uploadedImagesNames: string[] = [];
-    const uploadedImagesUrls: (string | ArrayBuffer | null)[] = [];
-
-    for (let i = 0; i < uploadedFiles.length; i++) {
-      uploadedImages.push(uploadedFiles[i]);
-      uploadedImagesNames.push(uploadedFiles[i].name);
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[i]);
-      reader.onload = () => {
-        uploadedImagesUrls.push(reader.result);
-      };
-    }
-
-    this.importedImages[field] = uploadedImages;
+  onImagesSelection(form: FormGroup, field: string, uploadedImagesNames: any) {
     form.controls[field].setValue(uploadedImagesNames);
     this.cd.detectChanges();
   }
@@ -212,11 +194,13 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
             this.forms[formName].get(control)?.value;
         });
       });
-      this.formResults.emit({
-        formValues: collectiveFormValues,
-        formFiles: this.importedFiles,
-        formImages: this.importedImages,
-      });
+      console.log(collectiveFormValues);
+
+      //   this.formResults.emit({
+      //     formValues: collectiveFormValues,
+      //     formFiles: this.importedFiles,
+      //     formImages: this.importedImages,
+      //   });
     }
   }
 

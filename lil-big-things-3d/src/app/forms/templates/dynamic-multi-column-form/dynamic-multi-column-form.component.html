@@ -101,6 +101,9 @@
           <app-image-uploader
             *ngIf="field.type === formFieldType.ImageUploader"
             [field]="field"
+            (filesSelected)="
+              onImagesSelection(forms[form.name], field.name, $event)
+            "
             (primaryImageSelected)="setPrimaryImage($event)"
           ></app-image-uploader>
         </div>

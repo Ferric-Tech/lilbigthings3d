@@ -25,6 +25,7 @@ export class ImageUploaderComponent {
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       const reader = new FileReader();
+
       reader.readAsDataURL(event.target.files[i]);
       reader.onload = () => {
         this.uploadedImagesData.push({
@@ -33,6 +34,8 @@ export class ImageUploaderComponent {
           url: reader.result,
         });
       };
+
+      this.filesSelected.emit(this.uploadedImagesData);
     }
   }
 
