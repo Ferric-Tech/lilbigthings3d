@@ -92,6 +92,7 @@ import { MultiColumnFieldComponent } from './forms/templates/form-fields/multi-c
 import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-area.component';
 import { FileUploaderComponent } from './forms/templates/form-fields/file-uploader/file-uploader.component';
 import { FileUploaderWithParametersComponent } from './forms/templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
+import { ImageUploaderComponent } from './forms/templates/form-fields/image-uploader/image-uploader.component';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import { FileUploaderWithParametersComponent } from './forms/templates/form-fiel
     TextAreaComponent,
     FileUploaderComponent,
     FileUploaderWithParametersComponent,
+    ImageUploaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ import {
 import { isEqual } from 'lodash';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FileWithParameters } from '../form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
+import { ImageData } from '../form-fields/image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-dynamic--multi-column-form',
@@ -219,9 +220,9 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
   }
 
-  setPrimaryImage(url: string | ArrayBuffer | null) {
+  setPrimaryImage(image: ImageData) {
     this.forms['Product basic details'].controls['primary-image-url'].setValue(
-      url
+      image
     );
   }
 }

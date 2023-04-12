@@ -66,7 +66,7 @@
                 field.type === formFieldType.MainImage &&
                 forms[form.name].controls[field.name].value
               "
-              src="{{ forms[form.name].controls[field.name].value }}"
+              src="{{ forms[form.name].controls[field.name].value.url }}"
             />
           </div>
 
@@ -98,41 +98,11 @@
           ></app-file-uploader-with-parameters>
 
           <!-- Image Uploaders -->
-          <div *ngIf="field.type === formFieldType.ImageUploader">
-            <div class="form-line">
-              <div class="uploader-label">
-                {{ field.label }}
-              </div>
-              <input
-                class="fake-file-selector"
-                #designFileInput
-                type="file"
-                multiple
-                (change)="
-                  onImagesSelection(forms[form.name], field.name, $event)
-                "
-              />
-              <button
-                class="file-selector-button"
-                #upload
-                (click)="designFileInput.click()"
-              >
-                Upload images
-              </button>
-            </div>
-            <div class="image-collection">
-              <div
-                *ngFor="let url of forms[form.name].value[field.name]"
-                class="image-container"
-              >
-                <img [src]="url" />
-                <div class="overlay">
-                  <button>Delete</button>
-                  <button (click)="setPrimaryImage(url)">Make primary</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-image-uploader
+            *ngIf="field.type === formFieldType.ImageUploader"
+            [field]="field"
+            (primaryImageSelected)="setPrimaryImage($event)"
+          ></app-image-uploader>
         </div>
       </form>
     </div>
