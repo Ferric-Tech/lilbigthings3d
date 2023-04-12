@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AppField } from 'src/app/forms/models/form-template.interface';
-
-export interface ImageData {
-  file: File;
-  fileName: string;
-  url: string | ArrayBuffer | null;
-}
+import {
+  AppField,
+  FileData,
+} from 'src/app/forms/models/form-template.interface';
 
 @Component({
   selector: 'app-image-uploader',
@@ -14,10 +11,10 @@ export interface ImageData {
 })
 export class ImageUploaderComponent {
   @Input() field: AppField | undefined;
-  @Output() filesSelected = new EventEmitter<ImageData[]>();
-  @Output() primaryImageSelected = new EventEmitter<ImageData>();
+  @Output() filesSelected = new EventEmitter<FileData[]>();
+  @Output() primaryImageSelected = new EventEmitter<FileData>();
 
-  uploadedImagesData: ImageData[] = [];
+  uploadedImagesData: FileData[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onImagesSelection(event: any) {
@@ -30,7 +27,7 @@ export class ImageUploaderComponent {
       reader.onload = () => {
         this.uploadedImagesData.push({
           file: uploadedFiles[i],
-          fileName: uploadedFiles[i].name,
+          //   fileName: uploadedFiles[i].name,
           url: reader.result,
         });
       };
@@ -44,7 +41,7 @@ export class ImageUploaderComponent {
     this.filesSelected.emit(this.uploadedImagesData);
   }
 
-  setPrimaryImage(image: ImageData) {
+  setPrimaryImage(image: FileData) {
     this.primaryImageSelected.emit(image);
   }
 }

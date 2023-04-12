@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AppField } from 'src/app/forms/models/form-template.interface';
+import {
+  AppField,
+  FileData,
+} from 'src/app/forms/models/form-template.interface';
 import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 
 @Component({
@@ -9,15 +12,15 @@ import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 })
 export class FileUploaderComponent implements OnInit {
   @Input() field: AppField | undefined;
-  @Output() fileSelected = new EventEmitter<File>();
+  @Output() fileSelected = new EventEmitter<FileData[]>();
 
   formFieldType = AppFieldType;
-  fieldValue = '';
+  fieldDisplayValues: string[] = [];
   multiFileImport = false;
 
   ngOnInit() {
     if (!this.field) return;
-    this.fieldValue = this.field.value || this.field.placeholder || '';
+    this.populateFieldDisplayValues();
     this.multiFileImport =
       this.field.type === this.formFieldType.UploaderMultiFilePlain ||
       this.field.type === this.formFieldType.UploaderMultiFileUnderlined;
@@ -25,9 +28,25 @@ export class FileUploaderComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFileSelection(event: any): void {
-    const file: File = event.target.files[0];
-    if (!file) return;
-    this.fieldValue = file.name;
-    this.fileSelected.emit(file);
+    const filesSelected: File[] = event.target.files;
+    if (!filesSelected) return;
+
+    const fileData: FileData[] = [];
+    for (const file of filesSelected) {
+      fileData.push({ file: file });
+      this.fieldDisplayValues.push(file.name);
+    }
+    this.fileSelected.emit(fileData);
+  }
+
+  populateFieldDisplayValues() {
+    if (!this.field) return;
+    if (this.field.value) {
+      this.fieldDisplayValues.push(this.field.value);
+    } else {
+      if (this.field.placeholder) {
+        this.fieldDisplayValues.push(this.field.placeholder);
+      }
+    }
   }
 }

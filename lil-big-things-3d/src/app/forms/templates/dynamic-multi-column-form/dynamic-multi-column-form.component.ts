@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import {
   AppMultiColumnForm,
+  FileData,
+  FileDataWithParameters,
   FormResults,
 } from '../../models/form-template.interface';
 import {
@@ -17,8 +19,6 @@ import {
 } from '../../models/form-templates.enum';
 import { isEqual } from 'lodash';
 import { FormControl, FormGroup } from '@angular/forms';
-import { FileWithParameters } from '../form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
-import { ImageData } from '../form-fields/image-uploader/image-uploader.component';
 
 @Component({
   selector: 'app-dynamic--multi-column-form',
@@ -37,8 +37,8 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
   formFieldType = AppFieldType;
   forms: Record<string, FormGroup> = {};
   formDefaults: Record<string, string> = {};
-  importedFiles: Record<string, File[]> = {};
-  importedImages: Record<string, File[]> = {};
+  importedFiles: Record<string, FileData[]> = {};
+  importedImages: Record<string, FileData[]> = {};
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];
@@ -145,22 +145,20 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     form.controls[field].setValue(updatedValues);
   }
 
-  onFileSelection(form: FormGroup, field: string, file: File): void {
-    if (!file) return;
-    this.importedFiles[field] = [file];
-    form.controls[field].setValue({ file: file });
+  onFileSelection(form: FormGroup, field: string, fileData: FileData[]): void {
+    if (!fileData) return;
+    this.importedFiles[field] = fileData;
+    form.controls[field].setValue(fileData);
   }
 
   onFileWithParametersSelection(
     form: FormGroup,
     field: string,
-    fileWithParameters: FileWithParameters
+    fileWithParameters: FileDataWithParameters
   ) {
     if (!fileWithParameters.file) return;
-    const file: File = fileWithParameters.file;
-    this.importedFiles[field] = [file];
+    this.importedFiles[field] = [fileWithParameters];
     form.controls[field].setValue(fileWithParameters);
-    console.log(form);
   }
 
   onImagesSelection(form: FormGroup, field: string, uploadedImagesNames: any) {
@@ -187,7 +185,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
   }
 
-  setPrimaryImage(image: ImageData) {
+  setPrimaryImage(image: FileData) {
     this.forms['Product basic details'].controls['primary-image-url'].setValue(
       image
     );

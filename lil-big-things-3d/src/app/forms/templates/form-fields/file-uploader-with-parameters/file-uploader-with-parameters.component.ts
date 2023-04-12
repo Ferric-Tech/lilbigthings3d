@@ -3,17 +3,15 @@ import {
   PrintFileParameters,
   PrintFileParametersMapping,
 } from 'src/app/forms/dialogs/print-file-parameters-dialog/print-file-parameters-dialog.component';
-import { AppField } from 'src/app/forms/models/form-template.interface';
+import {
+  AppField,
+  FileDataWithParameters,
+} from 'src/app/forms/models/form-template.interface';
 import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 
 export enum FileParamaterType {
   None,
   PrintFile,
-}
-
-export interface FileWithParameters {
-  file: File | null;
-  parameters: Record<string, unknown>;
 }
 
 @Component({
@@ -23,10 +21,11 @@ export interface FileWithParameters {
 })
 export class FileUploaderWithParametersComponent implements OnInit {
   @Input() field: AppField | undefined;
-  @Output() fileSelectedWithParameters = new EventEmitter<FileWithParameters>();
+  @Output() fileSelectedWithParameters =
+    new EventEmitter<FileDataWithParameters>();
 
   formFieldType = AppFieldType;
-  fieldValue: FileWithParameters = { file: null, parameters: {} };
+  fieldValue: FileDataWithParameters = { file: null, parameters: {} };
   fileName = '';
   showParameterDialog = false;
   currentParameterType = FileParamaterType.None;

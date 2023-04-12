@@ -12,8 +12,8 @@
   </div>
 
   <!-- File name  -->
-  <div class="uploader-file-name">
-    {{ fieldValue }}
+  <div class="uploader-file-name" *ngFor="let value of fieldDisplayValues">
+    {{ value }}
   </div>
 
   <!-- Import button  -->

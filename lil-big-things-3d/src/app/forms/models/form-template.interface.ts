@@ -43,3 +43,12 @@ export interface MultiColumnFieldSetting {
   value?: string;
   validators?: ValidatorFn[];
 }
+
+export interface FileData {
+  file: File | null;
+  url?: string | ArrayBuffer | null;
+}
+
+export interface FileDataWithParameters extends FileData {
+  parameters: Record<string, unknown>;
+}
