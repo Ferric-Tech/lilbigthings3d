@@ -35,7 +35,7 @@ import { ViewProductsComponent } from './pages/admin-page/admin-dashboard/produc
 import { MatTableModule } from '@angular/material/table';
 import { AddProductComponent } from './pages/admin-page/admin-dashboard/product-management/add-product/add-product.component';
 import { EditProductComponent } from './pages/admin-page/admin-dashboard/product-management/edit-product/edit-product.component';
-import { LoadingScreenComponent } from './shared/loading-screen/loading-screen.component';
+import { LoadingScreenComponent } from './shared/components/loading-screen/loading-screen.component';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
@@ -70,7 +70,7 @@ import { PaymentNotifyComponent } from './pages/home-page/payment-result/payment
 import { PaymentResultComponent } from './pages/home-page/payment-result/payment-result.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OrdersViewComponent } from './pages/home-page/orders-view/orders-view.component';
-import { SignOutDialogComponent } from './shared/sign-out-dialog/sign-out-dialog.component';
+import { SignOutDialogComponent } from './shared/components/sign-out-dialog/sign-out-dialog.component';
 import { GoogleButtonComponent } from './pages/home-page/shared-components/user-sign-in/google-button/google-button.component';
 import { FacebookButtonComponent } from './pages/home-page/shared-components/user-sign-in/facebook-button/facebook-button.component';
 import { NavbarMenuComponent } from './pages/home-page/shared-components/navbar/navbar-menu/navbar-menu.component';
