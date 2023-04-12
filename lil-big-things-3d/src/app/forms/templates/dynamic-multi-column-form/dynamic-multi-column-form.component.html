@@ -12,14 +12,14 @@
         class="form-container"
         [formGroup]="forms[form.name]"
       >
-        <div *ngFor="let field of form.fields">
+        <div *ngFor="let field of form.fields" [ngSwitch]="field.type">
           <!-- Form labels  -->
           <app-form-label
-            *ngIf="
-              field.type === formFieldType.MainLabel ||
-              field.type === formFieldType.LabelSub ||
-              field.type === formFieldType.UnderlinedLabel ||
-              field.type === formFieldType.PlainLabel
+            *ngSwitchCase="
+              formFieldType.MainLabel ||
+              formFieldType.LabelSub ||
+              formFieldType.UnderlinedLabel ||
+              formFieldType.PlainLabel
             "
             class="form-line"
             [field]="field"
@@ -27,7 +27,7 @@
 
           <!-- Title input -->
           <app-title-input
-            *ngIf="field.type === formFieldType.InputTitle"
+            *ngSwitchCase="formFieldType.InputTitle"
             [field]="field"
             (updateFieldValue)="
               updateFieldValue($event, forms[form.name], field.name)
@@ -36,10 +36,7 @@
 
           <!-- Multi column -->
           <app-multi-column-field
-            *ngIf="
-              field.type === formFieldType.InputMultiColumn &&
-              field.multiColumnFieldSetting
-            "
+            *ngSwitchCase="formFieldType.InputMultiColumn"
             class="form-line"
             [field]="field"
             (updateFieldValues)="
@@ -49,9 +46,8 @@
 
           <!-- Text area -->
           <app-text-area
-            *ngIf="
-              field.type === formFieldType.InputTextShort ||
-              field.type === formFieldType.InputTextLong
+            *ngSwitchCase="
+              formFieldType.InputTextShort || formFieldType.InputTextLong
             "
             [field]="field"
             (updateFieldValue)="
@@ -60,23 +56,20 @@
           ></app-text-area>
 
           <!-- Main Image -->
-          <div class="main-image-container">
-            <img
-              *ngIf="
-                field.type === formFieldType.MainImage &&
-                forms[form.name].controls[field.name].value
-              "
-              src="{{ forms[form.name].controls[field.name].value.url }}"
-            />
+          <div
+            class="main-image-container"
+            *ngSwitchCase="formFieldType.MainImage"
+          >
+            <img src="{{ forms[form.name].controls[field.name].value.url }}" />
           </div>
 
           <!-- File Uploader -->
           <app-file-uploader
-            *ngIf="
-              field.type === formFieldType.UploaderMultiFilePlain ||
-              field.type === formFieldType.UploaderMultiFileUnderlined ||
-              field.type === formFieldType.UploaderSingleFilePlain ||
-              field.type === formFieldType.UploaderSingleFileUnderlined
+            *ngSwitchCase="
+              formFieldType.UploaderMultiFilePlain ||
+              formFieldType.UploaderMultiFileUnderlined ||
+              formFieldType.UploaderSingleFilePlain ||
+              formFieldType.UploaderSingleFileUnderlined
             "
             [field]="field"
             (fileSelected)="
@@ -86,7 +79,7 @@
 
           <!-- File Uploaders with Parameters -->
           <app-file-uploader-with-parameters
-            *ngIf="field.type === formFieldType.UploaderSingleFileWithParams"
+            *ngSwitchCase="formFieldType.UploaderSingleFileWithParams"
             [field]="field"
             (fileSelectedWithParameters)="
               onFileWithParametersSelection(
@@ -99,7 +92,7 @@
 
           <!-- Image Uploaders -->
           <app-image-uploader
-            *ngIf="field.type === formFieldType.ImageUploader"
+            *ngSwitchCase="formFieldType.ImageUploader"
             [field]="field"
             (primaryImageSelected)="setPrimaryImage($event)"
           ></app-image-uploader>
