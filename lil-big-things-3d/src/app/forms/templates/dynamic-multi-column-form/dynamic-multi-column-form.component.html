@@ -30,7 +30,7 @@
             *ngIf="field.type === formFieldType.InputTitle"
             [field]="field"
             (updateFieldValue)="
-              updateFieldValue($event, forms[form.name], field.name)
+              updateFieldValue(forms[form.name], field.name, $event)
             "
           ></app-title-input>
 
@@ -43,7 +43,7 @@
             class="form-line"
             [field]="field"
             (updateFieldValues)="
-              updateMultiColumnFieldValues($event, forms[form.name])
+              updateMultiColumnFieldValues(forms[form.name], field.name, $event)
             "
           ></app-multi-column-field>
 
@@ -55,7 +55,7 @@
             "
             [field]="field"
             (updateFieldValue)="
-              updateFieldValue($event, forms[form.name], field.name)
+              updateFieldValue(forms[form.name], field.name, $event)
             "
           ></app-text-area>
 

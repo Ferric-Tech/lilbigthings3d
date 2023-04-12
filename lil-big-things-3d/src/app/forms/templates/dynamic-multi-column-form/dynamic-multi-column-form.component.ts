@@ -93,29 +93,13 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
         const formGroup = new FormGroup({});
         form.fields.forEach((field) => {
           if (FORM_FIELD_TYPES.includes(field.type)) {
-            switch (field.type) {
-              case AppFieldType.InputMultiColumn: {
-                field.multiColumnFieldSetting?.forEach((column) => {
-                  formGroup.addControl(
-                    column.name.toLowerCase(),
-                    new FormControl(
-                      column.value || column.placeholder || '',
-                      column.validators
-                    )
-                  );
-                });
-                break;
-              }
-              default: {
-                formGroup.addControl(
-                  field.name,
-                  new FormControl(
-                    field.value || field.placeholder || '',
-                    field.validators
-                  )
-                );
-              }
-            }
+            formGroup.addControl(
+              field.name,
+              new FormControl(
+                field.value || field.placeholder || '',
+                field.validators
+              )
+            );
           }
         });
         this.forms[form.name] = formGroup;
@@ -149,17 +133,16 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
   }
 
-  updateFieldValue(updatedValue: string, form: FormGroup, field: string) {
+  updateFieldValue(form: FormGroup, field: string, updatedValue: string) {
     form.controls[field].setValue(updatedValue);
   }
 
   updateMultiColumnFieldValues(
-    updatedValues: Record<string, string>,
-    form: FormGroup
+    form: FormGroup,
+    field: string,
+    updatedValues: Record<string, string>
   ) {
-    Object.keys(updatedValues).forEach((fieldColumnName) => {
-      form.controls[fieldColumnName].setValue(updatedValues[fieldColumnName]);
-    });
+    form.controls[field].setValue(updatedValues);
   }
 
   onFileSelection(form: FormGroup, field: string, file: File): void {
