@@ -2,12 +2,6 @@ import { ValidatorFn } from '@angular/forms';
 import { AppFieldType } from './form-templates.enum';
 import { FileParamaterType } from '../templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 
-export interface FormResults {
-  formValues: { [key: string]: string };
-  formFiles: { [key: string]: File[] };
-  formImages: { [key: string]: File[] };
-}
-
 export interface AppMultiColumnForm {
   columns: AppFormColumn[];
 }
@@ -33,6 +27,7 @@ export interface AppField {
   multiColumnFieldSetting?: MultiColumnFieldSetting[];
   parameterType?: FileParamaterType;
   parameters?: Record<string, unknown>;
+  multiFileImport?: boolean;
   characterLimit?: number;
 }
 

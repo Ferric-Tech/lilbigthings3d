@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
-import { FormResults } from 'src/app/forms/models/form-template.interface';
 import {
   EventChannel,
   EventTopic,
@@ -23,8 +22,8 @@ export class AddProductComponent {
     private readonly eventService: EventManagementService
   ) {}
 
-  processFormResults(formResults: FormResults): void {
+  processFormResults(formResults: Record<string, unknown>): void {
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
-    this.productService.processFormResults(formResults, false);
+    this.productService.addNewProduct(formResults);
   }
 }

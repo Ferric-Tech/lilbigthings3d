@@ -27,14 +27,14 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
               type: AppFieldType.MainImage,
             },
             {
-              name: ProductFormFields.ShortDescription,
+              name: ProductFormFields.ShortDesc,
               type: AppFieldType.InputTextShort,
               placeholder: ProductFormPlaceholders.ShortDescription,
               validators: [Validators.required],
               characterLimit: 128,
             },
             {
-              name: ProductFormFields.LongDescription,
+              name: ProductFormFields.LongDesc,
               type: AppFieldType.InputTextLong,
               placeholder: ProductFormPlaceholders.LongDescription,
             },

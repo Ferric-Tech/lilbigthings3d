@@ -1,8 +1,8 @@
 export enum ProductFormFields {
   Title = 'title',
   PrimaryImage = 'primary-image-url',
-  ShortDescription = 'shortDescription',
-  LongDescription = 'longDescription',
+  ShortDesc = 'shortDescription',
+  LongDesc = 'longDescription',
   Dimentions = 'dimentions',
   DimentionX = 'x',
   DimentionY = 'y',

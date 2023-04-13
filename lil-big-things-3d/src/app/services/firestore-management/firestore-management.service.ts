@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import { Injectable } from '@angular/core';
 import { initializeApp } from '@angular/fire/app';
 import {
@@ -20,7 +21,6 @@ import {
 import {
   Product,
   ProductData,
-  ProductFilesMetaData,
   ProductForDisplay,
   ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
@@ -28,6 +28,7 @@ import { environment } from 'src/environments/environment';
 import { AppUserProfile } from '../user/user.interface';
 import { UserOrder } from '../orders/orders.service';
 import { MaterialInput } from 'src/app/pages/admin-page/admin-dashboard/cost-pricing-management/costs-dashboard/material-schedule/material-schedule.component';
+import { ProductFileType } from 'src/app/pages/admin-page/admin-dashboard/product-management/services/product-management.service';
 
 @Injectable({
   providedIn: 'root',
@@ -36,43 +37,92 @@ export class FirestoreManagementService {
   app = initializeApp(environment.firebase);
   db = getFirestore(this.app);
 
-  async addProduct(
-    product: Product,
-    isEdit: boolean,
-    productID?: string
-  ): Promise<void> {
-    const productDoc = product.data;
-
-    if (isEdit && productID) {
-      await setDoc(doc(this.db, 'products', productID), productDoc);
-    } else {
+  async initialiseProductDocument(product: Product): Promise<string> {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve) => {
       const productDocRef = await addDoc(
         collection(this.db, 'products'),
-        productDoc
+        product
       );
-      productID = productDocRef.id;
-    }
-
-    // Add design files to storage
-    const storage = getStorage();
-    let folderRef = 'products/' + productID + '/files/';
-
-    Object.keys(product.files).forEach((fileDescription) => {
-      const fileName = productID + '-' + fileDescription;
-      const storageRef = ref(storage, folderRef + fileName);
-      const file: File = product.files[fileDescription] as File;
-      this.addFilesToStrorage(storageRef, file);
+      resolve(productDocRef.id);
     });
+  }
 
-    // Add images files to storage
-    Object.keys(product.images).forEach((imageCatergory) => {
-      folderRef = 'products/' + productID + '/images/' + imageCatergory + '/';
-      product.images[imageCatergory]?.forEach((file, index) => {
-        const fileName =
-          productID + '-' + imageCatergory + '-image-' + (index + 1);
-        const storageRef = ref(storage, folderRef + fileName);
-        this.addFilesToStrorage(storageRef, file as File);
-      });
+  updateProduct(productID: string, product: Product): void {
+    // eslint-disable-next-line no-async-promise-executor
+    setDoc(doc(this.db, 'products', productID), product, {
+      merge: true,
+    });
+  }
+
+  //     var cityRef = db.collection('cities').doc('BJ');
+
+  // var setWithMerge = cityRef.set({
+  //     capital: true
+  // }, { merge: true });
+
+  // const productDoc = product.data;
+  // if (isEdit && productID) {
+  //   await setDoc(doc(this.db, 'products', productID), productDoc);
+  // } else {
+  //   const productDocRef = await addDoc(
+  //     collection(this.db, 'products'),
+  //     productDoc
+  //   );
+  //   productID = productDocRef.id;
+  // }
+  // // Add design files to storage
+  // const storage = getStorage();
+  // let folderRef = 'products/' + productID + '/files/';
+  // Object.keys(product.files).forEach((fileDescription) => {
+  //   const fileName = productID + '-' + fileDescription;
+  //   const storageRef = ref(storage, folderRef + fileName);
+  //   const file: File = product.files[fileDescription] as File;
+  //   this.addFilesToStrorage(storageRef, file);
+  // });
+  // // Add images files to storage
+  // Object.keys(product.images).forEach((imageCatergory) => {
+  //   folderRef = 'products/' + productID + '/images/' + imageCatergory + '/';
+  //   product.images[imageCatergory]?.forEach((file, index) => {
+  //     const fileName =
+  //       productID + '-' + imageCatergory + '-image-' + (index + 1);
+  //     const storageRef = ref(storage, folderRef + fileName);
+  //     this.addFilesToStrorage(storageRef, file as File);
+  //   });
+  // });
+
+  addProductImagesByIDAndCatergory(
+    productID: string,
+    catergory: string,
+    images: File[]
+  ): Promise<string[]> {
+    const imageUrls: string[] = [];
+    const storage = getStorage();
+    return new Promise(async (resolve) => {
+      for (const [index, image] of images.entries()) {
+        const filePath = `${productID}/Images/${catergory}/${productID}-${catergory}-Image-${
+          index + 1
+        }`;
+        const storageRef = ref(storage, filePath);
+        await this.addFilesToStrorage(storageRef, image);
+        imageUrls.push(await getDownloadURL(ref(storage, filePath)));
+      }
+
+      resolve(imageUrls);
+    });
+  }
+
+  async addProductFileByIDAndType(
+    productID: string,
+    type: ProductFileType,
+    file: File
+  ): Promise<string> {
+    return new Promise(async (resolve) => {
+      const storage = getStorage();
+      const filePath = `${productID}/Files/${type}/${productID}-${type}`;
+      const storageRef = ref(storage, filePath);
+      await this.addFilesToStrorage(storageRef, file);
+      resolve(await getDownloadURL(ref(storage, filePath)));
     });
   }
 
@@ -91,14 +141,14 @@ export class FirestoreManagementService {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const listOfProducts: ProductForDisplay[] = [];
-      const querySnapshot = await getDocs(collection(this.db, 'products'));
-      querySnapshot.forEach((doc) => {
-        const productToBeAdded = {
-          id: doc.id,
-          data: doc.data(),
-        } as ProductForDisplay;
-        listOfProducts.push(productToBeAdded);
-      });
+      //   const querySnapshot = await getDocs(collection(this.db, 'products'));
+      //   querySnapshot.forEach((doc) => {
+      //     const productToBeAdded = {
+      //       id: doc.id,
+      //       data: doc.data(),
+      //     } as ProductForDisplay;
+      //     listOfProducts.push(productToBeAdded);
+      //   });
       resolve(listOfProducts);
     });
   }
@@ -151,57 +201,57 @@ export class FirestoreManagementService {
   ): Promise<Product> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
-      const storage = getStorage();
+      //   const storage = getStorage();
 
-      // Get files metadata
-      product.data.filesMetaData = {} as ProductFilesMetaData;
-      let path = 'products/' + productID + '/files';
-      let folderRef = ref(storage, path);
+      //   // Get files metadata
+      //   product.data.filesMetaData = {} as ProductFilesMetaData;
+      //   let path = 'products/' + productID + '/files';
+      //   let folderRef = ref(storage, path);
 
-      await listAll(folderRef).then((response) => {
-        response.items.forEach((itemRef) => {
-          if (itemRef.name.includes('designFile')) {
-            product.data.filesMetaData.designFile = itemRef.name;
-          }
-          if (itemRef.name.includes('printFileFast')) {
-            product.data.filesMetaData.printFileFast = itemRef.name;
-          }
-          if (itemRef.name.includes('printFileStandard')) {
-            product.data.filesMetaData.printFileStandard = itemRef.name;
-          }
-          if (itemRef.name.includes('printFileOptimised')) {
-            product.data.filesMetaData.printFileOptimised = itemRef.name;
-          }
-          if (itemRef.name.includes('printFileCustom')) {
-            product.data.filesMetaData.printFileCustom = itemRef.name;
-          }
-        });
-      });
+      //   await listAll(folderRef).then((response) => {
+      //     response.items.forEach((itemRef) => {
+      //       if (itemRef.name.includes('designFile')) {
+      //         product.data.filesMetaData.designFile = itemRef.name;
+      //       }
+      //       if (itemRef.name.includes('printFileFast')) {
+      //         product.data.filesMetaData.printFileFast = itemRef.name;
+      //       }
+      //       if (itemRef.name.includes('printFileStandard')) {
+      //         product.data.filesMetaData.printFileStandard = itemRef.name;
+      //       }
+      //       if (itemRef.name.includes('printFileOptimised')) {
+      //         product.data.filesMetaData.printFileOptimised = itemRef.name;
+      //       }
+      //       //   if (itemRef.name.includes('printFileCustom')) {
+      //       //     product.data.filesMetaData.printFileCustom = itemRef.name;
+      //       //   }
+      //     });
+      //   });
 
-      product.images = { design: [], product: [] };
-      // Get product images metadata
-      path = 'products/' + productID + '/images/product';
-      folderRef = ref(storage, path);
-      let filesFound: string[] = [];
+      //   product.images = { design: [], product: [] };
+      //   // Get product images metadata
+      //   path = 'products/' + productID + '/images/product';
+      //   folderRef = ref(storage, path);
+      //   let filesFound: string[] = [];
 
-      await listAll(folderRef).then((response) => {
-        response.items.forEach((itemRef) => {
-          filesFound.push(itemRef.name);
-        });
-      });
-      product.data.imagesMetaData.product = filesFound;
+      //   await listAll(folderRef).then((response) => {
+      //     response.items.forEach((itemRef) => {
+      //       filesFound.push(itemRef.name);
+      //     });
+      //   });
+      //   product.data.imagesMetaData.product = filesFound;
 
-      // Get design images metadata
-      path = 'products/' + productID + '/images/design';
-      folderRef = ref(storage, path);
-      filesFound = [];
+      //   // Get design images metadata
+      //   path = 'products/' + productID + '/images/design';
+      //   folderRef = ref(storage, path);
+      //   filesFound = [];
 
-      await listAll(folderRef).then((response) => {
-        response.items.forEach((itemRef) => {
-          filesFound.push(itemRef.name);
-        });
-      });
-      product.data.imagesMetaData.design = filesFound;
+      //   await listAll(folderRef).then((response) => {
+      //     response.items.forEach((itemRef) => {
+      //       filesFound.push(itemRef.name);
+      //     });
+      //   });
+      //   product.data.imagesMetaData.design = filesFound;
 
       resolve(product);
     });

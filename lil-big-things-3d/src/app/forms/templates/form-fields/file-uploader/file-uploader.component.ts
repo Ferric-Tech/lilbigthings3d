@@ -12,7 +12,7 @@ import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 })
 export class FileUploaderComponent implements OnInit {
   @Input() field: AppField | undefined;
-  @Output() fileSelected = new EventEmitter<FileData[]>();
+  @Output() fileSelected = new EventEmitter<FileData[] | FileData>();
 
   formFieldType = AppFieldType;
   fieldDisplayValues: string[] = [];
@@ -31,11 +31,18 @@ export class FileUploaderComponent implements OnInit {
     const filesSelected: File[] = event.target.files;
     if (!filesSelected) return;
 
-    const fileData: FileData[] = [];
-    for (const file of filesSelected) {
-      fileData.push({ file: file });
-      this.fieldDisplayValues.push(file.name);
+    if (this.multiFileImport) {
+      const fileData: FileData[] = [];
+      for (const file of filesSelected) {
+        fileData.push({ file: file });
+        this.fieldDisplayValues.push(file.name);
+      }
+      this.fileSelected.emit(fileData);
+      return;
     }
+
+    const fileData: FileData = { file: filesSelected[0] };
+    this.fieldDisplayValues = [filesSelected[0].name];
     this.fileSelected.emit(fileData);
   }
 

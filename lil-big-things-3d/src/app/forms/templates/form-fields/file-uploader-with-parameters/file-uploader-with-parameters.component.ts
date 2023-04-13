@@ -44,6 +44,7 @@ export class FileUploaderWithParametersComponent implements OnInit {
     const file: File = event.target.files[0];
     if (!file) return;
     this.fieldValue.file = file;
+    this.fileName = file.name;
     this.showParameterDialog = true;
   }
 

@@ -92,7 +92,7 @@ export class ProductViewComponent implements OnInit {
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
     if (!this.productID) return;
     this.productData = await this.fs.getProductDataByID(this.productID);
-    this.primaryImageUrl = this.productData['primary-image-url'];
+    this.primaryImageUrl = this.productData.primaryImageUrl;
   }
 
   private async setProductImages() {

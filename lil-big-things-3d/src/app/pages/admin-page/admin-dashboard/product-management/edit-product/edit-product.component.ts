@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormResults } from 'src/app/forms/models/form-template.interface';
 import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
 import {
   EventChannel,
@@ -48,9 +47,9 @@ export class EditProductComponent implements OnInit {
   }
 
   // Child component call backs
-  processFormResults(formResults: FormResults): void {
+  processFormResults(formResults: Record<string, unknown>): void {
     this.eventService.publish(EventChannel.Product, EventTopic.Loading, true);
-    this.productService.processFormResults(formResults, true, this.productID);
+    this.productService.updateProduct(this.productID, formResults);
   }
 
   /********************************************** Set form content *********************************************/

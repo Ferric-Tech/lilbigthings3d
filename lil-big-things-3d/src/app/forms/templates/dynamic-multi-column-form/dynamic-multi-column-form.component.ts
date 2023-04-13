@@ -11,7 +11,6 @@ import {
   AppMultiColumnForm,
   FileData,
   FileDataWithParameters,
-  FormResults,
 } from '../../models/form-template.interface';
 import {
   AppFieldType,
@@ -32,13 +31,11 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   // The component requires a config strucuted as a AppMultiColumnForm as well
   @Input() config: AppMultiColumnForm | undefined;
-  @Output() formResults = new EventEmitter<FormResults>();
+  @Output() formResults = new EventEmitter<Record<string, unknown>>();
 
   formFieldType = AppFieldType;
   forms: Record<string, FormGroup> = {};
   formDefaults: Record<string, string> = {};
-  importedFiles: Record<string, FileData[]> = {};
-  importedImages: Record<string, FileData[]> = {};
 
   get formFieldsWithDefaultValues(): string[] {
     const fieldsWithDefualtValues: string[] = [];
@@ -145,9 +142,12 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     form.controls[field].setValue(updatedValues);
   }
 
-  onFileSelection(form: FormGroup, field: string, fileData: FileData[]): void {
+  onFileSelection(
+    form: FormGroup,
+    field: string,
+    fileData: FileData[] | FileData
+  ): void {
     if (!fileData) return;
-    this.importedFiles[field] = fileData;
     form.controls[field].setValue(fileData);
   }
 
@@ -157,7 +157,6 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     fileWithParameters: FileDataWithParameters
   ) {
     if (!fileWithParameters.file) return;
-    this.importedFiles[field] = [fileWithParameters];
     form.controls[field].setValue(fileWithParameters);
   }
 
@@ -168,20 +167,14 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isValidForm) {
-      const collectiveFormValues: { [key: string]: string } = {};
+      const collectiveFormValues: Record<string, unknown> = {};
       Object.keys(this.forms).forEach((formName) => {
         Object.keys(this.forms[formName].controls).forEach((control) => {
           collectiveFormValues[control] =
             this.forms[formName].get(control)?.value;
         });
       });
-      console.log(collectiveFormValues);
-
-      //   this.formResults.emit({
-      //     formValues: collectiveFormValues,
-      //     formFiles: this.importedFiles,
-      //     formImages: this.importedImages,
-      //   });
+      this.formResults.emit(collectiveFormValues);
     }
   }
 

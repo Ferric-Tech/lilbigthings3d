@@ -4,24 +4,33 @@ export interface ProductForDisplay extends Product {
 
 export interface Product {
   [key: string]: unknown;
-  data: ProductData;
-  files: ProductFiles;
-  images: ProductImages;
+  title: string;
+  primaryImageUrl: string;
+  shortDesc: string;
+  longDesc: string[];
+  dimentions: Record<string, number>;
+  imagesDesignUrls?: string[];
+  imagesProductUrls?: string[];
+  fileDesign: ProductFileData;
+  filePrintFast: ProductFileData;
+  filePrintStandard: ProductFileData;
+  filePrintOptimised: ProductFileData;
 }
 
 export interface ProductData {
-  [key: string]: unknown;
+  [key: string]: unknown | undefined;
   title: string;
-  'primary-image-url': string;
+  primaryImageUrl: string;
   shortDescription: string;
   longDescription: string[];
-  dimentions: {
-    x: number;
-    y: number;
-    z: number;
-  };
+  dimentions: Record<string, number>;
   filesMetaData: ProductFilesMetaData;
   imagesMetaData: ProductImagesMetaData;
+}
+
+export interface ProductFileData {
+  url: string;
+  parameters: Record<string, unknown>;
 }
 
 export interface ProductFiles {
@@ -30,7 +39,6 @@ export interface ProductFiles {
   printFileFast?: File;
   printFileStandard?: File;
   printFileOptimised?: File;
-  printFileCustom?: File;
 }
 
 export interface ProductImages {
@@ -41,8 +49,6 @@ export interface ProductImages {
 
 export interface ProductImageUrls {
   [key: string]: string[] | undefined;
-  'images-design'?: string[];
-  'images-product'?: string[];
 }
 
 export interface ProductFilesMetaData {
@@ -51,7 +57,6 @@ export interface ProductFilesMetaData {
   printFileFast?: string;
   printFileStandard?: string;
   printFileOptimised?: string;
-  printFileCustom?: string;
 }
 
 export interface ProductImagesMetaData {
