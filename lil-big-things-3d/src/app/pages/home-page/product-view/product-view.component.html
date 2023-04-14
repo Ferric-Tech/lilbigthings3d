@@ -1,7 +1,7 @@
 <!-- Mobile view -->
 <div *ngIf="isMobileView">
-  <div *ngIf="productData" class="mobile-container">
-    <div class="title">{{ productData.title }}</div>
+  <div *ngIf="product" class="mobile-container">
+    <div class="title">{{ product.title }}</div>
     <img class="primary-image" src="{{ primaryImageUrl }}" alt="" />
     <div class="thumbnails-container">
       <img
@@ -16,10 +16,10 @@
     <button (click)="onAddToBasketClick()">Add to basket</button>
 
     <!-- Descriptions  -->
-    <div class="short-description">{{ productData.shortDescription }}</div>
+    <div class="short-description">{{ product.shortDesc }}</div>
     <div *ngIf="!showFullDescription">
       <div class="long-description-capped">
-        {{ productData.longDescription }}
+        {{ product.longDesc }}
       </div>
       <div class="show-more-less-container" (click)="toggleShowDecription()">
         Show more...
@@ -28,7 +28,7 @@
 
     <div *ngIf="showFullDescription">
       <div class="long-description">
-        {{ productData.longDescription }}
+        {{ product.longDesc }}
       </div>
       <div class="show-more-less-container" (click)="toggleShowDecription()">
         Show less...
@@ -39,7 +39,7 @@
 
 <!-- Desktop view -->
 <div *ngIf="!isMobileView">
-  <div *ngIf="productData" class="desktop-container">
+  <div *ngIf="product" class="desktop-container">
     <mat-card class="primary-details-card">
       <div class="images-container">
         <img class="primary-image" src="{{ primaryImageUrl }}" alt="" />
@@ -54,9 +54,11 @@
         </div>
       </div>
       <div class="product-detail-container">
-        <div class="title">{{ productData.title }}</div>
+        <div *ngIf="product" class="title">{{ product.title }}</div>
         <div class="price">R10.00</div>
-        <div class="short-description">{{ productData.shortDescription }}</div>
+        <div *ngIf="product" class="short-description">
+          {{ product.shortDesc }}
+        </div>
 
         <button class="add-to-basket-button" (click)="onAddToBasketClick()">
           Add to basket
@@ -70,7 +72,7 @@
 
       <div *ngIf="!showFullDescription">
         <div class="long-description-capped">
-          {{ productData.longDescription }}
+          {{ product.longDesc }}
         </div>
         <div class="show-more-less-container" (click)="toggleShowDecription()">
           Show more...
@@ -79,7 +81,7 @@
 
       <div *ngIf="showFullDescription">
         <div class="long-description">
-          {{ productData.longDescription }}
+          {{ product.longDesc }}
         </div>
         <div class="show-more-less-container" (click)="toggleShowDecription()">
           Show less...

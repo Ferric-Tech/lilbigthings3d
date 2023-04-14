@@ -1,5 +1,6 @@
 export interface ProductForDisplay extends Product {
   id: string;
+  data: Product;
 }
 
 export interface Product {

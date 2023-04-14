@@ -5,6 +5,7 @@ import {
   ProductFormFields,
   ProductFormLabels,
   ProductFormPlaceholders,
+  ProductForm,
 } from './product.enum';
 import { FileParamaterType } from 'src/app/forms/templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 
@@ -14,7 +15,7 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
       name: 'Basic details and main image column',
       forms: [
         {
-          name: 'Product basic details',
+          name: ProductForm.BasicDetails,
           fields: [
             {
               name: ProductFormFields.Title,
@@ -71,7 +72,7 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
       name: 'Files and images column',
       forms: [
         {
-          name: 'Product files',
+          name: ProductForm.ProductFiles,
           fields: [
             {
               name: ProductFormFields.FilesLabel,
@@ -110,7 +111,7 @@ export const PRODUCT_FORM_CONFIG: AppMultiColumnForm = {
           ],
         },
         {
-          name: 'Product images',
+          name: ProductForm.ProductImages,
           fields: [
             {
               name: ProductFormFields.ImagesLabel,

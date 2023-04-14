@@ -1,19 +1,25 @@
+export enum ProductForm {
+  BasicDetails = 'Product basic details',
+  ProductFiles = 'Product files',
+  ProductImages = 'Product images',
+}
+
 export enum ProductFormFields {
   Title = 'title',
   PrimaryImage = 'primary-image-url',
-  ShortDesc = 'shortDescription',
-  LongDesc = 'longDescription',
+  ShortDesc = 'short-description',
+  LongDesc = 'long-description',
   Dimentions = 'dimentions',
   DimentionX = 'x',
   DimentionY = 'y',
   DimentionZ = 'z',
   FilesLabel = 'files-label',
-  FileDesign = 'designFile', // To align with ProductFilesMetaData keys
+  FileDesign = 'design-file',
   FilePrintLabel = 'print-files-label',
-  FilePrintFast = 'printFileFast', // To align with ProductFilesMetaData keys
-  FilePrintStandard = 'printFileStandard', // To align with ProductFilesMetaData keys
-  FilePrintOptimised = 'printFileOptimised', // To align with ProductFilesMetaData keys
-  FilePrintCustom = 'printFileCustom', // To align with ProductFilesMetaData keys
+  FilePrintFast = 'print-file-fast',
+  FilePrintStandard = 'print-file-standard',
+  FilePrintOptimised = 'print-file-optimised',
+  FilePrintCustom = 'print-file-custom', //
   ImagesLabel = 'images-label',
   ImagesDesign = 'images-design',
   ImagesProduct = 'images-product',

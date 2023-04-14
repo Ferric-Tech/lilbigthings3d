@@ -20,7 +20,6 @@ import {
 } from '@angular/fire/storage';
 import {
   Product,
-  ProductData,
   ProductForDisplay,
   ProductImageUrls,
 } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
@@ -50,46 +49,8 @@ export class FirestoreManagementService {
 
   updateProduct(productID: string, product: Product): void {
     // eslint-disable-next-line no-async-promise-executor
-    setDoc(doc(this.db, 'products', productID), product, {
-      merge: true,
-    });
+    setDoc(doc(this.db, 'products', productID), product);
   }
-
-  //     var cityRef = db.collection('cities').doc('BJ');
-
-  // var setWithMerge = cityRef.set({
-  //     capital: true
-  // }, { merge: true });
-
-  // const productDoc = product.data;
-  // if (isEdit && productID) {
-  //   await setDoc(doc(this.db, 'products', productID), productDoc);
-  // } else {
-  //   const productDocRef = await addDoc(
-  //     collection(this.db, 'products'),
-  //     productDoc
-  //   );
-  //   productID = productDocRef.id;
-  // }
-  // // Add design files to storage
-  // const storage = getStorage();
-  // let folderRef = 'products/' + productID + '/files/';
-  // Object.keys(product.files).forEach((fileDescription) => {
-  //   const fileName = productID + '-' + fileDescription;
-  //   const storageRef = ref(storage, folderRef + fileName);
-  //   const file: File = product.files[fileDescription] as File;
-  //   this.addFilesToStrorage(storageRef, file);
-  // });
-  // // Add images files to storage
-  // Object.keys(product.images).forEach((imageCatergory) => {
-  //   folderRef = 'products/' + productID + '/images/' + imageCatergory + '/';
-  //   product.images[imageCatergory]?.forEach((file, index) => {
-  //     const fileName =
-  //       productID + '-' + imageCatergory + '-image-' + (index + 1);
-  //     const storageRef = ref(storage, folderRef + fileName);
-  //     this.addFilesToStrorage(storageRef, file as File);
-  //   });
-  // });
 
   addProductImagesByIDAndCatergory(
     productID: string,
@@ -141,24 +102,24 @@ export class FirestoreManagementService {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const listOfProducts: ProductForDisplay[] = [];
-      //   const querySnapshot = await getDocs(collection(this.db, 'products'));
-      //   querySnapshot.forEach((doc) => {
-      //     const productToBeAdded = {
-      //       id: doc.id,
-      //       data: doc.data(),
-      //     } as ProductForDisplay;
-      //     listOfProducts.push(productToBeAdded);
-      //   });
+      const querySnapshot = await getDocs(collection(this.db, 'products'));
+      querySnapshot.forEach((doc) => {
+        const productToBeAdded = {
+          id: doc.id,
+          data: doc.data(),
+        } as ProductForDisplay;
+        listOfProducts.push(productToBeAdded);
+      });
       resolve(listOfProducts);
     });
   }
 
-  async getProductDataByID(productID: string): Promise<ProductData> {
+  async getProductDataByID(productID: string): Promise<Product> {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const docRef = doc(this.db, 'products', productID);
       const docSnap = await getDoc(docRef);
-      const product = docSnap.data() as ProductData;
+      const product = docSnap.data() as Product;
       resolve(product);
     });
   }

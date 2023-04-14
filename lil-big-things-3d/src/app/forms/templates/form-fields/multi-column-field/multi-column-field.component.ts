@@ -16,7 +16,7 @@ export class MultiColumnFieldComponent implements OnInit {
     if (!this.field?.multiColumnFieldSetting) return;
     this.field.multiColumnFieldSetting.forEach((fieldColumn) => {
       this.fieldValues[fieldColumn.name] =
-        fieldColumn.value || fieldColumn.placeholder || '';
+        (fieldColumn.value as string) || fieldColumn.placeholder || '';
     });
   }
 

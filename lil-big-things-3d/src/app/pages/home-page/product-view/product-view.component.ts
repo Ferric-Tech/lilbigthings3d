@@ -14,7 +14,7 @@ import { EventManagementService } from 'src/app/services/event-management/event-
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import {
-  ProductData,
+  Product,
   ProductImageUrls,
 } from '../../admin-page/admin-dashboard/product-management/models/product.interface';
 
@@ -30,7 +30,7 @@ export class ProductViewComponent implements OnInit {
   }
 
   productID: string | undefined;
-  productData: ProductData | undefined;
+  product: Product | undefined;
   primaryImageUrl = '';
   showFullDescription = false;
   isMobileView = false;
@@ -57,7 +57,7 @@ export class ProductViewComponent implements OnInit {
     if (!this.productID) return;
     await this.productService.addProductToBasket({
       id: this.productID,
-      title: this.productData?.title || '',
+      title: this.product?.title || '',
       imageUrl: this.primaryImageUrl,
       price: 10,
       qty: 1,
@@ -91,8 +91,8 @@ export class ProductViewComponent implements OnInit {
   private async setProductData() {
     this.productID = this.route.snapshot.paramMap.get('productId') || '';
     if (!this.productID) return;
-    this.productData = await this.fs.getProductDataByID(this.productID);
-    this.primaryImageUrl = this.productData.primaryImageUrl;
+    this.product = await this.fs.getProductDataByID(this.productID);
+    this.primaryImageUrl = this.product.primaryImageUrl;
   }
 
   private async setProductImages() {
