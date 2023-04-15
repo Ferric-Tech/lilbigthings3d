@@ -114,7 +114,10 @@ export class ProductManagementService {
       primaryImageReferance.fieldName === ProductFormFields.ImagesDesign
         ? imagesDesignUrls
         : imagesProductUrls;
-    const primaryImageUrl = primaryImageFamily[primaryImageReferance.index];
+    let primaryImageUrl = primaryImageFamily[primaryImageReferance.index];
+    if (!primaryImageUrl) {
+      primaryImageUrl = primaryImageReferance.url;
+    }
 
     return { imagesDesignUrls, imagesProductUrls, primaryImageUrl };
   }

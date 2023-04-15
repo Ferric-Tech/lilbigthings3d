@@ -90,11 +90,17 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
       column.forms.forEach((form) => {
         const formGroup = new FormGroup({});
         form.fields.forEach((field) => {
-          if (FORM_FIELD_TYPES.includes(field.type)) {
+          if (field.type === AppFieldType.InputTextLong) {
+            let value = '';
+            const content = field.value as unknown as string[];
+            for (const para of content) {
+              value = `${value}${para}\n`;
+              console.log(value);
+            }
             formGroup.addControl(
               field.name,
               new FormControl(
-                field.value || field.placeholder || '',
+                value || field.placeholder || '',
                 field.validators
               )
             );
@@ -108,6 +114,17 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
                 field.validators
               )
             );
+            return;
+          }
+          if (FORM_FIELD_TYPES.includes(field.type)) {
+            formGroup.addControl(
+              field.name,
+              new FormControl(
+                field.value || field.placeholder || '',
+                field.validators
+              )
+            );
+            return;
           }
         });
         this.forms[form.name] = formGroup;
@@ -185,6 +202,7 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
             this.forms[formName].get(control)?.value;
         });
       });
+      console.log(collectiveFormValues);
       this.formResults.emit(collectiveFormValues);
     }
   }
