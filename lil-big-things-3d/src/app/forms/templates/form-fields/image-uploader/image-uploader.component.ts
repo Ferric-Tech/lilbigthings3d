@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AppField,
   FileData,
@@ -9,12 +9,22 @@ import {
   templateUrl: './image-uploader.component.html',
   styleUrls: ['./image-uploader.component.scss'],
 })
-export class ImageUploaderComponent {
+export class ImageUploaderComponent implements OnInit {
   @Input() field: AppField | undefined;
   @Output() filesSelected = new EventEmitter<FileData[]>();
   @Output() primaryImageSelected = new EventEmitter<FileData>();
 
   uploadedImagesData: FileData[] = [];
+
+  ngOnInit() {
+    console.log(this.field);
+    if (!this.field) return;
+    if (!this.field.value) return;
+    const urls = this.field.value as unknown as string[];
+    for (const url of urls) {
+      this.uploadedImagesData.push({ file: null, url });
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onImagesSelection(event: any) {
