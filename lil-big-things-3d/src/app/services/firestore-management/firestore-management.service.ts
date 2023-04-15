@@ -77,13 +77,16 @@ export class FirestoreManagementService {
     productID: string,
     type: ProductFileType,
     file: File
-  ): Promise<string> {
+  ): Promise<Record<string, string>> {
     return new Promise(async (resolve) => {
       const storage = getStorage();
       const filePath = `${productID}/Files/${type}/${productID}-${type}`;
       const storageRef = ref(storage, filePath);
       await this.addFilesToStrorage(storageRef, file);
-      resolve(await getDownloadURL(ref(storage, filePath)));
+      resolve({
+        url: await getDownloadURL(ref(storage, filePath)),
+        displayValue: `${productID}-${type}`,
+      });
     });
   }
 

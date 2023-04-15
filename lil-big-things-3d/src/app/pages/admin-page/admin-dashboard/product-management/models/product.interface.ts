@@ -12,10 +12,10 @@ export interface Product {
   dimentions: Record<string, number>;
   imagesDesignUrls?: string[];
   imagesProductUrls?: string[];
-  fileDesign: ProductFileData;
-  filePrintFast: ProductFileData;
-  filePrintStandard: ProductFileData;
-  filePrintOptimised: ProductFileData;
+  fileDesign: AppFileData;
+  filePrintFast: AppFileData;
+  filePrintStandard: AppFileData;
+  filePrintOptimised: AppFileData;
 }
 
 export interface ProductData {
@@ -29,8 +29,9 @@ export interface ProductData {
   imagesMetaData: ProductImagesMetaData;
 }
 
-export interface ProductFileData {
+export interface AppFileData {
   url: string;
+  displayValue: string;
   parameters: Record<string, unknown>;
 }
 

@@ -23,6 +23,7 @@ export interface AppField {
   label?: string;
   placeholder?: string;
   value?: string;
+  displayValue?: string;
   urls?: string[];
   validators?: ValidatorFn[];
   multiColumnFieldSetting?: MultiColumnFieldSetting[];

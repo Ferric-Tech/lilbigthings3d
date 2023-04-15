@@ -159,8 +159,6 @@ export class EditProductComponent implements OnInit {
       formField.value = this.product[productField] as string;
     });
 
-    console.log(this.formConfig);
-
     //   for (const key of Object.keys(this.product)) {
     // }
 

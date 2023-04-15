@@ -1,6 +1,5 @@
 /* eslint-disable no-async-promise-executor */
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   EventChannel,
   EventTopic,
@@ -8,7 +7,7 @@ import {
 import { EventManagementService } from 'src/app/services/event-management/event-management.service';
 import { FirestoreManagementService } from 'src/app/services/firestore-management/firestore-management.service';
 import { ProductFormFields } from '../models/product.enum';
-import { Product, ProductFileData } from '../models/product.interface';
+import { Product, AppFileData } from '../models/product.interface';
 import {
   FileData,
   FileDataWithParameters,
@@ -27,7 +26,6 @@ export enum ProductFileType {
 export class ProductManagementService {
   constructor(
     private readonly fs: FirestoreManagementService,
-    private router: Router,
     private readonly eventService: EventManagementService
   ) {}
 
@@ -69,10 +67,10 @@ export class ProductManagementService {
       productID,
       formResults
     )) as {
-      designFileData: ProductFileData;
-      printFastFileData: ProductFileData;
-      printStandardFileData: ProductFileData;
-      printOptimisedFileData: ProductFileData;
+      designFileData: AppFileData;
+      printFastFileData: AppFileData;
+      printStandardFileData: AppFileData;
+      printOptimisedFileData: AppFileData;
     };
 
     // Updated product with image and file storage data as required
@@ -141,14 +139,16 @@ export class ProductManagementService {
       ProductFormFields.FileDesign
     ] as FileDataWithParameters;
 
-    let designFileData = {} as ProductFileData;
+    let designFileData = {} as AppFileData;
     if (receivedDesignFileData.file) {
+      const storedDesignFileData = (await this.uploadProductFileByType(
+        productID,
+        ProductFileType.Design,
+        receivedDesignFileData.file
+      )) as { url: string; displayValue: string };
       designFileData = {
-        url: await this.uploadProductFileByType(
-          productID,
-          ProductFileType.Design,
-          receivedDesignFileData.file
-        ),
+        url: storedDesignFileData.url,
+        displayValue: storedDesignFileData.displayValue,
         parameters: receivedDesignFileData.parameters || null,
       };
     }
@@ -158,14 +158,16 @@ export class ProductManagementService {
       ProductFormFields.FilePrintFast
     ] as FileDataWithParameters;
 
-    let printFastFileData = {} as ProductFileData;
+    let printFastFileData = {} as AppFileData;
     if (receivedPrintFastFileData.file) {
+      const storedPrintFileFileData = (await this.uploadProductFileByType(
+        productID,
+        ProductFileType.PrintFast,
+        receivedPrintFastFileData.file
+      )) as { url: string; displayValue: string };
       printFastFileData = {
-        url: await this.uploadProductFileByType(
-          productID,
-          ProductFileType.PrintFast,
-          receivedPrintFastFileData.file
-        ),
+        url: storedPrintFileFileData.url,
+        displayValue: storedPrintFileFileData.displayValue,
         parameters: receivedPrintFastFileData.parameters,
       };
     }
@@ -175,14 +177,16 @@ export class ProductManagementService {
       ProductFormFields.FilePrintStandard
     ] as FileDataWithParameters;
 
-    let printStandardFileData = {} as ProductFileData;
+    let printStandardFileData = {} as AppFileData;
     if (receivedPrintStandardFileData.file) {
+      const storedPrintStandardFileData = (await this.uploadProductFileByType(
+        productID,
+        ProductFileType.PrintStandard,
+        receivedPrintStandardFileData.file
+      )) as { url: string; displayValue: string };
       printStandardFileData = {
-        url: await this.uploadProductFileByType(
-          productID,
-          ProductFileType.PrintStandard,
-          receivedPrintStandardFileData.file
-        ),
+        url: storedPrintStandardFileData.url,
+        displayValue: storedPrintStandardFileData.displayValue,
         parameters: receivedPrintStandardFileData.parameters,
       };
     }
@@ -192,14 +196,16 @@ export class ProductManagementService {
       ProductFormFields.FilePrintOptimised
     ] as FileDataWithParameters;
 
-    let printOptimisedFileData = {} as ProductFileData;
+    let printOptimisedFileData = {} as AppFileData;
     if (receivedPrintOptimisedFileData.file) {
+      const storedPrintOptimisedFileData = (await this.uploadProductFileByType(
+        productID,
+        ProductFileType.PrintOptimised,
+        receivedPrintOptimisedFileData.file
+      )) as { url: string; displayValue: string };
       printOptimisedFileData = {
-        url: await this.uploadProductFileByType(
-          productID,
-          ProductFileType.PrintOptimised,
-          receivedPrintOptimisedFileData.file
-        ),
+        url: storedPrintOptimisedFileData.url,
+        displayValue: storedPrintOptimisedFileData.displayValue,
         parameters: receivedPrintOptimisedFileData.parameters,
       };
     }
@@ -216,7 +222,7 @@ export class ProductManagementService {
     productID: string,
     type: ProductFileType,
     file: File
-  ): Promise<string> {
+  ): Promise<Record<string, string>> {
     // Uploads file to storage and returns url where they can be downloaded later
     return new Promise(async (resolve) => {
       resolve(await this.fs.addProductFileByIDAndType(productID, type, file));
@@ -226,9 +232,13 @@ export class ProductManagementService {
   private setProductBasicsFromFormResults(
     formResults: Record<string, unknown>
   ) {
+    const primaryImageData = formResults[ProductFormFields.PrimaryImage] as {
+      file: File;
+      url: string;
+    };
     return {
       title: formResults[ProductFormFields.Title] as string,
-      primaryImageUrl: formResults[ProductFormFields.PrimaryImage] as string,
+      primaryImageUrl: primaryImageData.url,
       shortDesc: formResults[ProductFormFields.ShortDesc] as string,
       longDesc: this.setLongDescription(formResults),
       dimentions: formResults[ProductFormFields.Dimentions] as Record<

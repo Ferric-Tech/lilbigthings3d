@@ -47,6 +47,7 @@ export class FileUploaderComponent implements OnInit {
   }
 
   populateFieldDisplayValues() {
+    console.log(this.field);
     if (!this.field) return;
     if (this.field.value) {
       this.fieldDisplayValues.push(this.field.value);
