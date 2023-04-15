@@ -29,5 +29,4 @@ export const FORM_FIELD_TYPES = [
   AppFieldType.UploaderMultiFileUnderlined,
   AppFieldType.UploaderSingleFileUnderlined,
   AppFieldType.ImageUploader,
-  AppFieldType.MainImage,
 ];

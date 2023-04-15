@@ -60,7 +60,11 @@ export class ProductManagementService {
     const imageUrls = (await this.addImageFilesToStorage(
       productID,
       formResults
-    )) as { imagesDesignUrls: string[]; imagesProductUrls: string[] };
+    )) as {
+      imagesDesignUrls: string[];
+      imagesProductUrls: string[];
+      primaryImageUrl: string;
+    };
 
     // Store files in form results
     const fileData = (await this.addProductFilesToStorage(
@@ -76,6 +80,7 @@ export class ProductManagementService {
     // Updated product with image and file storage data as required
     completeProduct.imagesDesignUrls = imageUrls.imagesDesignUrls;
     completeProduct.imagesProductUrls = imageUrls.imagesProductUrls;
+    completeProduct.primaryImageUrl = imageUrls.primaryImageUrl;
     completeProduct.fileDesign = fileData.designFileData;
     completeProduct.filePrintFast = fileData.printFastFileData;
     completeProduct.filePrintStandard = fileData.printStandardFileData;
@@ -88,7 +93,7 @@ export class ProductManagementService {
   private async addImageFilesToStorage(
     productID: string,
     formResults: Record<string, unknown>
-  ): Promise<Record<string, string[]>> {
+  ): Promise<Record<string, string[] | string>> {
     // Design images
     const imagesDesignUrls = await this.uploadProductImageByCatergory(
       productID,
@@ -102,7 +107,16 @@ export class ProductManagementService {
       'Product'
     );
 
-    return { imagesDesignUrls, imagesProductUrls };
+    const primaryImageReferance = formResults[
+      ProductFormFields.PrimaryImage
+    ] as { url: string; fieldName: string; index: number };
+    const primaryImageFamily =
+      primaryImageReferance.fieldName === ProductFormFields.ImagesDesign
+        ? imagesDesignUrls
+        : imagesProductUrls;
+    const primaryImageUrl = primaryImageFamily[primaryImageReferance.index];
+
+    return { imagesDesignUrls, imagesProductUrls, primaryImageUrl };
   }
 
   private async uploadProductImageByCatergory(
@@ -232,13 +246,8 @@ export class ProductManagementService {
   private setProductBasicsFromFormResults(
     formResults: Record<string, unknown>
   ) {
-    const primaryImageData = formResults[ProductFormFields.PrimaryImage] as {
-      file: File;
-      url: string;
-    };
     return {
       title: formResults[ProductFormFields.Title] as string,
-      primaryImageUrl: primaryImageData.url,
       shortDesc: formResults[ProductFormFields.ShortDesc] as string,
       longDesc: this.setLongDescription(formResults),
       dimentions: formResults[ProductFormFields.Dimentions] as Record<

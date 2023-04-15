@@ -12,12 +12,15 @@ import {
 export class ImageUploaderComponent implements OnInit {
   @Input() field: AppField | undefined;
   @Output() filesSelected = new EventEmitter<FileData[]>();
-  @Output() primaryImageSelected = new EventEmitter<FileData>();
+  @Output() primaryImageSelected = new EventEmitter<{
+    url: string;
+    field: AppField;
+    index: number;
+  }>();
 
   uploadedImagesData: FileData[] = [];
 
   ngOnInit() {
-    console.log(this.field);
     if (!this.field) return;
     if (!this.field.value) return;
     const urls = this.field.value as unknown as string[];
@@ -37,7 +40,6 @@ export class ImageUploaderComponent implements OnInit {
       reader.onload = () => {
         this.uploadedImagesData.push({
           file: uploadedFiles[i],
-          //   fileName: uploadedFiles[i].name,
           url: reader.result,
         });
       };
@@ -51,7 +53,14 @@ export class ImageUploaderComponent implements OnInit {
     this.filesSelected.emit(this.uploadedImagesData);
   }
 
-  setPrimaryImage(image: FileData) {
-    this.primaryImageSelected.emit(image);
+  setPrimaryImage(fileData: FileData, index: number) {
+    if (!this.field) return;
+    if (!fileData.url) return;
+    const url = fileData.url as string;
+    this.primaryImageSelected.emit({
+      url,
+      field: this.field,
+      index,
+    });
   }
 }

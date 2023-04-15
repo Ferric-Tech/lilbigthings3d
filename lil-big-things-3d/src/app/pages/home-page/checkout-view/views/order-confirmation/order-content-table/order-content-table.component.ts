@@ -19,7 +19,6 @@ export class OrderContentTableComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.determineView();
-    console.log();
   }
 
   private determineView() {

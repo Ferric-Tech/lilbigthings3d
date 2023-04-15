@@ -8,6 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import {
+  AppField,
   AppMultiColumnForm,
   FileData,
   FileDataWithParameters,
@@ -97,6 +98,16 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
                 field.validators
               )
             );
+            return;
+          }
+          if (field.type === AppFieldType.MainImage) {
+            formGroup.addControl(
+              field.name,
+              new FormControl(
+                { url: field.value } || field.placeholder || '',
+                field.validators
+              )
+            );
           }
         });
         this.forms[form.name] = formGroup;
@@ -178,9 +189,15 @@ export class DynanmicMultiColumnFormComponent implements OnInit {
     }
   }
 
-  setPrimaryImage(image: FileData) {
-    this.forms['Product basic details'].controls['primary-image-url'].setValue(
-      image
-    );
+  setPrimaryImage(imageReferance: {
+    url: string;
+    field: AppField;
+    index: number;
+  }) {
+    this.forms['Product basic details'].controls['primary-image-url'].setValue({
+      url: imageReferance.url,
+      fieldName: imageReferance.field.name,
+      index: imageReferance.index,
+    });
   }
 }
