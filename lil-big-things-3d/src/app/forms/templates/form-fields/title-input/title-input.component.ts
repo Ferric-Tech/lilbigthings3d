@@ -14,7 +14,8 @@ export class TitleInputComponent implements OnInit {
 
   ngOnInit() {
     if (!this.field) return;
-    this.fieldValue = this.field.value || this.field.placeholder || '';
+    this.fieldValue =
+      (this.field.value as string) || this.field.placeholder || '';
   }
 
   onFieldFocus(): void {

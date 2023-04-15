@@ -8,6 +8,7 @@ import {
   FileDataWithParameters,
 } from 'src/app/forms/models/form-template.interface';
 import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
+import { AppFileData } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 
 export enum FileParamaterType {
   None,
@@ -34,7 +35,7 @@ export class FileUploaderWithParametersComponent implements OnInit {
 
   ngOnInit() {
     if (!this.field?.parameterType) return;
-    this.fileName = this.field.value || this.field.placeholder || '';
+    this.setFileName();
     this.fieldValue.parameters = this.field.parameters || {};
     this.currentParameterType = this.field.parameterType;
   }
@@ -55,5 +56,25 @@ export class FileUploaderWithParametersComponent implements OnInit {
       unknown
     >;
     this.fileSelectedWithParameters.emit(this.fieldValue);
+  }
+
+  setFileName() {
+    if (!this.field) return;
+
+    if (this.field.value) {
+      if (typeof this.field.value === 'string') {
+        this.fileName = this.field.value;
+        return;
+      }
+      if ('displayValue' in this.field.value) {
+        this.fileName = (this.field.value as AppFileData).displayValue;
+        return;
+      }
+      return;
+    }
+
+    if (this.field.placeholder) {
+      this.fileName = this.field.placeholder;
+    }
   }
 }

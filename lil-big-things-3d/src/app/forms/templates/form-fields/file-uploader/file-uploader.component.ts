@@ -4,6 +4,7 @@ import {
   FileData,
 } from 'src/app/forms/models/form-template.interface';
 import { AppFieldType } from 'src/app/forms/models/form-templates.enum';
+import { AppFileData } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 
 @Component({
   selector: 'app-file-uploader',
@@ -47,14 +48,24 @@ export class FileUploaderComponent implements OnInit {
   }
 
   populateFieldDisplayValues() {
-    console.log(this.field);
     if (!this.field) return;
+
     if (this.field.value) {
-      this.fieldDisplayValues.push(this.field.value);
-    } else {
-      if (this.field.placeholder) {
-        this.fieldDisplayValues.push(this.field.placeholder);
+      if (typeof this.field.value === 'string') {
+        this.fieldDisplayValues.push(this.field.value);
+        return;
       }
+      if ('displayValue' in this.field.value) {
+        this.fieldDisplayValues.push(
+          (this.field.value as AppFileData).displayValue
+        );
+        return;
+      }
+      return;
+    }
+
+    if (this.field.placeholder) {
+      this.fieldDisplayValues.push(this.field.placeholder);
     }
   }
 }

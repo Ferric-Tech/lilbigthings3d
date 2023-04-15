@@ -2,6 +2,7 @@ import { ValidatorFn } from '@angular/forms';
 import { AppFieldType } from './form-templates.enum';
 import { FileParamaterType } from '../templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 import { ProductForm } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.enum';
+import { AppFileData } from 'src/app/pages/admin-page/admin-dashboard/product-management/models/product.interface';
 
 export interface AppMultiColumnForm {
   columns: AppFormColumn[];
@@ -22,7 +23,7 @@ export interface AppField {
   type: AppFieldType;
   label?: string;
   placeholder?: string;
-  value?: string;
+  value?: string | AppFileData;
   displayValue?: string;
   urls?: string[];
   validators?: ValidatorFn[];

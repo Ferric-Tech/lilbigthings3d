@@ -24,7 +24,8 @@
     (change)="onFileSelection($event)"
   />
   <button class="file-selector-button" #upload (click)="FileInput.click()">
-    Upload file
+    <div *ngIf="field.value">Change file</div>
+    <div *ngIf="!field.value">Upload file</div>
   </button>
 </div>
 
