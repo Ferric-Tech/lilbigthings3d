@@ -30,14 +30,17 @@
 </div>
 
 <div *ngIf="fieldValue.parameters" class="parameters-container">
-  <div
-    *ngFor="let parameter of fieldValue.parameters | keyvalue"
-    class="paramater-line"
-  >
-    <div class="parameter-lable">
-      {{ PrintFileParametersMapping[parameter.key] }}
+  <div [ngSwitch]="currentParameterType">
+    <div *ngSwitchCase="parameterType.PrintFile"></div>
+    <div
+      *ngFor="let parameter of fieldValue.parameters | keyvalue"
+      class="paramater-line"
+    >
+      <div class="parameter-lable">
+        {{ PrintFileParametersMapping[parameter.key] }}
+      </div>
+      <div class="parameter-value">{{ parameter.value }}</div>
     </div>
-    <div class="parameter-value">{{ parameter.value }}</div>
   </div>
 </div>
 

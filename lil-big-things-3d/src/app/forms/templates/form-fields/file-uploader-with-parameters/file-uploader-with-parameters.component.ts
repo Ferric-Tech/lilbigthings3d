@@ -35,8 +35,7 @@ export class FileUploaderWithParametersComponent implements OnInit {
 
   ngOnInit() {
     if (!this.field?.parameterType) return;
-    this.setFileName();
-    this.fieldValue.parameters = this.field.parameters || {};
+    this.setValues();
     this.currentParameterType = this.field.parameterType;
   }
 
@@ -58,7 +57,7 @@ export class FileUploaderWithParametersComponent implements OnInit {
     this.fileSelectedWithParameters.emit(this.fieldValue);
   }
 
-  setFileName() {
+  setValues() {
     if (!this.field) return;
 
     if (this.field.value) {
@@ -67,7 +66,9 @@ export class FileUploaderWithParametersComponent implements OnInit {
         return;
       }
       if ('displayValue' in this.field.value) {
-        this.fileName = (this.field.value as AppFileData).displayValue;
+        const fieldData = this.field.value as AppFileData;
+        this.fileName = fieldData.displayValue;
+        this.fieldValue.parameters = fieldData.parameters;
         return;
       }
       return;
