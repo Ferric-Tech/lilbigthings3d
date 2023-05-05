@@ -93,6 +93,8 @@ import { TextAreaComponent } from './forms/templates/form-fields/text-area/text-
 import { FileUploaderComponent } from './forms/templates/form-fields/file-uploader/file-uploader.component';
 import { FileUploaderWithParametersComponent } from './forms/templates/form-fields/file-uploader-with-parameters/file-uploader-with-parameters.component';
 import { ImageUploaderComponent } from './forms/templates/form-fields/image-uploader/image-uploader.component';
+import { ViewProductsEmptyStateComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products-empty-state/view-products-empty-state.component';
+import { ViewProductsTableComponent } from './pages/admin-page/admin-dashboard/product-management/view-products/view-products-table/view-products-table.component';
 
 @NgModule({
   declarations: [
@@ -149,6 +151,8 @@ import { ImageUploaderComponent } from './forms/templates/form-fields/image-uplo
     FileUploaderComponent,
     FileUploaderWithParametersComponent,
     ImageUploaderComponent,
+    ViewProductsEmptyStateComponent,
+    ViewProductsTableComponent,
   ],
   imports: [
     BrowserModule,
